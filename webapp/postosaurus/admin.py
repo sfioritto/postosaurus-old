@@ -3,3 +3,4 @@ from django.contrib import admin
 
 admin.site.register(Subscription)
 admin.site.register(MailingList)
+admin.site.register(User)

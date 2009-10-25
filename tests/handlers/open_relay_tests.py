@@ -1,26 +1,16 @@
 from nose.tools import *
 from lamson.testing import *
-import os
 from lamson import server
 
 relay = relay(port=8823)
-client = RouterConversation("somedude@localhost", "requests_tests")
-confirm_format = "testing-confirm-[0-9]+@"
-noreply_format = "testing-noreply@"
-
-
-def test_forwards_relay_host():
-    """
-    Makes sure that your config/settings.py is configured to forward mail from
-    localhost (or your direct host) to your relay.
-    """
-    client.begin()
-    client.say("tester@localhost", "Test that forward works.", "tester@localhost")
+domain = 'postosaurus.com'
+sender = 'somedude@somedude.com'
+client = RouterConversation(sender, "requests_tests")
 
 
 def test_drops_open_relay_messages():
     """
-    But, make sure that mail NOT for test.com gets dropped silently.
+    Make sure that mail NOT for postosaurus.com gets dropped silently.
     """
     client.begin()
     client.say("tester@badplace.notinterwebs", "Relay should not happen")

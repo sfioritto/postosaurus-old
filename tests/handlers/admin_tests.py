@@ -1,53 +1,72 @@
-from nose.tools import *
 from lamson.testing import *
-from config import settings
-import time
-from app.model import archive, confirmation
+from lamson import server
+from webapp.postosaurus.models import *
+from nose import with_setup
 
 
-queue_path = archive.store_path('test.list', 'queue')
-sender = "sender-%s@sender.com" % time.time()
-host = "librelist.com"
+relay = relay(port=8823)
+sender = "sender@sender.com"
+host = "postosaurus.com"
 list_name = "test.list"
-list_addr = "test.list@%s" % host
+list_addr = "%s@%s" % (list_name, host)
 client = RouterConversation(sender, 'Admin Tests')
-
-def setup():
-    clear_queue("run/posts")
-    clear_queue("run/spam")
-
-def test_new_user_subscribes_with_invalid_name():
-    client.begin()
-
-    client.say('test-list@%s' % host, "I can't read!", 'noreply')
-    client.say('test=list@%s' % host, "I can't read!", 'noreply')
-    clear_queue()
-
-    client.say('unbounce@%s' % host, "I have two email addresses!")
-    assert not delivered('noreply')
-    assert not delivered('unbounce')
-
-    client.say('noreply@%s' % host, "Dumb dumb.")
-    assert not delivered('noreply')
-
-def test_new_user_subscribes():
-    client.begin()
-    msg = client.say(list_addr, "Hey I was wondering how to fix this?",
-                     list_name + '-confirm')
-    client.say(msg['Reply-To'], 'Confirmed I am.', 'noreply')
-    clear_queue()
+user = None
 
 
-def test_existing_user_unsubscribes():
-    test_new_user_subscribes()
-    msg = client.say(list_name + "-unsubscribe@%s" % host, "I would like to unsubscribe.", 'confirm')
-    client.say(msg['Reply-To'], 'Confirmed yes I want out.', 'noreply')
+def setup_func():
+    mlist = MailingList(name = list_name, email = list_addr)
+    mlist.save()
 
+def teardown_func():
+    MailingList.objects.all().delete()
+    Subscription.objects.all().delete()
+    User.objects.all().delete()    
+
+def subscribe_user(address):
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    user = User(email = address)
+    user.save()
+    sub = Subscription(user=user, mailing_list = mlist)
+    sub.save()
+
+
+@with_setup(setup_func, teardown_func)
 def test_existing_user_posts_message():
-    test_new_user_subscribes()
-    msg = client.say(list_addr, "Howdy folks, I was wondering what this is?",
+
+    """
+    Moves the user to the POSTING state and posts a message.
+    """
+    
+    subscribe_user(sender)
+    msg = client.say(list_addr, "My first message.",
                      list_addr)
-    # make sure it gets archived
-    assert delivered(list_addr, to_queue=queue(queue_path))
+    assert delivered(list_addr)
+
+@with_setup(setup_func, teardown_func)
+def test_non_user_posts_message():
+    
+    """
+    Only subscribers to a list can post to the list.
+    """
+
+    assert len(User.objects.all()) == 0
+    client.begin()
+    msg = client.say(list_addr, "My first message.")
+    assert not delivered(list_addr)
+
+
+@with_setup(setup_func, teardown_func)
+def test_forwards_to_posting():
+
+    """
+    Makes sure that the first message sent moves a user into the POSTING state.
+    """
+    subscribe_user(sender)
+    client.begin()
+    client.say(list_addr, "Test that forward works.", list_addr)
+    assert_in_state('app.handlers.admin', list_addr, sender, 'POSTING')
+    assert delivered(list_addr)
+
+
 
 

@@ -2,9 +2,18 @@ from django.db import models
 from datetime import datetime
 from email.utils import formataddr
 
+
+class User(models.Model):
+    created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
+    email = models.CharField(max_length=512, primary_key=True)
+
+    def __unicode__(self):
+        return self.email
+
 class MailingList(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=512)
+    name = models.CharField(max_length=512, unique = True)
+    email = models.CharField(max_length=512, unique = True)
 
     def __unicode__(self):
         return self.name
@@ -12,12 +21,8 @@ class MailingList(models.Model):
 
 class Subscription(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
-    subscriber_address = models.EmailField()
-    subscriber_name = models.CharField(max_length=200)
     mailing_list = models.ForeignKey(MailingList)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return '"%s" <%s>' % (self.subscriber_name, self.subscriber_address)
-
-    def subscriber_full_address(self):
-        return formataddr((self.subscriber_name, self.subscriber_address))
+        return '%s' % (self.user.email)

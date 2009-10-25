@@ -15,5 +15,7 @@ def POSTING(message, list_name=None, host=None):
 
 @route_like(POSTING)
 def START(message, list_name=None, host=None):
+    print '!!!!!!!!!!!!!!!!!!!!'
+    print message.base.keys()
     POSTING(message, list_name=list_name, host=host)
 

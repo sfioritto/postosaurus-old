@@ -35,6 +35,34 @@ def subscribe_user(address):
 
 
 @with_setup(setup_func, teardown_func)
+def test_add_new_user():
+
+    """
+    If there are multiple addresses in the To field, add them
+    tot the list.
+    """
+    
+    client.begin()
+    subscribe_user(sender)
+    client.say([list_addr, member], "Add member to this list.")
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    assert len(mlist.subscription_set.all()) == 2
+    
+
+@with_setup(setup_func, teardown_func)
+def test_subscribers_no_duplicates():
+    
+    """
+    If an email address in the To field is from someone in
+    the list already, the list should not generate a
+    duplicate email.
+    """
+
+    client.begin()
+    test_add_new_user()
+    assert queue().count() == 0, "There are %s messages in the queue should be 0." % queue().count()
+
+@with_setup(setup_func, teardown_func)
 def test_existing_user_posts_message():
 
     """

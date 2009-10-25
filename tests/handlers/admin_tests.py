@@ -29,8 +29,9 @@ def subscribe_user(address):
     mlist = MailingList.objects.filter(email = list_addr)[0]
     user = User(email = address)
     user.save()
-    sub = Subscription(user=user, mailing_list = mlist)
-    sub.save()
+    if not Subscription.objects.filter(user=user, mailing_list = mlist):
+        sub = Subscription(user=user, mailing_list = mlist)
+        sub.save()
 
 
 @with_setup(setup_func, teardown_func)
@@ -40,11 +41,14 @@ def test_existing_user_posts_message():
     Posts a message and checks to see that the one member
     was sent a message.
     """
-    
+
+    client.begin()
     subscribe_user(sender)
     subscribe_user(member)
+    test_forwards_to_posting()
+    clear_queue()
     msg = client.say(list_addr, "My first message.")
-
+    # only one message should be sent to member.
     assert queue().count() == 1
 
 

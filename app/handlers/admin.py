@@ -14,7 +14,6 @@ def POSTING(message, list_name=None, host=None):
 
 
 @route_like(POSTING)
-@stateless
-def FORWARD(message, list_name=None, host=None):
+def START(message, list_name=None, host=None):
     POSTING(message, list_name=list_name, host=host)
 

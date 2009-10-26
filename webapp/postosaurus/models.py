@@ -12,7 +12,7 @@ class User(models.Model):
 
 class MailingList(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=512, unique = True)
+    name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
 
     def __unicode__(self):

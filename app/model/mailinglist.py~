@@ -1,0 +1,125 @@
+from webapp.postosaurus.models import *
+from email.utils import parseaddr
+from lamson.mail import MailResponse
+
+
+
+def is_subscribed(address, list_name):
+    if find_subscription(address, list_name):
+        return True
+    else:
+        return False;
+
+def create_list(list_name):
+    list_name = list_name.lower()
+    mlist = find_list(list_name)
+
+    if not mlist:
+        mlist = MailingList(name=list_name)
+        mlist.save()
+
+    return mlist
+
+def find_user(address):
+    users = User.objects.filter(email = address)
+    if users:
+        return users[0]
+    else:
+        return None
+
+def find_list(list_name):
+    mlists = MailingList.objects.filter(name = list_name)
+    if mlists:
+        return mlists[0]
+    else:
+        return None
+
+def add_subscriber(address, list_name):
+    mlist = create_list(list_name)
+    sub_name, sub_addr = parseaddr(address)
+    sub = find_subscription(address, list_name)
+    user = find_user(address)
+
+    if not sub:
+        sub = Subscription(mailing_list = mlist,
+                           user = user)
+        sub.save()
+        return sub
+    else:
+        return sub
+
+def find_subscription(address, list_name):
+
+    sub_name, sub_addr = parseaddr(address)
+    mlist = find_list(list_name)
+    user = find_user(address)
+    if user:
+        assert mlist, "Mailing list %s must exist to find a subscription." % list_name
+        assert user, "Address must map to user %s to find a subscription." % address
+    
+        subs = Subscription.objects.filter(mailing_list = mlist, 
+                                           user = user)
+
+        if subs:
+            return subs[0]
+    else:
+        return None
+
+
+def post_message(relay, message, list_name, host, fromaddress):
+    mlist = find_list(list_name)
+    sender = find_user(fromaddress)
+    assert mlist, "User is somehow able to post to list %s" % list_name
+    assert sender, "Sender %s must exist in order to post a message" % fromaddress
+
+    for sub in mlist.subscription_set.all():
+        if sub.user != sender:
+            list_addr = "%s@%s" % (list_name, host)
+            delivery = craft_response(message, list_name, list_addr) 
+            relay.deliver(delivery, To=sub.user.email, From=list_addr)
+
+
+def craft_response(message, list_name, list_addr):
+    response = MailResponse(To=list_addr, 
+                            From=message['from'],
+                            Subject=message['subject'])
+
+    msg_id = message['message-id']
+
+    response.update({
+        "Sender": list_addr, 
+        "Reply-To": list_addr,
+        "List-Id": list_addr,
+        "List-Unsubscribe": "<mailto:%s-unsubscribe@postosaurus.com>" % list_name,
+        "List-Archive": "<http://postosaurus.com/archives/%s/>" % list_name,
+        "List-Post": "<mailto:%s>" % list_addr,
+        "List-Help": "<http://postosaurus.com/help.html>",
+        "List-Subscribe": "<mailto:%s-subscribe@postosaurus.com>" % list_name,
+        "Return-Path": list_addr, 
+        "Precedence": 'list',
+    })
+
+    if 'date' in message:
+        response['Date'] = message['date']
+
+    if 'references' in message:
+        response['References'] = message['References']
+    elif msg_id:
+        response['References'] = msg_id
+
+    if msg_id:
+        response['message-id'] = msg_id
+
+        if 'in-reply-to' not in message:
+            response["In-Reply-To"] = message['Message-Id']
+
+    if message.all_parts():
+        response.attach_all_parts(message)
+    else:
+        response.Body = message.body()
+
+    return response
+
+
+
+

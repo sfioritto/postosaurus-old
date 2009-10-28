@@ -9,3 +9,8 @@
 #*.[oa]
 #Ignore .pyc files
 *.pyc
+run/*.*
+logs/*.*
+.ropeproject/*.*
+*~
+settings.py

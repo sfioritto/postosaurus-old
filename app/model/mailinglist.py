@@ -7,7 +7,8 @@ from types import ListType
 
 
 def is_subscribed(address, list_name):
-    if find_subscription(address, list_name):
+    name, addr = parseaddr(address)
+    if find_subscription(addr, list_name):
         return True
     else:
         return False;
@@ -56,8 +57,8 @@ def find_list(list_name):
 def add_if_not_subscriber(address, list_name):
     mlist = create_list(list_name)
     sub_name, sub_addr = parseaddr(address)
-    sub = find_subscription(address, list_name)
-    user = find_user(address)
+    sub = find_subscription(sub_addr, list_name)
+    user = find_user(sub_addr)
 
     if not sub:
         sub = Subscription(mailing_list = mlist,
@@ -86,10 +87,11 @@ def find_subscription(address, list_name):
 
 
 def post_message(relay, message, list_name, host, fromaddress):
+    name, addr = parseaddr(fromaddress)
     mlist = find_list(list_name)
-    sender = find_user(fromaddress)
+    sender = find_user(addr)
     assert mlist, "User is somehow able to post to list %s" % list_name
-    assert sender, "Sender %s must exist in order to post a message" % fromaddress
+    assert sender, "Sender %s must exist in order to post a message" % addr
 
     for sub in mlist.subscription_set.all():
         if should_generate_response(sub.user, sender, message):

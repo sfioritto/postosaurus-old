@@ -2,11 +2,12 @@ from lamson.testing import *
 from lamson import server
 from webapp.postosaurus.models import *
 from nose import with_setup
-
+from email.utils import parseaddr
+from app.model import mailinglist
 
 relay = relay(port=8823)
-sender = "sender@sender.com"
-member = "member@member.com"
+sender = "send <sender@sender.com>"
+member = "member <member@member.com>"
 host = "postosaurus.com"
 list_name = "test.list"
 list_addr = "%s@%s" % (list_name, host)
@@ -27,11 +28,11 @@ def teardown_func():
 
 def subscribe_user(address):
     mlist = MailingList.objects.filter(email = list_addr)[0]
-    user = User(email = address)
-    user.save()
-    if not Subscription.objects.filter(user=user, mailing_list = mlist):
-        sub = Subscription(user=user, mailing_list = mlist)
-        sub.save()
+    mlist.save()
+    sub_name, sub_addr = parseaddr(address)
+    print sub_addr
+    user = mailinglist.create_user(sub_addr)
+    mailinglist.add_if_not_subscriber(address, list_name)
 
 
 @with_setup(setup_func, teardown_func)
@@ -99,10 +100,14 @@ def test_forwards_to_posting():
     """
     Makes sure that the first message sent moves a user into the POSTING state.
     """
+
     subscribe_user(sender)
     client.begin()
     client.say(list_addr, "Test that forward works.")
-    assert_in_state('app.handlers.admin', list_addr, sender, 'POSTING')
+    name, addr = parseaddr(sender)
+    assert_in_state('app.handlers.admin', list_addr, addr, 'POSTING')
+
+
 
 
 

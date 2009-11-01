@@ -4,7 +4,7 @@ from config.settings import relay
 from lamson import view
 from app.model import mailinglist
 from types import ListType
-
+from email.utils import parseaddr
 
 
 @route('(list_name)@(host)')
@@ -27,10 +27,13 @@ def POSTING(message, list_name=None, host=None):
     # otherwise To is a string.
     if type(message.To) == ListType:
         for address in [to for to in message.To if to != "%s@%s" % (list_name, host)]:
-            user = mailinglist.find_user(address)
+            sub_name, sub_addr = parseaddr(address)
+            print sub_addr
+            user = mailinglist.find_user(sub_addr)
+            print user
             if not user:
-                mailinglist.create_user(address)
-            mailinglist.add_if_not_subscriber(address, list_name)
+                mailinglist.create_user(sub_addr)
+            mailinglist.add_if_not_subscriber(sub_addr, list_name)
 
     if mailinglist.is_subscribed(message['from'], list_name):
         mailinglist.post_message(relay, message, list_name, host, message['from'])

@@ -49,14 +49,18 @@ def switch(hash):
     with cd(env.prodhome):
         sudo("ln -s %s/snapshots/%s/app /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/app" % (env.prodhome, hash))
         sudo("ln -s %s/snapshots/%s/webapp /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/webapp" % (env.prodhome, hash))
+    with cd(env.approot):
+        run("cp webappsettings.py webapp/settings.py")
 
 
 def reboot():
-    with cd(env.approot):
-        sudo("apache2ctl graceful")
-        sudo("lamson stop -ALL run/")
-        sudo("lamson start -gid 1000 -uid 1000")
-        sudo("chown -R %s:%s ../postosaurus" % (env.user, env.user))
+    with settings(warn_only=True):
+        with cd(env.approot):
+            sudo("apache2ctl graceful")
+            sudo("lamson stop -ALL run/")
+            sudo("rm run/*")
+            sudo("lamson start -gid 1000 -uid 1000")
+            sudo("chown -R %s:%s ../postosaurus" % (env.user, env.user))
     
 
 def deploy(hash):

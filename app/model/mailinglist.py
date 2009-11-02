@@ -100,6 +100,30 @@ def post_message(relay, message, list_name, host, fromaddress):
             relay.deliver(delivery, To=sub.user.email, From=list_addr)
 
 
+def all_recpts(message):
+
+    """
+    Returns a cleaned up list of all emails in the
+    to and Cc headers of the message.
+    """
+
+    allrecpts = []
+
+    if type(message.To) == ListType:
+        allrecpts = message.To
+
+    if message.base.headers.has_key('To'):
+        allrecpts = allrecpts + message.base.headers['To'].split(",")
+
+    if message.base.headers.has_key('Cc'):
+        allrecpts = allrecpts + message.base.headers['Cc'].split(",")
+
+    allrecpts = [parseaddr(address)[1] for address in allrecpts]
+    
+    return allrecpts
+
+
+
 def should_generate_response(user, sender, message):
     
     """
@@ -111,10 +135,9 @@ def should_generate_response(user, sender, message):
     field of the message, they would get a duplicate
     message, so we don't generate a response.
     """
-
-    if type(message.To) == ListType:
-        if user.email in message.To:
-            return False
+    allrecpts = all_recpts(message)
+    if user.email in allrecpts:
+        return False
 
     elif user == sender:
         return False

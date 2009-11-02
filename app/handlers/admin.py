@@ -23,21 +23,8 @@ def POSTING(message, list_name=None, host=None):
     files, photos, etc.
     """
 
-    # Only true if there are multiple emails in the To address
-    # otherwise To is a string.
-    allrecpts = []
-
-    if type(message.To) == ListType:
-        allrecpts = message.To
-
-    if message.base.headers.has_key('To'):
-        allrecpts = allrecpts + message.base.headers['To'].split(",")
-
-    if message.base.headers.has_key('Cc'):
-        allrecpts = allrecpts + message.base.headers['Cc'].split(",")
-
-    allrecpts = [parseaddr(address)[1] for address in allrecpts]
-
+    allrecpts = mailinglist.all_recpts(message)
+    
     for address in [to for to in allrecpts if not to.endswith(host)]:
         user = mailinglist.find_user(address)
         if not user:

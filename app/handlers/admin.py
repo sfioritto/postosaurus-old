@@ -25,15 +25,24 @@ def POSTING(message, list_name=None, host=None):
 
     # Only true if there are multiple emails in the To address
     # otherwise To is a string.
+    allrecpts = []
+
     if type(message.To) == ListType:
-        for address in [to for to in message.To if to != "%s@%s" % (list_name, host)]:
-            sub_name, sub_addr = parseaddr(address)
-            print sub_addr
-            user = mailinglist.find_user(sub_addr)
-            print user
-            if not user:
-                mailinglist.create_user(sub_addr)
-            mailinglist.add_if_not_subscriber(sub_addr, list_name)
+        allrecpts = message.To
+
+    if message.base.headers.has_key('To'):
+        allrecpts = allrecpts + message.base.headers['To'].split(",")
+
+    if message.base.headers.has_key('Cc'):
+        allrecpts = allrecpts + message.base.headers['Cc'].split(",")
+
+    allrecpts = [parseaddr(address)[1] for address in allrecpts]
+
+    for address in [to for to in allrecpts if not to.endswith(host)]:
+        user = mailinglist.find_user(address)
+        if not user:
+            mailinglist.create_user(address)
+        mailinglist.add_if_not_subscriber(address, list_name)
 
     if mailinglist.is_subscribed(message['from'], list_name):
         mailinglist.post_message(relay, message, list_name, host, message['from'])

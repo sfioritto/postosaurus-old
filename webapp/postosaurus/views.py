@@ -41,6 +41,7 @@ def create_list(request):
             list_name = form.cleaned_data['name']
             mlist = mailinglist.create_list(list_name)
             user = mailinglist.create_user(email)
+            add_if_not_subscriber(email, list_name)
             subject = 'Welcome to your first postosaurus group -- %s' % mlist.email
             t = loader.get_template('postosaurus/startemail.txt')
             c = Context({

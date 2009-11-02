@@ -1,7 +1,7 @@
 from fabric.api import *
 
 env.hosts = ['postosaurus.com']
-
+env.approot = "/var/local/postosaurus"
 
 
 def test():
@@ -45,11 +45,28 @@ def upload_untar(archive, hash):
     untar(archive, hash)
 
 
+def switch(hash):
+    with cd(env.prodhome):
+        sudo("ln -s %s/snapshots/%s/app /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/app" % (env.prodhome, hash))
+        sudo("ln -s %s/snapshots/%s/webapp /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/webapp" % (env.prodhome, hash))
+
+
+def reboot():
+    with cd(env.approot):
+        sudo("apache2ctl graceful")
+        sudo("lamson stop -ALL run/")
+        sudo("lamson start -gid 1000 -uid 1000")
+        sudo("chown -R %s:%s ../postosaurus" % (env.user, env.user))
+    
+
 def deploy(hash):
     with cd(env.devpath):
         test()
         archive = pack(hash)
     upload_untar(archive, hash)
+    switch(hash)
+    reboot()
+
     
     
 

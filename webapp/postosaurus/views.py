@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from app.model import mailinglist
 from django.core.mail import send_mail
 from django.template import Context, loader
+from postosaurus.models import MailingList
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -64,3 +65,13 @@ def create_list(request):
 
 def list_created(request):
     return render_to_response('postosaurus/thanks.html')
+
+def links(request, listid):
+    try:
+        listid = MailingList.objects.get(pk=listid)
+        linklist = listid.link_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/links.html', {'listid': listid, 'linklist': linklist})
+
+    

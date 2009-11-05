@@ -26,3 +26,12 @@ class Subscription(models.Model):
 
     def __unicode__(self):
         return '%s' % (self.user.email)
+
+class Link(models.Model):
+    list = models.ForeignKey(MailingList)
+    link = models.CharField(max_length=512)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.link
+

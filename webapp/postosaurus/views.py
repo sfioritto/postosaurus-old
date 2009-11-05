@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from app.model import mailinglist
 from django.core.mail import send_mail
-from django.template import Context, loader
+from django.template import RequestContext, Context, loader
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -31,7 +31,7 @@ class MailingListForm(forms.Form):
 def index(request):
     return render_to_response("postosaurus/landing.html", {
             'form' : MailingListForm()
-            })
+            }, context_instance = RequestContext(request))
 
 def create_list(request):
     if request.method == 'POST':
@@ -59,8 +59,8 @@ def create_list(request):
 
     return render_to_response('postosaurus/landing.html', {
         'form': form,
-    })
+    }, context_instance = RequestContext(request))
 
 
 def list_created(request):
-    return render_to_response('postosaurus/thanks.html')
+    return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))

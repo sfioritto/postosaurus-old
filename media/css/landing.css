@@ -4,20 +4,27 @@
 }
 
 #left, #right{
+    margin-top: 30px;
     float: left;
 }
 
 #left{
-    width: 520px;
+    width: 690px;
 }
 
 #right{
-    min-width: 700px;
+    width: 200px;
 }
 
-#right .extras{
+.extras{
     float: left;
-    width: 180px;
+    width: 200px;
+    margin-right: 20px;
+    margin-left: 5px;
+}
+
+#links{
+    margin-left: 0px;
 }
 
 #top, #left, #bottom{
@@ -44,6 +51,7 @@
     margin-left: 5px;
     padding-top: 5px;
 }
+
 /*end layout*/
 
 /* top styling*/
@@ -71,10 +79,6 @@
     margin-right: 5px;
 }
 
-.intro {
-    margin-right: 75px;
-}
-
 #labels label{
     display: block;
     text-align: right;
@@ -100,27 +104,34 @@
     color: rgb(60, 60, 60);
 }
 
-p.directions{
-    font-family: verdana;
-    color: rgb(60, 60, 60);
-    clear: both;
-    margin: 40px 0 15px 0;
-}
-
 #submit{
     margin-top: 10px;
+    clear: both;
+    display: block;
 }
 
-.intro{
-    font-family: verdana;
-    color: rgb(80, 80, 80);
-    font-size: 12px;
-}
 
 /*end left styling*/
 
 /*right styling*/
+.intro{
+    font-family: verdana;
+    color: rgb(80, 80, 80);
+    font-size: 11px;
+    margin: 0 0 10 10;
+}
 #right h1{
+    font-family: georgia;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgb(100, 100, 100);
+    margin-top: 0px;
+}
+/*end right styling*/
+
+/*bottom styling*/
+
+#left h1{
     font-family: georgia;
     font-size: 16px;
     color: rgb(60, 60, 60);
@@ -128,14 +139,19 @@ p.directions{
     margin-top: 0px;
 }
 
-#right p{
+#left div p{
     font-family: verdana;
     font-size: 11px;
     font-color: rgb(80, 80, 80);
-    margin-left: 5px;
 }
 
-div.extras{
-    padding: 5px;
+/*end bottom styling*/
+
+p.directions{
+    font-family: verdana;
+    font-size: 18px;
+    color: rgb(60, 60, 60);
+    clear: both;
+    margin: 0px 0 15px 0;
 }
-/*end right styling*/
+

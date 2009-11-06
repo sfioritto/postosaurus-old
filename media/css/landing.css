@@ -1,15 +1,26 @@
 /*start layout*/
-#top, #bottom {
+#top{
     clear: both;
+    width: 750px;
 }
 
-#left, #right{
+#footer{
+    clear: both;
+    width: 850px;
+}
+
+#leftinner, #right{
     margin-top: 30px;
     float: left;
 }
 
+#leftinner{
+    width: 750px;
+}
+
 #left{
-    width: 690px;
+    height: 725px;
+    float: left;
 }
 
 #right{
@@ -19,15 +30,22 @@
 .extras{
     float: left;
     width: 200px;
-    margin-right: 20px;
     margin-left: 5px;
+    padding: 0px 20px;
+    margin-top: 30px;
+}
+
+.extras input{
+    margin: 0;
+    padding: 0;
+    display: inline;
 }
 
 #links{
     margin-left: 0px;
 }
 
-#top, #left, #bottom{
+#leftinner{
     margin-left: 100px;
 }
 
@@ -64,6 +82,7 @@
     font-weight: normal;
     font-size: 18px;
     color: rgb(40, 40, 40);
+
 }
 
 #top h2{
@@ -77,6 +96,7 @@
 /*left styling*/
 #labels{
     margin-right: 5px;
+    margin-left: 50px;
 }
 
 #labels label{
@@ -104,12 +124,19 @@
     color: rgb(60, 60, 60);
 }
 
+#files {
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+
 #submit{
     margin-top: 10px;
     clear: both;
     display: block;
+    position: relative;
+    top: 30px;
+    padding: 10px;
 }
-
 
 /*end left styling*/
 
@@ -125,13 +152,17 @@
     font-weight: normal;
     font-size: 16px;
     color: rgb(100, 100, 100);
-    margin-top: 0px;
+    margin-top: 40px;
+}
+
+#right {
+    padding-left: 30px;
 }
 /*end right styling*/
 
 /*bottom styling*/
 
-#left h1{
+#leftinner h1{
     font-family: georgia;
     font-size: 16px;
     color: rgb(60, 60, 60);
@@ -139,12 +170,21 @@
     margin-top: 0px;
 }
 
-#left div p{
+#leftinner div p{
     font-family: verdana;
     font-size: 11px;
-    font-color: rgb(80, 80, 80);
+    color: rgb(80, 80, 80);
 }
 
+#footer {
+    height: 25px;
+    text-align: center;
+}
+
+#footer a{
+    font-family: arial;
+    font-size: 10px;
+}
 /*end bottom styling*/
 
 p.directions{
@@ -152,6 +192,45 @@ p.directions{
     font-size: 18px;
     color: rgb(60, 60, 60);
     clear: both;
-    margin: 0px 0 15px 0;
 }
 
+#left {
+    background-color: rgb(240, 240, 240);
+}
+
+#top, #footer{
+    background-color: rgb(210, 210, 210);
+}
+
+#top {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 100px;
+}
+
+body{
+    margin: 0;
+}
+
+#leftinner div p.buyme{
+    display: inline;
+    margin: 0;
+    font-family: arial;
+    font-size: 11px;
+    color: rgb(40, 40, 40);
+    font-weight: bold;
+}
+
+#leftinner div p.price{
+    font-family: arial;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(30, 30, 30);
+}
+
+#leftinner div p.price span.price{
+    font-family: verdana;
+    font-size: 10px;
+    color: rgb(120, 120, 120);
+    font-weight: normal;
+}

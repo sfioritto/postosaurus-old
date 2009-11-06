@@ -43,6 +43,7 @@
 
 #links{
     margin-left: 0px;
+    padding-left: 0px;
 }
 
 #leftinner{
@@ -198,8 +199,8 @@ p.directions{
     background-color: rgb(240, 240, 240);
 }
 
-#top, #footer{
-    background-color: rgb(210, 210, 210);
+#top{
+    background-color: rgb(153, 205, 223);
 }
 
 #top {
@@ -223,9 +224,9 @@ body{
 
 #leftinner div p.price{
     font-family: arial;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    color: rgb(30, 30, 30);
+    color: rgb(223, 126, 13);
 }
 
 #leftinner div p.price span.price{
@@ -233,4 +234,8 @@ body{
     font-size: 10px;
     color: rgb(120, 120, 120);
     font-weight: normal;
+}
+
+.descheight {
+    height: 220px;
 }

@@ -7,5 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     (r'^lists/create/$', 'webapp.postosaurus.views.create_list'),
+    (r'^outofspace/$', 'webapp.postosaurus.views.out_of_space'),
     (r'^thanks/$', 'webapp.postosaurus.views.list_created'),
 )

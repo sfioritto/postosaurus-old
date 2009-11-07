@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
 from django.utils.http import urlquote
 from webapp.postosaurus.models import *
+from postosaurus.models import MailingList
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -86,6 +87,7 @@ def create_list(request):
 
     return render_to_response('postosaurus/landing.html')
 
+
 def out_of_space(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -99,3 +101,15 @@ def out_of_space(request):
 
 def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
+
+
+def links(request, listid):
+    try:
+        listid = MailingList.objects.get(pk=listid)
+        linklist = listid.link_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/links.html', {'listid': listid, 'linklist': linklist})
+
+    
+

@@ -19,7 +19,7 @@
 }
 
 #left{
-    height: 725px;
+    height: 750px;
     float: left;
 }
 
@@ -244,5 +244,5 @@ body{
 }
 
 .descheight {
-    height: 220px;
+    height: 240px;
 }

@@ -1,0 +1,43 @@
+#center{
+    width: 600px;
+    margin-top: 25px;
+}
+
+#center, #footer{
+    margin-left: 250px;
+}
+
+a {
+    font-family: arial;
+    font-size: 12px;
+}
+#goback{
+    float: left;
+}
+
+#center h1{
+    font-weight: normal;
+    font-family: arial;
+    font-size: 16px;
+    font-color: rgb(40, 40, 40);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+#center p, li{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(80, 80, 80);
+}
+
+#footer {
+    padding-left: 200px;
+}
+
+#footer ul li{
+    display: inline;
+}
+
+#footer ul{
+    list-style: none;
+}

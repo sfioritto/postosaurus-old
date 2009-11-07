@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from app.model import mailinglist
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
-from django.utils.http import urlquote
 from webapp.postosaurus.models import *
 from postosaurus.models import MailingList
 

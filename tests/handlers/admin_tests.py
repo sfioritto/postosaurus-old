@@ -16,11 +16,13 @@ user = None
 
 
 def setup_func():
+    print 'setup'
     mlist = MailingList(name = list_name, email = list_addr)
     mlist.save()
 
 
 def teardown_func():
+    print 'teardown'
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()    
@@ -30,7 +32,6 @@ def subscribe_user(address):
     mlist = MailingList.objects.filter(email = list_addr)[0]
     mlist.save()
     sub_name, sub_addr = parseaddr(address)
-    print sub_addr
     user = mailinglist.create_user(sub_addr)
     mailinglist.add_if_not_subscriber(address, list_name)
 

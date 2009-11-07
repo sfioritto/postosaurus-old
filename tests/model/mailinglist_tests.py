@@ -23,7 +23,14 @@ def teardown_func():
     Subscription.objects.all().delete()
     User.objects.all().delete()    
 
+
+@with_setup(setup_func, teardown_func)
 def test_create_user():
+
+    """
+    Create a user.
+    """
+
     user = mailinglist.create_user(member)
     assert len(User.objects.all()) == 1
     user = mailinglist.create_user(member)
@@ -32,6 +39,9 @@ def test_create_user():
 
 @with_setup(setup_func, teardown_func)
 def test_add_if_not_subscribed():
+    """
+    Test add_if_not_subscribed.
+    """
     test_create_user()
     mailinglist.add_if_not_subscriber(member, list_name)
     subs = Subscription.objects.all()

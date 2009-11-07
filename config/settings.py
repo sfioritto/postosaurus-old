@@ -4,7 +4,7 @@ import os
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'webapp.settings'
 
-relay_config = {'host': 'localhost', 'port': 8025}
+relay_config = {'host': 'localhost', 'port': 8825}
 
 receiver_config = {'host': 'localhost', 'port': 8823}
 

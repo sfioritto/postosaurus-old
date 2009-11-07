@@ -6,6 +6,7 @@ from app.model import mailinglist
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
 from django.utils.http import urlquote
+from webapp.postosaurus.models import *
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -77,6 +78,8 @@ def create_list(request):
             links = form.cleaned_data['links']
             files = form.cleaned_data['files']
             tasks = form.cleaned_data['tasks']
+            aRequest = Request(email=email, links=links, files=files, tasks=tasks)
+            aRequest.save()
             return render_to_response('postosaurus/beta.html', {
                     'form' : form,
                     }, context_instance = RequestContext(request))
@@ -88,6 +91,9 @@ def out_of_space(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
+            betaRequest = BetaRequest(email=email)
+            betaRequest.save()
+
     return render_to_response('postosaurus/thanks.html')
 
 

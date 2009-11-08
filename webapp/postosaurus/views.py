@@ -105,10 +105,13 @@ def list_created(request):
 def links(request, listid):
     try:
         mlist = MailingList.objects.get(pk=listid)
-        links = mlist.url_set.all().order_by('-created_on')
+        links = mlist.link_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
-    return render_to_response('postosaurus/links.html', {'listid': mlist, 'linklist': links})
+    return render_to_response('postosaurus/links.html', {
+            'mlist': mlist, 
+            'links': links
+            }, context_instance = RequestContext(request))
 
     
 

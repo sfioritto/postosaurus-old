@@ -1,17 +1,17 @@
-<style>
-  body{
-  padding: 20px;
-}
+<head>
+<title>Links for {{ mlist.name }}</title>
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/links.css">
+</head>
 
-  p{
-  font-family: verdana;
-  font-size: 18px;
-}
-</style>
+<body>
 
-<p>
-  We'll let you know as soon as we open up more beta accounts!
-</p>
+<ul id="links">
+{% for link in links %}
+<li>{{ link.url }}</li>
+{% endfor %}
+</ul>
+
+
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -21,3 +21,4 @@ try {
 var pageTracker = _gat._getTracker("UA-8964246-2");
 pageTracker._trackPageview();
 } catch(err) {}</script>
+</body>

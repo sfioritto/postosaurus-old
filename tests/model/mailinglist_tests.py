@@ -1,12 +1,8 @@
-from lamson.testing import *
-from lamson import server
 from webapp.postosaurus.models import *
 from nose import with_setup
 from app.model import mailinglist
 
 
-relay = relay(port=8823)
-sender = "sender@sender.com"
 member = "member@member.com"
 host = "postosaurus.com"
 list_name = "test.list"

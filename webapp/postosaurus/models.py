@@ -41,8 +41,8 @@ class BetaRequest(models.Model):
 
             
 class Link(models.Model):
-    list = models.ForeignKey(MailingList)
-    link = models.CharField(max_length=512)
+    mlist = models.ForeignKey(MailingList)
+    url = models.CharField(max_length=2083)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

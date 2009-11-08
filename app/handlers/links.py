@@ -9,7 +9,7 @@ from lamson.routing import route, stateless
 def START(message, list_name=None, host=None):
     body = message.body()
     if body:
-        list_addr = "%s@%s" % (list_name, host)
-        urls = links.extract_urls(body)
+        urls = links.extract_urls_from_text(body)
+        links.add_link(list_name, None)
         for url in urls:
-            links.add_link(list_addr, url)
+            links.add_link(list_name, url)

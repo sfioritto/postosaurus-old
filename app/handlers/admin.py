@@ -2,7 +2,7 @@ import logging
 from lamson.routing import route, route_like, stateless
 from config.settings import relay
 from lamson import view
-from app.model import mailinglist
+from app.model import mailinglist, links
 from types import ListType
 from email.utils import parseaddr
 
@@ -31,8 +31,11 @@ def POSTING(message, list_name=None, host=None):
             mailinglist.create_user(address)
         mailinglist.add_if_not_subscriber(address, list_name)
 
+    list_addr = "%s@%s" % (list_name, host)
     if mailinglist.is_subscribed(message['from'], list_name):
-        mailinglist.post_message(relay, message, list_name, host, message['from'])
+        delivery = mailinglist.craft_response(message, list_name, list_addr) 
+        mailinglist.post_message(relay, delivery, message, list_name, host, message['from'])
+        links.enqueue(list_name, delivery)
     return POSTING
 
 

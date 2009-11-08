@@ -35,6 +35,7 @@ class Request(models.Model):
     files = models.BooleanField()
     tasks = models.BooleanField()
 
+
 class BetaRequest(models.Model):
     email = models.CharField(max_length=512)
 

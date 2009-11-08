@@ -1,4 +1,3 @@
-from lamson import queue
 from lamson.routing import route, stateless
 import logging
 

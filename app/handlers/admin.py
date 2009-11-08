@@ -12,7 +12,7 @@ def POSTING(message, list_name=None, host=None):
 
     """
     Takes a message and posts it to the rest of the group. If there
-    are multiple email addresses in the To field, those emails
+    are multiple email addresses in the To or CC field, those emails
     will be added to the list.
 
     We also ensure that they don't receive a duplicate of the
@@ -35,7 +35,7 @@ def POSTING(message, list_name=None, host=None):
     if mailinglist.is_subscribed(message['from'], list_name):
         delivery = mailinglist.craft_response(message, list_name, list_addr) 
         mailinglist.post_message(relay, delivery, message, list_name, host, message['from'])
-        links.enqueue(list_name, delivery)
+        links.enqueue(delivery)
     return POSTING
 
 

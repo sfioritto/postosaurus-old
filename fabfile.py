@@ -50,6 +50,7 @@ def switch(hash):
         sudo("ln -s %s/snapshots/%s/app /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/app" % (env.prodhome, hash))
         sudo("ln -s %s/snapshots/%s/webapp /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/webapp" % (env.prodhome, hash))
         sudo("ln -s %s/snapshots/%s/media /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/media" % (env.prodhome, hash))
+        sudo("ln -s %s/snapshots/%s/config /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/config" % (env.prodhome, hash))
     with cd(env.approot):
         run("cp webappsettings.py webapp/settings.py")
 

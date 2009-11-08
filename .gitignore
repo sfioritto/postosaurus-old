@@ -13,4 +13,4 @@ run/*.*
 logs/*.*
 .ropeproject/*.*
 *~
-settings.py
+webapp/settings.py

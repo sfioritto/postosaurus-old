@@ -27,7 +27,7 @@ def setup_func():
 def teardown_func():
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
-    User.objects.all().delete()    
+    User.objects.all().delete()
     Link.objects.all().delete()
 
 
@@ -45,7 +45,25 @@ def test_extract_urls_from_text():
     assert len(mlist.link_set.all()) == 2
     client.say(list_addr, "Add member to this list. www.postosaurus.com http://www.google.com")
     assert len(mlist.link_set.all()) == 3
+
+
+@with_setup(setup_func, teardown_func)
+def test_text_query_string():
+
+    """
+    Given a text email, extract urls with a query string.
+    """
     
+    client.begin()
+    client.say(list_addr, "Add member to this list. www.postosaurus.com/?test=123&herewego=now")
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    assert len(mlist.link_set.all()) == 1
+
+    client.say(list_addr, "Add member to this list. www.postosaurus.com/?test=123&herewego=now")
+    assert len(mlist.link_set.all()) == 1
+
+    client.say(list_addr, "Add member to this list. www.postosaurus.com/?test=123&herewego=thischanged")
+    assert len(mlist.link_set.all()) == 2
 
 
 

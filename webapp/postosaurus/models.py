@@ -46,5 +46,5 @@ class Link(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.link
+        return self.url
 

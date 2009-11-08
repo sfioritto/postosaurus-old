@@ -6,7 +6,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'webapp.settings'
 
 relay_config = {'host': 'localhost', 'port': 8825}
 
-receiver_config = {'host': 'localhost', 'port': 8823}
+receiver_config = {'host': 'localhost', 'port': 23}
 
 queue_config = {'queue' : 'run/links', 'sleep' : 10}
 

@@ -19,7 +19,7 @@ settings.receiver = SMTPReceiver(settings.receiver_config['host'],
 
 Router.defaults(**settings.router_defaults)
 Router.load(settings.handlers)
-Router.RELOAD=True
+Router.RELOAD=False
 Router.STATE_STORE=ShelveStorage("run/states")
 
 view.LOADER = jinja2.Environment(

@@ -16,13 +16,11 @@ user = None
 
 
 def setup_func():
-    print 'setup'
     mlist = MailingList(name = list_name, email = list_addr)
     mlist.save()
 
 
 def teardown_func():
-    print 'teardown'
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()    

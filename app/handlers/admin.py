@@ -33,9 +33,8 @@ def POSTING(message, list_name=None, host=None):
 
     list_addr = "%s@%s" % (list_name, host)
     if mailinglist.is_subscribed(message['from'], list_name):
-        delivery = mailinglist.craft_response(message, list_name, list_addr) 
-        mailinglist.post_message(relay, delivery, message, list_name, host, message['from'])
-        links.enqueue(delivery)
+        mailinglist.post_message(relay, message, list_name, host, message['from'])
+        links.enqueue(message)
     return POSTING
 
 

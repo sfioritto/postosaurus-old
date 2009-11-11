@@ -6,13 +6,17 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'webapp.settings'
 
 relay_config = {'host': 'localhost', 'port': 8825}
 
-receiver_config = {'host': 'localhost', 'port': 23}
+receiver_config = {'host': 'localhost', 'port': 25}
 
 queue_config = {'queue' : 'run/links', 'sleep' : 10}
+
+archive_config = {'queue' : 'run/archive', 'sleep' : 10}
 
 handlers = ['app.handlers.admin']
 
 queue_handlers = ['app.handlers.links']
+
+archive_handlers = ['app.handlers.archive']
 
 router_defaults = {'host': 'postosaurus\\.com',
     'list_name': '[a-zA-Z0-9\.]+',

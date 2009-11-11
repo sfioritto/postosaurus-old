@@ -18,7 +18,7 @@ settings.relay = Relay(host=settings.relay_config['host'],
 settings.receiver = None
 
 Router.defaults(**settings.router_defaults)
-Router.load(settings.handlers + settings.queue_handlers)
+Router.load(settings.handlers + settings.queue_handlers + settings.archive_handlers)
 Router.RELOAD=True
 Router.LOG_EXCEPTIONS=False
 

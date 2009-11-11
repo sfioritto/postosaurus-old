@@ -2,7 +2,7 @@ import logging
 from lamson.routing import route, route_like, stateless
 from config.settings import relay
 from lamson import view
-from app.model import mailinglist, links
+from app.model import mailinglist, links, archive
 from types import ListType
 from email.utils import parseaddr
 

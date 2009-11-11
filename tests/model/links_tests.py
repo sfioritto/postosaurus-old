@@ -29,6 +29,7 @@ def test_add_link():
     links.add_link(list_name, url)
     assert len(Link.objects.all()) == 1
 
+
 @with_setup(setup_func, teardown_func)
 def test_add_existing_link():
     

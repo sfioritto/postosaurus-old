@@ -15,8 +15,10 @@
 </ul>   
 
 <ul id="links">
-{% for link in links %} 
-      {% ifchanged %}<h3>{{ link.created_on|date:"F j, Y"}}</h3>{% endifchanged %}
+{% for link in links %}
+      {% ifchanged %}
+      <h3>{{ link.created_on|date:"F j, Y"}}</h3>
+      {% endifchanged %}
       <li>{{ link.url }}</li>
 {% endfor %}
 </ul>

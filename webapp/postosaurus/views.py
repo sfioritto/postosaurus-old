@@ -118,11 +118,11 @@ def links(request, listid, pagenum):
     try:
         mlist = MailingList.objects.get(pk=listid)
         pagenum = int(pagenum)
-        future = (pagenum - 1)*10
-        perpage = 20
-        links = mlist.link_set.all().order_by('-created_on')[future:20]
         prevpage = pagenum - 1
         nextpage = pagenum + 1
+        future = prevpage * 10
+        perpage = future + 10
+        links = mlist.link_set.all().order_by('-created_on')[future:perpage]
         if pagenum > 1:
             notfirstpage = True
         else:

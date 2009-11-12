@@ -5,6 +5,8 @@
 
 <body>
 
+<h1 id="listname">Links for {{ mlist.name }}</h1>
+
 <ul id="links">
 {% for link in links %}
    {% ifchanged %}<h3>{{ link.created_on|date:"F j, Y"}}</h3>{% endifchanged %}

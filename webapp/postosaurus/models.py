@@ -48,9 +48,9 @@ class Link(models.Model):
     def __unicode__(self):
         return self.url
 
-class Email(models.Model):
+class Message(models.Model):
     mlist = models.ForeignKey(MailingList)
-    user = models.ForeignKey(MailingList)
+    user = models.ForeignKey(User)
     subject = models.CharField(max_length=2083)
     text = models.CharField(max_length=40000)
     created_on = models.DateTimeField(auto_now_add=True)

@@ -113,5 +113,14 @@ def links(request, listid):
             'links': links
             }, context_instance = RequestContext(request))
 
-    
+def archive(request, listid):
+    try:
+        mlist = MailingList.objects.get(pk=listid)
+        messages = mlist.message_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/archive.html', {
+            'mlist': mlist,
+            'messages': messages
+            }, context_instance = RequestContext(request))
 

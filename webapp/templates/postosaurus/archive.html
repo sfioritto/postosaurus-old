@@ -1,14 +1,16 @@
 <head>
 <title>Archive for {{ mlist.name }}</title>
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/links.css">
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archive.css">
 </head>
 
 <body>
 
 <ul id="emails">
-{% for email in emails %}
-   {% ifchanged %}<h3>{{ email.created_on|date:"F j, Y"}}</h3>{% endifchanged %}
-   <li>{{ link.url }}</li>
+{% for message in messages %}
+   {% ifchanged %}<h3>{{ message.created_on|date:"F j, Y"}}</h3>{% endifchanged %}
+   <li>{{ message.user</li>
+   <li>{{ message.subject }}</li>
+   <li>{{ message.text }}</li>
 {% endfor %}
 </ul>
 

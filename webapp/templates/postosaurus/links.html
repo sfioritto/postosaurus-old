@@ -1,36 +1,47 @@
 <head>
 <title>Links for {{ mlist.name }}</title>
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css">
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
 </head>
 
 <body>
 
-<h1 id="listname">Links for {{ mlist.name }}</h1>
+<div id ="top"
+     <h1>Postosaurus</h1>
+     <h2>Run your project from your inbox</h2>
+</div>
 
-<ul id="datenav">
-{% if notfirstpage %}
-   <li><a href="{{prevpage}}"> Forward </a></li>
-{% endif %}
-   <li><a href="{{nextpage}}"> Backward </a></li>
-</ul>   
+  <div id="middle">
+    <div id="left">
+      <div id="leftinner">
 
-<ul id="links">
-{% for link in links %}
-      {% ifchanged %}
-      <h3>{{ link.created_on|date:"F j, Y"}}</h3>
-      {% endifchanged %}
-      <li>{{ link.url }}</li>
-{% endfor %}
-</ul>
+        <p class="directions">Links for {{ mlist.name }}</p>
 
+        <div id="linksnav">
+          {% if notfirstpage %}
+            <a href="{{prevpage}}"> Previous 10 Links </a></li> &nbsp;
+          {% endif %}
+          <a href="{{nextpage}}"> Next 10 Links </a></li>
+        </div>   
 
-<ul id="datenav">
-{% if notfirstpage %}
-   <li><a href="{{prevpage}}"> Forward </a></li>
-{% endif %}
-   <li><a href="{{nextpage}}"> Backward </a></li>
-</ul>
+        <ul id="links">
+          {% for link in links %}
+            {% ifchanged %}
+              <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
+            {% endifchanged %}
+            <li>{{ link.url }}</li>
+          {% endfor %}
+        </ul>
 
+        <div id="linksnav">
+          {% if notfirstpage %}
+            <a href="{{prevpage}}"> Previous 10 Links </a></li> &nbsp;
+          {% endif %}
+          <a href="{{nextpage}}"> Next 10 Links </a></li>
+        </div>          
+
+      </div>
+    </div>
+  </div>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

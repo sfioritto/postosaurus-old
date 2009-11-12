@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
 from webapp.postosaurus.models import *
 from postosaurus.models import MailingList
+import datetime
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -102,15 +103,39 @@ def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
-def links(request, listid):
+#def links(request, listid):
+#    try:
+#        mlist = MailingList.objects.get(pk=listid)
+#        links = mlist.link_set.all().order_by('-created_on')
+#    except ValueError:
+#        raise Http404()
+#    return render_to_response('postosaurus/links.html', {
+#            'mlist': mlist, 
+#            'links': links
+#            }, context_instance = RequestContext(request))
+
+def links(request, listid, pagenum):
     try:
         mlist = MailingList.objects.get(pk=listid)
-        links = mlist.link_set.all().order_by('-created_on')
+        pagenum = int(pagenum)
+        future = (pagenum - 1)*10
+        perpage = 20
+        links = mlist.link_set.all().order_by('-created_on')[future:20]
+        prevpage = pagenum - 1
+        nextpage = pagenum + 1
+        if pagenum > 1:
+            notfirstpage = True
+        else:
+            notfirstpage = False
     except ValueError:
         raise Http404()
     return render_to_response('postosaurus/links.html', {
             'mlist': mlist, 
-            'links': links
+            'links': links,
+            'pagenum': pagenum,
+            'prevpage': prevpage,
+            'nextpage': nextpage,
+            'notfirstpage': notfirstpage
             }, context_instance = RequestContext(request))
 
 def archive(request, listid):

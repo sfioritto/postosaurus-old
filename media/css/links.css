@@ -35,12 +35,6 @@
     margin-top: 30px;
 }
 
-.extras input{
-    margin: 0;
-    padding: 0;
-    display: inline;
-}
-
 #links{
     margin-left: 0px;
     padding-left: 0px;
@@ -55,30 +49,6 @@
     margin-left: 80px;
 }
 
-#inputs{
-    width: 385px;
-}
-
-#labels, #inputs{
-    float: left;
-    height: 110px;
-}
-
-#inputs input{
-    margin: 0;
-    float: left;
-    width: 250px;
-}
-
-#emaildomain{
-    float: left;
-    margin-left: 5px;
-    padding-top: 5px;
-}
-
-#examples{
-    clear: both;
-}
 
 /*end layout*/
 
@@ -108,54 +78,6 @@
 /*end top styling*/
 
 /*left styling*/
-#labels{
-    margin-right: 5px;
-}
-
-#labels label{
-    display: block;
-    text-align: right;
-    padding-top: 5px;
-}
-
-
-#leftinner div p{
-    font-family: verdana;
-    font-size: 11px;
-    color: rgb(80, 80, 80);
-}
-
-#labels label, #emaildomain, p#examples{
-    font-family: georgia;
-    font-size: 10px;
-    color: rgb(120, 120, 120);
-}
-
-
-#labels label, #inputs input{
-    height: 30px;
-    margin-top: 10px;
-}
-
-#inputs input{
-    font-family: georgia;
-    font-size: 12px;
-    color: rgb(60, 60, 60);
-}
-
-#files {
-    border-left: 1px solid grey;
-    border-right: 1px solid grey;
-}
-
-#submit{
-    margin-top: 10px;
-    clear: both;
-    display: block;
-    position: relative;
-    top: 30px;
-    padding: 10px;
-}
 
 /*end left styling*/
 
@@ -272,19 +194,3 @@ p {
     font-size: 16px;
     width: 350px;
 }
-form, p{
-    position: relative;
-    left: 25%;
-}
-
-form input{
-    margin-top: 10px;
-}
-
-form p{
-    display: none;
-}
-
-.italic{
-    font-style: italic;
-    font-weight: bold;

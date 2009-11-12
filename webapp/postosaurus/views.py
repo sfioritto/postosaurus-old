@@ -87,6 +87,12 @@ def create_list(request):
 
     return render_to_response('postosaurus/landing.html')
 
+def manage_list(request, listid):
+    try:
+        mlist = MailingList.objects.get(pk=listid)
+        subscribers = mlist.subscription_set.all()
+    except ValueError:
+        raise Http404()
 
 def out_of_space(request):
     if request.method == 'POST':
@@ -102,17 +108,6 @@ def out_of_space(request):
 def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
-
-#def links(request, listid):
-#    try:
-#        mlist = MailingList.objects.get(pk=listid)
-#        links = mlist.link_set.all().order_by('-created_on')
-#    except ValueError:
-#        raise Http404()
-#    return render_to_response('postosaurus/links.html', {
-#            'mlist': mlist, 
-#            'links': links
-#            }, context_instance = RequestContext(request))
 
 def links(request, listid, pagenum):
     try:

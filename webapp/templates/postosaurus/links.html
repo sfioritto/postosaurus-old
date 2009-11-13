@@ -1,24 +1,66 @@
 <head>
 <title>Links for {{ mlist.name }}</title>
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/links.css">
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
 </head>
 
 <body>
 
-<ul id="links">
-{% for link in links %}
-<li>{{ link.url }}</li>
-{% endfor %}
-</ul>
+{% include 'postosaurus/header.html' %}
 
+  <div id="middle">
+    <div id="left">
+      <div id="leftinner">
 
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-8964246-2");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+        <p class="directions">Links for {{ mlist.name }}</p>
+
+        <div class="pagination">
+	  <span class="step-links">
+	    {% if links.has_previous %}
+	      <a href="?page={{ links.previous_page_number }}">previous</a>
+	    {% endif %}
+	      
+	    <span class="current">
+	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
+	    </span>
+
+	    {% if links.has_next %}
+	      <a href="?page={{ links.next_page_number }}">next</a>
+	    {% endif %}
+	  </span>
+	</div>
+
+        <ul id="links">
+          {% for link in links.object_list %}
+            {% ifchanged %}
+              <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
+            {% endifchanged %}
+            <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
+          {% endfor %}
+        </ul>         
+
+	<div class="pagination">
+	  <span class="step-links">
+	    {% if links.has_previous %}
+	      <a href="?page={{ links.previous_page_number }}">previous</a>
+	    {% endif %}
+
+	    <span class="current">
+	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
+	    </span>
+
+	    {% if links.has_next %}
+	      <a href="?page={{ links.next_page_number }}">next</a>
+	    {% endif %}
+
+	  </span>
+	</div>       
+	
+      </div>
+    </div>
+  </div>
+
+ {% include 'postosaurus/footer.html' %}
+ {% include 'postosaurus/googscript.html' %}
 </body>

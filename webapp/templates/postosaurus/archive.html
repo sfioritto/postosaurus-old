@@ -1,0 +1,27 @@
+<head>
+<title>Archive for {{ mlist.name }}</title>
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archive.css">
+</head>
+
+<body>
+
+<ul id="emails">
+{% for message in messages %}
+   {% ifchanged %}<h3>{{ message.created_on|date:"F j, Y"}}</h3>{% endifchanged %}
+   <li>{{ message.user</li>
+   <li>{{ message.subject }}</li>
+   <li>{{ message.text }}</li>
+{% endfor %}
+</ul>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8964246-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>

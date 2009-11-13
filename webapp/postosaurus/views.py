@@ -5,8 +5,10 @@ from django.core.urlresolvers import reverse
 from app.model import mailinglist
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from webapp.postosaurus.models import *
 from postosaurus.models import MailingList
+import datetime
 
 class ListNameField(forms.Field):
     def clean(self, list_name):
@@ -83,9 +85,28 @@ def create_list(request):
             return render_to_response('postosaurus/beta.html', {
                     'form' : form,
                     }, context_instance = RequestContext(request))
-
     return render_to_response('postosaurus/landing.html')
 
+def delete_subscription(request, subid):
+    if request.method == 'POST':
+        subscriber = Subscription.objects.get(pk=subid)
+        mlist = subscriber.mailing_list
+        mlistpage = "/app/lists/" + str(mlist.pk) + "/manage/"
+        subscriber.delete()
+        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
+        return HttpResponseRedirect(mlistpage)
+        
+
+def manage_list(request, listid):
+    try:
+        mlist = MailingList.objects.get(pk=listid)
+        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/manage.html', {
+            'mlist': mlist,
+            'subscribers': subscribers
+            }, context_instance = RequestContext(request))
 
 def out_of_space(request):
     if request.method == 'POST':
@@ -94,7 +115,6 @@ def out_of_space(request):
             email = form.cleaned_data['email']
             betaRequest = BetaRequest(email=email)
             betaRequest.save()
-
     return render_to_response('postosaurus/thanks.html')
 
 
@@ -102,10 +122,20 @@ def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
-def links(request, listid):
+def links(request, listid, pagenum):
     try:
         mlist = MailingList.objects.get(pk=listid)
-        links = mlist.link_set.all().order_by('-created_on')
+        links_list = mlist.link_set.all().order_by('-created_on')
+        paginator = Paginator(links_list, 20) #sets links per page
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+        try:
+            links = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            links = paginator.page(paginator.num_pages)
+            
     except ValueError:
         raise Http404()
     return render_to_response('postosaurus/links.html', {
@@ -113,5 +143,14 @@ def links(request, listid):
             'links': links
             }, context_instance = RequestContext(request))
 
-    
+def archive(request, listid):
+    try:
+        mlist = MailingList.objects.get(pk=listid)
+        messages = mlist.message_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/archive.html', {
+            'mlist': mlist,
+            'messages': messages
+            }, context_instance = RequestContext(request))
 

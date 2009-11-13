@@ -17,7 +17,7 @@ DATABASE_HOST = ''             # Set to empty string for localhost. Not used wit
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 #Email settings. Change for production.
-EMAIL_PORT = 8825
+EMAIL_PORT = 1025
 EMAIL_HOST = "localhost"
 
 # Local time zone for this installation. Choices can be found here:
@@ -39,13 +39,12 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-# MEDIA_ROOT = '/home/sean/deploy/postosaurus/media'
-MEDIA_ROOT = '/site_media/'
+MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/site_media/'
+MEDIA_URL = ''
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -54,10 +53,6 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '^!avj&_tjd3+bcgshqdf&(f_utqim(j^p@n(fa38xpyog)7vf3'
-
-# Context processors
-TEMPLATE_CONTEXT_PROCESSORS = ('webapp.contextprocessors.media_url', 
-                               'django.core.context_processors.auth', )
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

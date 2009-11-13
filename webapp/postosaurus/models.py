@@ -47,6 +47,9 @@ class Link(models.Model):
 
     def __unicode__(self):
         return self.url
+    def cleaned(self):
+        return self.url
+    
 
 class Message(models.Model):
     mlist = models.ForeignKey(MailingList)

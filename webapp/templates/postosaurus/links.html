@@ -1,14 +1,13 @@
 <head>
 <title>Links for {{ mlist.name }}</title>
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
 </head>
 
 <body>
 
-<div id ="top"
-     <h1>Postosaurus</h1>
-     <h2>Run your project from your inbox</h2>
-</div>
+{% include 'postosaurus/header.html' %}
 
   <div id="middle">
     <div id="left">
@@ -16,39 +15,52 @@
 
         <p class="directions">Links for {{ mlist.name }}</p>
 
-        <div id="linksnav">
-          {% if notfirstpage %}
-            <a href="{{prevpage}}"> Previous 10 Links </a></li> &nbsp;
-          {% endif %}
-          <a href="{{nextpage}}"> Next 10 Links </a></li>
-        </div>   
+        <div class="pagination">
+	  <span class="step-links">
+	    {% if links.has_previous %}
+	      <a href="?page={{ links.previous_page_number }}">previous</a>
+	    {% endif %}
+	      
+	    <span class="current">
+	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
+	    </span>
+
+	    {% if links.has_next %}
+	      <a href="?page={{ links.next_page_number }}">next</a>
+	    {% endif %}
+	  </span>
+	</div>
 
         <ul id="links">
-          {% for link in links %}
+          {% for link in links.object_list %}
             {% ifchanged %}
               <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
             {% endifchanged %}
-            <li>{{ link.url }}</li>
+            <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
           {% endfor %}
-        </ul>
+        </ul>         
 
-        <div id="linksnav">
-          {% if notfirstpage %}
-            <a href="{{prevpage}}"> Previous 10 Links </a></li> &nbsp;
-          {% endif %}
-          <a href="{{nextpage}}"> Next 10 Links </a></li>
-        </div>          
+	<div class="pagination">
+	  <span class="step-links">
+	    {% if links.has_previous %}
+	      <a href="?page={{ links.previous_page_number }}">previous</a>
+	    {% endif %}
 
+	    <span class="current">
+	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
+	    </span>
+
+	    {% if links.has_next %}
+	      <a href="?page={{ links.next_page_number }}">next</a>
+	    {% endif %}
+
+	  </span>
+	</div>       
+	
       </div>
     </div>
   </div>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-8964246-2");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+
+ {% include 'postosaurus/footer.html' %}
+ {% include 'postosaurus/googscript.html' %}
 </body>

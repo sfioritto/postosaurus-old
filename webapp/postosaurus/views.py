@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from app.model import mailinglist
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from webapp.postosaurus.models import *
 from postosaurus.models import MailingList
 import datetime
@@ -124,25 +125,22 @@ def list_created(request):
 def links(request, listid, pagenum):
     try:
         mlist = MailingList.objects.get(pk=listid)
-        pagenum = int(pagenum)
-        prevpage = pagenum - 1
-        nextpage = pagenum + 1
-        future = prevpage * 10
-        perpage = future + 10
-        links = mlist.link_set.all().order_by('-created_on')[future:perpage]
-        if pagenum > 1:
-            notfirstpage = True
-        else:
-            notfirstpage = False
+        links_list = mlist.link_set.all().order_by('-created_on')
+        paginator = Paginator(links_list, 20) #sets links per page
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+        try:
+            links = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            links = paginator.page(paginator.num_pages)
+            
     except ValueError:
         raise Http404()
     return render_to_response('postosaurus/links.html', {
             'mlist': mlist, 
-            'links': links,
-            'pagenum': pagenum,
-            'prevpage': prevpage,
-            'nextpage': nextpage,
-            'notfirstpage': notfirstpage
+            'links': links
             }, context_instance = RequestContext(request))
 
 def archive(request, listid):

@@ -1,0 +1,37 @@
+<head>
+<title>{{ user }} Account Page</title>
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/userprofile.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
+</head>
+
+<body>
+
+{% include 'postosaurus/header.html' %}
+
+  <div id="middle">
+    <div id="left">
+      <div id="leftinner">
+
+        <p class="directions">{{ user }}</p>
+
+        <ul id="links">
+          <li>{{ user }}</li>            
+        </ul>
+
+	{% for subscription in subscriptions %}
+          <li>{{ subscription.mailing_list }} {{ subscription.mailing_list.pk }} {{subscription.pk}} {{ user.pk }}
+	    <form name="delete" action="/app/subscribers/{{subscription.pk}}/remove/user/{{user.pk}}" method="POST"> 
+	      <input type="submit"  value="Remove" /> 	      
+            </form>
+	  </li>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+ {% include 'postosaurus/footer.html' %}
+ {% include 'postosaurus/googscript.html' %}
+
+</body>

@@ -72,6 +72,7 @@ class SignupForm(forms.Form):
     files = forms.BooleanField(required=False)
     tasks = forms.BooleanField(required=False)
 
+
 def create_list(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -95,7 +96,16 @@ def delete_subscription(request, subid):
         subscriber.delete()
         subscribers = mlist.subscription_set.all().order_by('-user').reverse()
         return HttpResponseRedirect(mlistpage)
-        
+
+def user_delete_subscription(request, subid, userid):
+    if request.method == 'POST':
+        subscriber = Subscription.objects.get(pk=subid)
+        userid = userid
+        userpage = "/app/users/" + str(userid) + "/account/"
+        subscriber.delete()
+        user = User.objects.get(pk=userid)
+        subscriptions = user.subscription_set.all()
+        return HttpResponseRedirect(userpage)
 
 def manage_list(request, listid):
     try:
@@ -154,3 +164,13 @@ def archive(request, listid):
             'messages': messages
             }, context_instance = RequestContext(request))
 
+def userprofile(request, userid):
+    try:
+        user = User.objects.get(pk=userid)
+        subscriptions = user.subscription_set.all()
+    except ValueError:
+        raise Http404()
+    return render_to_response('postosaurus/userprofile.html', {
+            'user': user,
+            'subscriptions': subscriptions
+            }, context_instance = RequestContext(request))

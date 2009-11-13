@@ -5,6 +5,8 @@ import base64
 import hashlib
 from datetime import datetime
 from types import ListType
+from webapp.postosaurus.models import Message
+from app.model import mailinglist
 
 archive = pytyrant.PyTyrant.open('127.0.0.1', 1978)
 
@@ -52,51 +54,14 @@ def to_json(base):
     return json.dumps(json_build(base), sort_keys=True)
 
 
-def message_key(message):
-    return hashlib.sha1(str(message)).hexdigest()
-
-
-def day_messages_key(list_addr, year, month, day):
-
-    """
-    Returns the key used to store the message keys
-    by day.
-    """
-
-    return list_addr + "/" + _day_string(year, month, day)
-
-
-def _day_string(year, month, day):
-    
-    return "/".join([str(n) for n in [year, month, day]])
-
-
 def messages_by_day(list_addr, year, month, day):
 
     """
-    Returns all message for the given list and day.
+    Returns all messages for the given list and day.
     """
-    key = day_messages_key(list_addr, year, month, day)
-    return json.loads(archive[key])
-
-
-def add_message_to_day(key, list_addr, year, month, day):
-
-    """
-    adds the given key to the 
-    """
+    #todo write some django model query here.
+    pass
     
-    daykey = day_messages_key(list_addr, year, month, day)
-
-    try:
-        messages = json.loads(archive[daykey])
-    except KeyError:
-        messages = []
-
-    if key not in messages:
-        messages.append(key)
-        archive[daykey] = json.dumps(messages)
-
 
 def get_message(messagekey):
 
@@ -118,37 +83,7 @@ def get_messages(keys):
     return [json.loads(message) for message in archive.multi_get(keys)]
 
 
-def list_active_days(list_addr):
-    
-    """
-    Returns all the days that have messages for the given group.
-    """
-
-    return json.loads(archive[list_addr])
-
-
-def add_day(list_addr, year, month, day):
-
-    """
-    Adds a day to the list of active days for this list. Active
-    days are days where a message was sent.
-    """
-
-    key = day_messages_key(list_addr, year, month, day)
-
-    try:
-        days = json.loads(archive[list_addr])
-    except KeyError:
-        days = []
-
-    if key not in [key for list_addr, year, month, day, key in days]:
-        days.append((list_addr, year, month, day, key))
-        archive[list_addr] = json.dumps(days)
-
-
-
-
-def store_message(list_addr, message, year=None, month=None, day=None):
+def store_message(list_name, message):
 
     """
     Creates entries in key value store so a message can be
@@ -160,14 +95,10 @@ def store_message(list_addr, message, year=None, month=None, day=None):
     be archived using this function.
     """
 
-    key = message_key(message)
-    
-    # This is only true for testing.
-    if not year:
-        year, month, day = datetime.utcnow().timetuple()[:3]
-
-    add_day(list_addr, year, month, day)
-    add_message_to_day(key, list_addr, year, month, day)
+    mlist = mailinglist.find_list(list_name)
+    dbmessage = Message(mlist=mlist, subject=message['Subject'])
+    dbmessage.save()
     mjson = to_json(message.base)
-    archive[key] = mjson
+    archive[str(dbmessage.id)] = mjson
+    return dbmessage
     

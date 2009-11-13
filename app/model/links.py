@@ -13,10 +13,10 @@ def enqueue(message):
     links_q.push(message)
 
 
-def add_link(list_name, url):
+def add_link(list_name, url, message):
     mlist = mailinglist.find_list(list_name)
     if not_added(mlist, url):
-        link = Link(mlist=mlist, url=url)
+        link = Link(mlist=mlist, url=url, message=message)
         link.save()
 
 

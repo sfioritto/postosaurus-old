@@ -39,12 +39,22 @@ class Request(models.Model):
 class BetaRequest(models.Model):
     email = models.CharField(max_length=512)
 
+
+class Message(models.Model):
+
+    subject = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    mlist = models.ForeignKey(MailingList)
+
+    def __unicode__(self):
+        return str(self.id)
+
             
 class Link(models.Model):
     mlist = models.ForeignKey(MailingList)
+    message = models.ForeignKey(Message)
     url = models.CharField(max_length=2083)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.url
-

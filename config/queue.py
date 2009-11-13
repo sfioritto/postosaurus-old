@@ -13,12 +13,12 @@ settings.relay = Relay(host=settings.relay_config['host'],
                        port=settings.relay_config['port'], debug=1)
 
 # where to listen for incoming messages
-settings.receiver = QueueReceiver(settings.archive_config['queue'],
-                                 settings.archive_config['sleep'])
+settings.receiver = QueueReceiver(settings.queue_config['queue'],
+                                 settings.queue_config['sleep'])
 
 Router.defaults(**settings.router_defaults)
-Router.load(settings.archive_handlers)
-Router.RELOAD=True
+Router.load(settings.queue_handlers)
+Router.RELOAD=False
 
 view.LOADER = jinja2.Environment(
     loader=jinja2.PackageLoader(settings.template_config['dir'], 

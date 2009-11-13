@@ -12,10 +12,13 @@ url = "http://www.postosaurus.com"
 def setup_func():
     mlist = MailingList(name = list_name, email = list_addr)
     mlist.save()
+    message = Message(mlist=mlist)
+    message.save()
 
 
 def teardown_func():
     MailingList.objects.all().delete()
+    Message.objects.all().delete()
     Link.objects.all().delete()
 
     
@@ -25,8 +28,10 @@ def test_add_link():
     """
     Add a link.
     """
-
-    links.add_link(list_name, url)
+    
+    mlist = mailinglist.find_list(list_name)
+    message = Message.objects.filter(mlist=mlist).all()[0]
+    links.add_link(list_name, url, message)
     assert len(Link.objects.all()) == 1
 
 
@@ -39,7 +44,9 @@ def test_add_existing_link():
 
     test_add_link()
     assert len(Link.objects.all()) == 1
-    links.add_link(list_name, url)
+    mlist = mailinglist.find_list(list_name)
+    message = Message.objects.filter(mlist=mlist).all()[0]
+    links.add_link(list_name, url, message)
     assert len(Link.objects.all()) == 1
 
 

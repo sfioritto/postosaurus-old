@@ -84,15 +84,28 @@ def create_list(request):
             return render_to_response('postosaurus/beta.html', {
                     'form' : form,
                     }, context_instance = RequestContext(request))
-
     return render_to_response('postosaurus/landing.html')
+
+def delete_subscription(request, subid):
+    if request.method == 'POST':
+        subscriber = Subscription.objects.get(pk=subid)
+        mlist = subscriber.mailing_list
+        mlistpage = "/app/lists/" + str(mlist.pk) + "/manage/"
+        subscriber.delete()
+        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
+        return HttpResponseRedirect(mlistpage)
+        
 
 def manage_list(request, listid):
     try:
         mlist = MailingList.objects.get(pk=listid)
-        subscribers = mlist.subscription_set.all()
+        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
     except ValueError:
         raise Http404()
+    return render_to_response('postosaurus/manage.html', {
+            'mlist': mlist,
+            'subscribers': subscribers
+            }, context_instance = RequestContext(request))
 
 def out_of_space(request):
     if request.method == 'POST':
@@ -101,7 +114,6 @@ def out_of_space(request):
             email = form.cleaned_data['email']
             betaRequest = BetaRequest(email=email)
             betaRequest.save()
-
     return render_to_response('postosaurus/thanks.html')
 
 

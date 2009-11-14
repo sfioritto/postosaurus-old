@@ -65,6 +65,7 @@ def index(request):
 #         'form': form,
 #     }, context_instance = RequestContext(request))
 
+
 class SignupForm(forms.Form):
     email = forms.CharField(required=False)
     groupname = forms.CharField(required=False)
@@ -87,6 +88,7 @@ def create_list(request):
                     'form' : form,
                     }, context_instance = RequestContext(request))
     return render_to_response('postosaurus/landing.html')
+
 
 def delete_subscription(request, subid):
     if request.method == 'POST':
@@ -116,6 +118,7 @@ def manage_list(request, listid):
             'mlist': mlist,
             'subscribers': subscribers
             }, context_instance = RequestContext(request))
+
 
 def out_of_space(request):
     if request.method == 'POST':
@@ -151,6 +154,7 @@ def links(request, listid, pagenum):
             'mlist': mlist, 
             'links': links
             }, context_instance = RequestContext(request))
+
 
 def archive(request, listid):
     try:

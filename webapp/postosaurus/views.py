@@ -11,6 +11,15 @@ from postosaurus.models import MailingList
 import datetime
 
 
+
+class SignupForm(forms.Form):
+    email = forms.CharField(required=False)
+    groupname = forms.CharField(required=False)
+    links= forms.BooleanField(required=False)
+    files = forms.BooleanField(required=False)
+    tasks = forms.BooleanField(required=False)
+
+
 class ListNameField(forms.Field):
 
     def clean(self, list_name):
@@ -72,14 +81,6 @@ def index(request):
 #     }, context_instance = RequestContext(request))
 
 
-class SignupForm(forms.Form):
-    email = forms.CharField(required=False)
-    groupname = forms.CharField(required=False)
-    links= forms.BooleanField(required=False)
-    files = forms.BooleanField(required=False)
-    tasks = forms.BooleanField(required=False)
-
-
 def create_list(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -97,11 +98,15 @@ def create_list(request):
 
 
 def members(request, listname):
+    mlist = mailinglist.find_list(listname)
+    subscriptions = mlist.subscription_set.all()
     if request.method == 'POST':
-        subscriber = Subscription.objects.get(mailing_list__name = listname) #is this right?
-        subscriber.delete()
-        
-        return HttpResponseRedirect(mlistpage)
+        print request.POST.keys()
+        form = forms.Form(request.POST)
+        return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
+#        return HttpResponseRedirect(mlistpage)
+    else:
+        return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
 
 
 def out_of_space(request):
@@ -162,7 +167,7 @@ def archive_by_day(request, year, month, day):
     pass
 
 
-def user_profile(request, useremail):
+def user_main(request, useremail):
 
     try:
         user = User.objects.get(pk=useremail)
@@ -170,7 +175,4 @@ def user_profile(request, useremail):
     except ValueError:
         raise Http404()
 
-    return render_to_response('postosaurus/userprofile.html', {
-            'user': user,
-            'subscriptions': subscriptions
-            }, context_instance = RequestContext(request))
+    return render_to_response('postosaurus/usermain.html', locals(), context_instance = RequestContext(request))

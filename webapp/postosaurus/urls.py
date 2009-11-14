@@ -10,7 +10,7 @@ urlpatterns = patterns(
     (r'^lists/(?P<listname>.+)/members/$', 'webapp.postosaurus.views.members'),
     (r'^lists/(?P<listname>.+)/archive/$', 'webapp.postosaurus.views.archive'),
     (r'^lists/create/$', 'webapp.postosaurus.views.create_list'),
-    (r'^users/(?P<useremail>.+)/', 'webapp.postosaurus.views.user_profile'),
+    (r'^users/(?P<useremail>.+)/', 'webapp.postosaurus.views.user_main'),
     (r'^outofspace/$', 'webapp.postosaurus.views.out_of_space'),
     (r'^thanks/$', 'webapp.postosaurus.views.list_created'),
 )

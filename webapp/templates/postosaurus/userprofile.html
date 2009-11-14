@@ -13,19 +13,21 @@
     <div id="left">
       <div id="leftinner">
 
-        <p class="directions">{{ user }}</p>
-
-        <ul id="links">
-          <li>{{ user }}</li>            
-        </ul>
-
-	{% for subscription in subscriptions %}
-          <li>{{ subscription.mailing_list }} {{ subscription.mailing_list.pk }} {{subscription.pk}} {{ user.pk }}
+        <h1>{{ user }}'s Lists</h1>
+        
+	<ul id="subscriptions">   
+	 {% for subscription in subscriptions %}
+	   <p>{{ subscription.mailing_list }}</p>
+	   <li>
+            <a href="/app/lists/{{subscription.mailing_list.pk}}/manage/"> Manage List </a> |
+	    <a href="/app/lists/{{subscription.mailing_list.pk}}/links/1/"> List Links </a> |
+	    <a href="/app/lists/{{subscription.mailing_list.pk}}/archive/1/"> List Archive </a>
 	    <form name="delete" action="/app/subscribers/{{subscription.pk}}/remove/user/{{user.pk}}" method="POST"> 
-	      <input type="submit"  value="Remove" /> 	      
+	      <input type="submit"  value="Quit List" /> 	      
             </form>
-	  </li>
+	   </li>
         {% endfor %}
+       </ul>
 
       </div>
     </div>

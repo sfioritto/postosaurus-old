@@ -1,0 +1,128 @@
+/*start layout*/
+
+#leftinner, #right{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    float: left;
+}
+
+#leftinner{
+    width: 750px;
+}
+
+#left{
+    float: left;
+}
+
+#right{
+    width: 200px;
+}
+
+.extras{
+    float: left;
+    width: 200px;
+    margin-left: 5px;
+    padding: 0px 20px;
+    margin-top: 30px;
+}
+
+#subscriptions{
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+ul#subscriptions{
+    list-style-type: none;
+}
+
+#subscriptions li{
+    font-family: verdana;
+    font-size: 14px;
+}
+
+#leftinner{
+    margin-left: 80px;
+}
+
+
+/*end layout*/
+
+/*right styling*/
+
+#right h1{
+    font-family: georgia;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgb(100, 100, 100);
+    margin-top: 40px;
+}
+
+#right {
+    padding-left: 30px;
+}
+/*end right styling*/
+    
+
+p.directions{
+    font-family: verdana;
+    font-size: 22px;
+    color: rgb(20, 20, 20);
+    clear: both;
+}
+
+p.date{
+    font-family: verdana;
+    font-size: 18px;
+    color: rgb(60, 60, 60);
+    clear: both;
+}
+
+
+
+#pagination {
+    font-family: arial;
+    font-size: 20px;
+    color: rgb(60, 60, 200);
+}
+
+#left {
+    background-color: rgb(240, 240, 240);
+}
+
+body{
+    margin: 0;
+}
+
+#leftinner div p.buyme{
+    display: inline;
+    margin: 0;
+    font-family: arial;
+    font-size: 11px;
+    color: rgb(40, 40, 40);
+    font-weight: bold;
+}
+
+#leftinner div p.price{
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(223, 126, 13);
+}
+
+#leftinner div p.price span.price{
+    font-family: verdana;
+    font-size: 10px;
+    color: rgb(120, 120, 120);
+    font-weight: normal;
+}
+
+.descheight {
+    height: 240px;
+
+
+p {
+    font-family: verdana;
+    font-size: 16px;
+    width: 350px;
+}
+

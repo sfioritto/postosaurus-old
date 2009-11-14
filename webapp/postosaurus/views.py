@@ -101,7 +101,7 @@ def user_delete_subscription(request, subid, userid):
     if request.method == 'POST':
         subscriber = Subscription.objects.get(pk=subid)
         userid = userid
-        userpage = "/app/users/" + str(userid) + "/account/"
+        userpage = "postosaurus/users/" + str(userid) + "/account/"
         subscriber.delete()
         user = User.objects.get(pk=userid)
         subscriptions = user.subscription_set.all()

@@ -6,13 +6,11 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    (r'^lists/(?P<listid>\d+)/links/(?P<pagenum>\d+)/$', 'webapp.postosaurus.views.links'),
-    (r'^lists/(?P<listid>\d+)/manage/$', 'webapp.postosaurus.views.manage_list'),
-    (r'^subscribers/(?P<subid>\d+)/remove/manager/$', 'webapp.postosaurus.views.delete_subscription'),
-    (r'^subscribers/(?P<subid>\d+)/remove/user/(?P<userid>\d+)/$', 'webapp.postosaurus.views.user_delete_subscription'),
-    (r'^lists/(?P<listid>\d+)/archive/$', 'webapp.postosaurus.views.archive'),
+    (r'^lists/(?P<listname>.+)/links/$', 'webapp.postosaurus.views.links'),
+    (r'^lists/(?P<listname>.+)/members/$', 'webapp.postosaurus.views.members'),
+    (r'^lists/(?P<listname>.+)/archive/$', 'webapp.postosaurus.views.archive'),
     (r'^lists/create/$', 'webapp.postosaurus.views.create_list'),
-    (r'^users/(?P<userid>.+)/account', 'webapp.postosaurus.views.userprofile'),
+    (r'^users/(?P<useremail>.+)/', 'webapp.postosaurus.views.user_main'),
     (r'^outofspace/$', 'webapp.postosaurus.views.out_of_space'),
     (r'^thanks/$', 'webapp.postosaurus.views.list_created'),
 )

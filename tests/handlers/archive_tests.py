@@ -1,9 +1,13 @@
 from lamson.testing import *
+from lamson.mail import MailRequest
+from lamson.routing import Router
 from lamson import server
 from webapp.postosaurus.models import *
 from nose import with_setup
 from email.utils import parseaddr
-from app.model import mailinglist
+from app.model import mailinglist, archive
+from app.model.archive import archive as arch
+import simplejson as json
 
 
 sender = "send <sender@sender.com>"
@@ -46,3 +50,31 @@ def test_archive_message():
     client.say(list_addr, "Add member to this list. www.postosaurus.com http://www.google.com")
     assert len(mlist.message_set.all()) == 2
 
+
+@with_setup(setup_func, teardown_func)
+def test_complicated_archive_message():
+    msg = MailRequest('fakeperr', sender, list_addr, open("tests/archive.msg").read())
+    Router.deliver(msg)
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    messageid = mlist.message_set.all()[0].id
+    jsmsg = json.loads(arch[str(messageid)])
+    assert jsmsg['body'] == None
+    assert len(jsmsg['parts']) == 2
+    assert 'opted' in jsmsg['parts'][0]['body']
+    assert len(mlist.message_set.all()) == 1
+    
+
+def test_to_json():
+    msg = MailRequest('fakeperr', None, None, open("tests/bounce.msg").read())
+
+    resp = mailinglist.craft_response(msg, 'test.list', 'test.list@librelist.com')
+
+    resp.attach(filename="tests/bounce.msg", content_type="image/png", disposition="attachment")
+    resp.to_message() 
+
+    js = archive.to_json(resp.base)
+    assert js
+
+    rtjs = json.loads(js)
+    assert rtjs
+    assert rtjs['parts'][-1]['encoding']['format'] == 'base64'

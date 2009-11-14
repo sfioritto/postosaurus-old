@@ -1,0 +1,30 @@
+#top, middle, footer{
+    width: 750px;
+}
+
+h1{
+    font-family: georgia;
+    font-size: 20px;
+    color: rgb(40, 40, 40);
+}
+
+p{
+    font-family: verdana;
+    font-size: 14px;
+    color: rgb(100, 100, 100);
+}
+
+li p{
+    font-family: verdana;
+    font-size: 12px;
+    color: black;
+}
+
+#middle{
+    min-height: 500px;
+    margin-left: 30px;
+}
+
+body{
+    margin: 0;
+}

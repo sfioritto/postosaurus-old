@@ -3,16 +3,6 @@ import lamson.queue as queue
 from webapp.postosaurus.models import *
 from app.model import mailinglist
 
-
-def enqueue(message):
-    """
-    Message is the final version of the email sent
-    to the entire group.
-    """
-    links_q = queue.Queue("run/links")
-    links_q.push(message)
-
-
 def add_link(list_name, url, message):
     mlist = mailinglist.find_list(list_name)
     if not_added(mlist, url):

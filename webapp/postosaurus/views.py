@@ -47,9 +47,17 @@ class MailingListForm(forms.Form):
 
 
 def index(request):
-    return render_to_response("postosaurus/signup.html", {
-            'form' : MailingListForm()
+    return render_to_response("postosaurus/landing.html", {
+            #Change to "postosaurus/signup.html" when going to A/B tests"
+            'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
+
+def signup(request):
+    #Remove after changing index
+    return render_to_response("postosaurus/signup.html", {
+            'form' : MailingListForm(),
+            }, context_instance = RequestContext(request))
+
 
 def landing(request, number):
     number = str(number)

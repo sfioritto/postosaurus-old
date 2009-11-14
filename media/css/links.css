@@ -1,82 +1,20 @@
-/*start layout*/
-
-#leftinner, #right{
-    margin-top: 30px;
-    margin-bottom: 30px;
-    float: left;
-}
-
-#leftinner{
-    width: 750px;
-}
-
-#left{
-    float: left;
-}
-
-#right{
-    width: 200px;
-}
-
-.extras{
-    float: left;
-    width: 200px;
-    margin-left: 5px;
-    padding: 0px 20px;
-    margin-top: 30px;
-}
-
-#links{
+#linkslist{
     margin-left: 0px;
     padding-left: 0px;
-}
-
-ul#links{
     list-style-type: none;
 }
 
-#links li{
+#linkslist li{
     font-family: verdana;
     font-size: 14px;
     margin-top: 5px;
     margin-left: 10px;
 }
 
-#leftinner{
-    margin-left: 80px;
-}
-
-
-/*end layout*/
-
-/*right styling*/
-
-#right h1{
-    font-family: georgia;
-    font-weight: normal;
-    font-size: 16px;
-    color: rgb(100, 100, 100);
-    margin-top: 40px;
-}
-
-#right {
-    padding-left: 30px;
-}
-/*end right styling*/
-
-
-p.directions{
-    font-family: verdana;
-    font-size: 22px;
-    color: rgb(20, 20, 20);
-    clear: both;
-}
-
 p.date{
     font-family: verdana;
-    font-size: 18px;
+    font-size: 14px;
     color: rgb(60, 60, 60);
-    clear: both;
 }
 
 .pagination p{
@@ -89,11 +27,6 @@ p.date{
     color: rgb(100, 100, 100);
 }
 
-body{
-    margin: 0;
-}
 
-.descheight {
-    height: 240px;
 
 

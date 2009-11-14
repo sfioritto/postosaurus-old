@@ -7,28 +7,47 @@
 
 <body>
 
+<div id ="top">
 {% include 'postosaurus/header.html' %}
+</div>
 
   <div id="middle">
-    <div id="left">
-      <div id="leftinner">
-	<ul id="lists">   
-	 {% for subscription in subscriptions %}
-	   <p>Pages for list "{{ subscription.mailing_list }}":</p>
-	   <li>
-            <a href="/app/lists/{{subscription.mailing_list.pk}}/manage/"> List Members </a> |
-	    <a href="/app/lists/{{subscription.mailing_list.pk}}/links/1/"> List Links </a> |
-	    <a href="/app/lists/{{subscription.mailing_list.pk}}/archive/1/"> List Archive </a>
-	    <br><br>
-	    <form name="delete" action="/app/subscribers/{{subscription.pk}}/remove/user/{{user.pk}}/" method="POST"> 
-	      <input type="submit"  value="Quit List" /> 	      
-            </form>
-	   </li>
-        {% endfor %}
-       </ul>
-
-      </div>
+    <p id="description">
+      These are your Postosaurus lists.
+    </p>
+    <ul id="lists">   
+      {% for subscription in subscriptions %}
+      <li>
+	<p class="listname">{{ subscription.mailing_list.email }}</p>
+        <a href="{% url webapp.postosaurus.views.members listname=subscription.mailing_list.name %}">Members</a>
+	<a href="{% url webapp.postosaurus.views.archive listname=subscription.mailing_list.name %}">Archive</a>
+	<a href="{% url webapp.postosaurus.views.links listname=subscription.mailing_list.name %}">Links</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="instructions">
+      <ul class="instructions">
+	<li>
+	  <p class="top">What do I do next?</p>
+	</li>
+	<li>
+	  <p class="top">Members</p>
+	  <p class="bottom">The members link will show you all the members in the list.</p>
+	</li>
+	<li>
+	  <p class="top">Archive</p>
+	  <p class="bottom">The archive link will take you to a searchable archive of all emails sent to this list.</p>
+	</li>
+	<li>
+	  <p class="top">Links</p>
+	  <p class="bottom">
+	    If you click on "links" you will see every URL sent to this list. Postosaurus remembers them
+	    and stores them away by date for you to find later.
+	  </p>
+	</li>
+      </ul>
     </div>
+
   </div>
 
  {% include 'postosaurus/footer.html' %}

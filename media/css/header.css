@@ -1,14 +1,8 @@
-#top{
-    clear: both;
-    width: 750px;
-}
-
-/* top styling*/
-#top h1, #top h2{
+.header h1, .header h2{
     margin: 0;
 }
 
-#top h1{
+.header h1{
     font-family: arial;
     font-weight: normal;
     font-size: 18px;
@@ -16,7 +10,7 @@
 
 }
 
-#top h2{
+.header h2{
     font-family: verdana;
     font-weight: normal;
     font-size: 12px;
@@ -40,9 +34,7 @@ ul#topnav li a{
     margin-right: 5px;
 }
 
-/*end top styling*/
-
-#top{
+.header{
     background-color: rgb(153, 205, 223);
     padding-top: 15px;
     padding-bottom: 18px;

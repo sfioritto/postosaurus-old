@@ -10,7 +10,9 @@ from webapp.postosaurus.models import *
 from postosaurus.models import MailingList
 import datetime
 
+
 class ListNameField(forms.Field):
+
     def clean(self, list_name):
         """
         Postosaurus only accepts list names that have alphanumeric
@@ -28,14 +30,18 @@ class ListNameField(forms.Field):
 
         return list_name
 
+
 class MailingListForm(forms.Form):
+
     email = forms.EmailField(max_length=512)
     name = ListNameField()
+
 
 def index(request):
     return render_to_response("postosaurus/landing.html", {
             'form' : MailingListForm()
             }, context_instance = RequestContext(request))
+
 
 # def create_list(request):
 #     if request.method == 'POST':
@@ -90,34 +96,12 @@ def create_list(request):
     return render_to_response('postosaurus/landing.html')
 
 
-def delete_subscription(request, subid):
+def members(request, listname):
     if request.method == 'POST':
-        subscriber = Subscription.objects.get(pk=subid)
-        mlist = subscriber.mailing_list
-        mlistpage = "/app/lists/" + str(mlist.pk) + "/manage/"
+        subscriber = Subscription.objects.get(mailing_list__name = listname) #is this right?
         subscriber.delete()
-        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
+        
         return HttpResponseRedirect(mlistpage)
-
-def user_delete_subscription(request, subid, userid):
-    if request.method == 'POST':
-        subscriber = Subscription.objects.get(pk=subid)
-        user = User.objects.get(pk=userid)
-        userpage = "/app/users/" + str(user.pk) + "/account/"
-        subscriber.delete()
-        subscriptions = user.subscription_set.all()
-        return HttpResponseRedirect(userpage)
-
-def manage_list(request, listid):
-    try:
-        mlist = MailingList.objects.get(pk=listid)
-        subscribers = mlist.subscription_set.all().order_by('-user').reverse()
-    except ValueError:
-        raise Http404()
-    return render_to_response('postosaurus/manage.html', {
-            'mlist': mlist,
-            'subscribers': subscribers
-            }, context_instance = RequestContext(request))
 
 
 def out_of_space(request):
@@ -134,15 +118,18 @@ def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
-def links(request, listid, pagenum):
+def links(request, listname):
+
     try:
-        mlist = MailingList.objects.get(pk=listid)
+        mlist = MailingList.objects.get(pk=listname)
         links_list = mlist.link_set.all().order_by('-created_on')
         paginator = Paginator(links_list, 20) #sets links per page
+
         try:
             page = int(request.GET.get('page', '1'))
         except ValueError:
             page = 1
+
         try:
             links = paginator.page(page)
         except (EmptyPage, InvalidPage):
@@ -150,29 +137,39 @@ def links(request, listid, pagenum):
             
     except ValueError:
         raise Http404()
+
     return render_to_response('postosaurus/links.html', {
             'mlist': mlist, 
             'links': links
             }, context_instance = RequestContext(request))
 
 
-def archive(request, listid):
+def archive(request, listname):
+
     try:
-        mlist = MailingList.objects.get(pk=listid)
+        mlist = MailingList.objects.get(pk=listname)
         messages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
+
     return render_to_response('postosaurus/archive.html', {
             'mlist': mlist,
             'messages': messages
             }, context_instance = RequestContext(request))
 
-def userprofile(request, userid):
+
+def archive_by_day(request, year, month, day):
+    pass
+
+
+def user_profile(request, useremail):
+
     try:
-        user = User.objects.get(pk=userid)
+        user = User.objects.get(pk=useremail)
         subscriptions = user.subscription_set.all()
     except ValueError:
         raise Http404()
+
     return render_to_response('postosaurus/userprofile.html', {
             'user': user,
             'subscriptions': subscriptions

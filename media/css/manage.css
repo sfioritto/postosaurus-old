@@ -26,15 +26,19 @@
     margin-top: 30px;
 }
 
-#subscriptions{
+#links{
     margin-left: 0px;
     padding-left: 0px;
 }
 
-ul#subscriptions{
+ul#links{
     list-style-type: none;
 }
 
+#links li{
+    font-family: verdana;
+    font-size: 14px;
+}
 
 #leftinner{
     margin-left: 80px;
@@ -43,21 +47,12 @@ ul#subscriptions{
 
 /*end layout*/
 
-h1{
-    font-family: georgia;
-    font-weight: normal;
-    font-size: 26px;
-    color: rgb(100, 100, 100);
-    margin-top: 40px;
-}
-    
-
 /*right styling*/
 
 #right h1{
     font-family: georgia;
     font-weight: normal;
-    font-size: 26px;
+    font-size: 16px;
     color: rgb(100, 100, 100);
     margin-top: 40px;
 }
@@ -66,11 +61,7 @@ h1{
     padding-left: 30px;
 }
 /*end right styling*/
-    
-#subscriptions li{
-    font-family: verdana;
-    font-size: 14px;
-}
+
 
 p.directions{
     font-family: verdana;
@@ -134,4 +125,3 @@ p {
     font-size: 16px;
     width: 350px;
 }
-

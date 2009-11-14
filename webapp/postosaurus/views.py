@@ -47,7 +47,8 @@ class MailingListForm(forms.Form):
 
 
 def index(request):
-    return render_to_response("postosaurus/signup.html", {
+    return render_to_response("postosaurus/landing.html", { 
+            #Change to "postosaurus/signup.html" when split testing
             'form' : MailingListForm()
             }, context_instance = RequestContext(request))
 

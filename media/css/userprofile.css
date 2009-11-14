@@ -12,6 +12,7 @@
 
 #left{
     float: left;
+    height: 550px;
 }
 
 #right{
@@ -26,12 +27,12 @@
     margin-top: 30px;
 }
 
-#subscriptions{
+#lists{
     margin-left: 0px;
     padding-left: 0px;
 }
 
-ul#subscriptions{
+ul#lists{
     list-style-type: none;
 }
 
@@ -43,49 +44,27 @@ ul#subscriptions{
 
 /*end layout*/
 
-h1{
-    font-family: georgia;
-    font-weight: normal;
-    font-size: 26px;
-    color: rgb(100, 100, 100);
-    margin-top: 40px;
-}
-    
+
 
 /*right styling*/
 
-#right h1{
-    font-family: georgia;
-    font-weight: normal;
-    font-size: 26px;
-    color: rgb(100, 100, 100);
-    margin-top: 40px;
-}
 
 #right {
     padding-left: 30px;
 }
 /*end right styling*/
-    
-#subscriptions li{
+
+ 
+#lists p {
     font-family: verdana;
+    font-size: 18;
+    color: rgb(60, 60,60)
+}
+   
+#lists li {
+    font-family: georgia;
     font-size: 14px;
 }
-
-p.directions{
-    font-family: verdana;
-    font-size: 22px;
-    color: rgb(20, 20, 20);
-    clear: both;
-}
-
-p.date{
-    font-family: verdana;
-    font-size: 18px;
-    color: rgb(60, 60, 60);
-    clear: both;
-}
-
 
 
 #pagination {

@@ -12,16 +12,14 @@
   <div id="middle">
     <div id="left">
       <div id="leftinner">
-
-        <h1>Your Lists</h1>
-        
-	<ul id="subscriptions">   
+	<ul id="lists">   
 	 {% for subscription in subscriptions %}
-	   <p>{{ subscription.mailing_list }}</p>
+	   <p>Pages for list "{{ subscription.mailing_list }}":</p>
 	   <li>
             <a href="/app/lists/{{subscription.mailing_list.pk}}/manage/"> List Members </a> |
 	    <a href="/app/lists/{{subscription.mailing_list.pk}}/links/1/"> List Links </a> |
 	    <a href="/app/lists/{{subscription.mailing_list.pk}}/archive/1/"> List Archive </a>
+	    <br><br>
 	    <form name="delete" action="/app/subscribers/{{subscription.pk}}/remove/user/{{user.pk}}/" method="POST"> 
 	      <input type="submit"  value="Quit List" /> 	      
             </form>

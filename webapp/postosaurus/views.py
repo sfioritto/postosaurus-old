@@ -52,6 +52,13 @@ def index(request):
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
 
+def signup(request):
+    #Remove after changing index
+    return render_to_response("postosaurus/signup.html", {
+            'form' : MailingListForm(),
+            }, context_instance = RequestContext(request))
+
+
 def landing(request, number):
     number = str(number)
     url = "postosaurus/landing" + number + ".html/"

@@ -23,9 +23,23 @@
     color: rgb(120, 120, 120);
 }
 
-#extrafeatures{
-    padding-top: 35px;
+ul#topnav{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
+
+ul#topnav li{
+    display: inline;
+}
+
+ul#topnav li a{
+    font-size: 10px;
+    font-family: arial;
+    float: right;
+    width: 5em;
+}
+
 /*end top styling*/
 
 #top{

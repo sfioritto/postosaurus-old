@@ -51,8 +51,8 @@ class Message(models.Model):
 
             
 class Link(models.Model):
-    mlist = models.ForeignKey(MailingList)
     message = models.ForeignKey(Message)
+    mlist = models.ForeignKey(MailingList)
     url = models.CharField(max_length=2083)
     created_on = models.DateTimeField(auto_now_add=True)
 
@@ -63,10 +63,10 @@ class Link(models.Model):
         return self.url
     
 
-class Message(models.Model):
-    mlist = models.ForeignKey(MailingList)
-    user = models.ForeignKey(User)
-    subject = models.CharField(max_length=2083)
-    text = models.CharField(max_length=40000)
-    created_on = models.DateTimeField(auto_now_add=True)
+
+
+
+
+
+
 

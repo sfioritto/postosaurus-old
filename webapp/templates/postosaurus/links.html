@@ -20,14 +20,12 @@
 	    {% if links.has_previous %}
 	      <a href="?page={{ links.previous_page_number }}">previous</a>
 	    {% endif %}
-	      
-	    <span class="current">
-	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
-	    </span>
-
 	    {% if links.has_next %}
 	      <a href="?page={{ links.next_page_number }}">next</a>
-	    {% endif %}
+	    {% endif %}  
+	    <span class="current">
+	      <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
+	    </span>
 	  </span>
 	</div>
 
@@ -40,22 +38,20 @@
           {% endfor %}
         </ul>         
 
-	<div class="pagination">
+	 <div class="pagination">
 	  <span class="step-links">
+	    <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
 	    {% if links.has_previous %}
 	      <a href="?page={{ links.previous_page_number }}">previous</a>
 	    {% endif %}
-
-	    <span class="current">
-	      Page {{ links.number }} of {{ links.paginator.num_pages }}.
-	    </span>
-
 	    {% if links.has_next %}
 	      <a href="?page={{ links.next_page_number }}">next</a>
-	    {% endif %}
-
+	    {% endif %}  
+	    <span class="current">
+	     
+	    </span>
 	  </span>
-	</div>       
+	</div> 
 	
       </div>
     </div>

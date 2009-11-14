@@ -1,26 +1,16 @@
 #footer{
     clear: both;
-    width: 850px;
+    width: 830px;
     height: 20px;
-}
-
-/*bottom styling*/
-
-#leftinner h1{
-    font-family: georgia;
-    font-size: 16px;
-    color: rgb(60, 60, 60);
-    font-weight: normal;
-    margin-top: 0px;
-}
-
-#footer {
-    height: 25px;
+    padding-top: 0px;
+    height: 20px;
+    font-size: 10px;
+    font-family: verdana;
     text-align: center;
 }
 
-#footer a{
-    font-family: arial;
-    font-size: 10px;
+#footer a, #footer span{
+    margin-right: 5px;
 }
+
 /*end bottom styling*/

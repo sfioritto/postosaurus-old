@@ -4,7 +4,7 @@
 }
 
 /* top styling*/
-#top h1, h2{
+#top h1, #top h2{
     margin: 0;
 }
 
@@ -35,19 +35,16 @@ ul#topnav li{
 
 ul#topnav li a{
     font-size: 10px;
-    font-family: arial;
+    font-family: verdana;
     float: right;
-    width: 5em;
+    margin-right: 5px;
 }
 
 /*end top styling*/
 
 #top{
     background-color: rgb(153, 205, 223);
-}
-
-#top {
     padding-top: 15px;
-    padding-bottom: 15px;
+    padding-bottom: 18px;
     padding-left: 80px;
 }

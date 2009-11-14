@@ -37,21 +37,6 @@
             <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
           {% endfor %}
         </ul>         
-
-	 <div class="pagination">
-	  <span class="step-links">
-	    <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
-	    {% if links.has_previous %}
-	      <a href="?page={{ links.previous_page_number }}">previous</a>
-	    {% endif %}
-	    {% if links.has_next %}
-	      <a href="?page={{ links.next_page_number }}">next</a>
-	    {% endif %}  
-	    <span class="current">
-	     
-	    </span>
-	  </span>
-	</div> 
 	
       </div>
     </div>

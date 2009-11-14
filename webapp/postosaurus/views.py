@@ -33,8 +33,14 @@ class MailingListForm(forms.Form):
     name = ListNameField()
 
 def index(request):
-    return render_to_response("postosaurus/landing.html", {
+    return render_to_response("postosaurus/signup.html", {
             'form' : MailingListForm()
+            }, context_instance = RequestContext(request))
+
+def landing(request, number):
+    number = str(number)
+    url = "postosaurus/landing" + number + ".html/"
+    return render_to_response(url, {
             }, context_instance = RequestContext(request))
 
 # def create_list(request):

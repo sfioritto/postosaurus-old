@@ -19,9 +19,9 @@
 	 {% for subscription in subscriptions %}
 	   <p>{{ subscription.mailing_list }}</p>
 	   <li>
-            <a href="/app/lists/{{subscription.mailing_list.pk}}/manage/"> Manage List </a> |
-	    <a href="/app/lists/{{subscription.mailing_list.pk}}/links/1/"> List Links </a> |
-	    <a href="/app/lists/{{subscription.mailing_list.pk}}/archive/1/"> List Archive </a>
+            <a href="/app/users/{{user.pk}}/lists/{{subscription.mailing_list.pk}}/manage/"> Manage List </a> |
+	    <a href="/app/users/{{user.pk}}/lists/{{subscription.mailing_list.pk}}/links/1/"> List Links </a> |
+	    <a href="/app/user/{{user.pk}}lists/{{subscription.mailing_list.pk}}/archive/1/"> List Archive </a>
 	    <form name="delete" action="/app/subscribers/{{subscription.pk}}/remove/user/{{user.pk}}" method="POST"> 
 	      <input type="submit"  value="Quit List" /> 	      
             </form>

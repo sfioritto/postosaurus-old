@@ -100,21 +100,22 @@ def delete_subscription(request, subid):
 def user_delete_subscription(request, subid, userid):
     if request.method == 'POST':
         subscriber = Subscription.objects.get(pk=subid)
-        userid = userid
-        userpage = "postosaurus/users/" + str(userid) + "/account/"
-        subscriber.delete()
         user = User.objects.get(pk=userid)
+        userpage = "/app/users/" + str(user.pk) + "/account/"
+        subscriber.delete()
         subscriptions = user.subscription_set.all()
         return HttpResponseRedirect(userpage)
 
-def manage_list(request, listid):
+def manage_list(request, userid, listid):
     try:
+        user = User.objects.get(pk=userid)
         mlist = MailingList.objects.get(pk=listid)
         subscribers = mlist.subscription_set.all().order_by('-user').reverse()
     except ValueError:
         raise Http404()
     return render_to_response('postosaurus/manage.html', {
             'mlist': mlist,
+            'user': user,
             'subscribers': subscribers
             }, context_instance = RequestContext(request))
 
@@ -132,8 +133,9 @@ def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
-def links(request, listid, pagenum):
+def links(request, userid, listid, pagenum):
     try:
+        user = User.objects.get(pk=userid)
         mlist = MailingList.objects.get(pk=listid)
         links_list = mlist.link_set.all().order_by('-created_on')
         paginator = Paginator(links_list, 20) #sets links per page
@@ -150,17 +152,20 @@ def links(request, listid, pagenum):
         raise Http404()
     return render_to_response('postosaurus/links.html', {
             'mlist': mlist, 
-            'links': links
+            'links': links,
+            'user': user
             }, context_instance = RequestContext(request))
 
-def archive(request, listid):
+def archive(request, userid, listid):
     try:
+        user = User.object.get(pk=userid)
         mlist = MailingList.objects.get(pk=listid)
         messages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
     return render_to_response('postosaurus/archive.html', {
             'mlist': mlist,
+            'user': user,
             'messages': messages
             }, context_instance = RequestContext(request))
 

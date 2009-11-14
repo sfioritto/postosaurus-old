@@ -1,0 +1,15 @@
+<ul id="listnav">
+  <li id="members">
+    <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">members</a>
+  </li>
+  <li id="archive">
+    <a href="{% url webapp.postosaurus.views.archive listname=mlist.name %}">archive</a>
+  </li>
+  <li id="links">
+    <a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">links</a>
+  </li>
+  <li>
+    <a href="" id="yourlists">your lists</a>
+  </li>
+  
+</ul>

@@ -144,8 +144,8 @@ def links(request, listname):
 
     try:
         mlist = mailinglist.find_list(listname)
-        links = mlist.link_set.all().order_by('-created_on')
-        paginator = Paginator(links, 20) #sets links per page
+        alllinks = mlist.link_set.all().order_by('-created_on')
+        paginator = Paginator(alllinks, 20) #sets links per page
 
         try:
             page = int(request.GET.get('page', '1'))

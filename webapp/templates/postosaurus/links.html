@@ -1,47 +1,58 @@
 <head>
 <title>Links for {{ mlist.name }}</title>
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
 </head>
 
 <body>
-
+<div id="top">
 {% include 'postosaurus/header.html' %}
+</div>
 
-  <div id="middle">
-    <div id="left">
-      <div id="leftinner">
-
-        <p class="directions">Links for {{ mlist.name }}</p>
-
-        <div class="pagination">
-	  <span class="step-links">
-	    {% if links.has_previous %}
-	      <a href="?page={{ links.previous_page_number }}">previous</a>
-	    {% endif %}
-	    {% if links.has_next %}
-	      <a href="?page={{ links.next_page_number }}">next</a>
-	    {% endif %}  
-	    <span class="current">
-	      <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
-	    </span>
-	  </span>
-	</div>
-
-        <ul id="links">
-          {% for link in links.object_list %}
-            {% ifchanged %}
-              <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
-            {% endifchanged %}
-            <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
-          {% endfor %}
-        </ul>         
-	
-      </div>
+<div id="middle">
+  <div id="left">
+    <p id="description">Links</p>
+    {% include 'postosaurus/listnav.html' %}
+    <div class="pagination">
+      <span class="step-links">
+	{% if links.has_previous %}
+	<a href="?page={{ links.previous_page_number }}">previous</a>
+	{% endif %}
+	{% if links.has_next %}
+	<a href="?page={{ links.next_page_number }}">next</a>
+	{% endif %}  
+	<span class="current">
+	  <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
+	</span>
+      </span>
     </div>
+    
+    <ul id="linkslist">
+      {% for link in links.object_list %}
+      {% ifchanged %}
+      <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
+	{% endifchanged %}
+	<li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
+	{% endfor %}
+    </ul>          
+  </div> 
+  <div class="instructions">
+    <ul class="instructions">
+      <li>
+	<p class="top">What are these links?</p>
+	<p class="bottom">
+	  Postosaurus remembers any links sent to your list and stores them here to make
+	it easy for you to find them later.
+	</p>
+      </li>
+    </ul>
   </div>
+</div>
 
- {% include 'postosaurus/footer.html' %}
+<div id="footer">
+  {% include 'postosaurus/footer.html' %}
+</div>
  {% include 'postosaurus/googscript.html' %}
 </body>

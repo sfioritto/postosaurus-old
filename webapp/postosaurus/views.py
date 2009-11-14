@@ -98,13 +98,30 @@ def create_list(request):
 
 
 def members(request, listname):
+
     mlist = mailinglist.find_list(listname)
     subscriptions = mlist.subscription_set.all()
+
     if request.method == 'POST':
-        print request.POST.keys()
-        form = forms.Form(request.POST)
+
+        if not request.POST.has_key('confirmed'):
+            # not confirmed yet.
+            toremove = []
+            for email in request.POST.keys():
+                if request.POST[email]:
+                    toremove.append(email)
+            if len(toremove) > 0:
+                return render_to_response('postosaurus/members-confirm.html', locals(), context_instance = RequestContext(request))
+
+        # they confirmed, now remove the members.
+        toremove = [key for key in request.POST.keys() if key != 'confirmed']
+        for email in toremove:
+            sub = mailinglist.find_subscription(email, listname)
+            if sub:
+                sub.delete()
+
         return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
-#        return HttpResponseRedirect(mlistpage)
+
     else:
         return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
 
@@ -126,9 +143,9 @@ def list_created(request):
 def links(request, listname):
 
     try:
-        mlist = MailingList.objects.get(pk=listname)
-        links_list = mlist.link_set.all().order_by('-created_on')
-        paginator = Paginator(links_list, 20) #sets links per page
+        mlist = mailinglist.find_list(listname)
+        links = mlist.link_set.all().order_by('-created_on')
+        paginator = Paginator(links, 20) #sets links per page
 
         try:
             page = int(request.GET.get('page', '1'))

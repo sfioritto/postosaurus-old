@@ -52,7 +52,15 @@ def messages_by_day(list_addr, year, month, day):
     end = start + datetime.timedelta(hours=23, minutes=59, seconds=59)
     dbmessages = Message.objects.filter(created_on__range=(start, end)).all()
     ids = [str(message.id) for message in dbmessages]
-    return [json.loads(msg) for msg in archive.multi_get(ids)]
+    messages = []
+    for msg in archive.multi_get(ids):
+        #The archiver sometimes screws up and misses an
+        #email. multi_get returns null in that case. Do
+        #this check so the json loader doesn't blow up.
+        if msg:
+            messages.append(json.loads(msg))
+            
+    return messages
     
 
 def get_message(messagekey):

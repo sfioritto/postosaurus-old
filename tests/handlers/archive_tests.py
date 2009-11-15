@@ -62,7 +62,7 @@ def test_complicated_archive_message():
     assert len(jsmsg['parts']) == 2
     assert 'opted' in jsmsg['parts'][0]['body']
     assert len(mlist.message_set.all()) == 1
-    
+
 
 def test_to_json():
     msg = MailRequest('fakeperr', None, None, open("tests/bounce.msg").read())

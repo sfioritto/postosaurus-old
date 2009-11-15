@@ -1,0 +1,10 @@
+ul#emails{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul#emails li{
+    font-family: verdana;
+    font-size: 12px;
+}

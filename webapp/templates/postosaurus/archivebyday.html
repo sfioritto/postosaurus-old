@@ -12,36 +12,29 @@
 </div>
 <div id="middle">
   <div id="left">
-    <p id="description">Archive</p>
+    <p id="description">Archive for {{date|date:"F j, Y"}}</p>
     {% include 'postosaurus/listnav.html' %}
     <ul id="emails">
       {% for message in messages %}
       <li>
-	<p class="date">
-	  {{message.date}}
-	</p>
-	<p class="sender">
-	  {{message.sender}}
-	</p>
-	<p class="subject">
-	  {{message.subject}}
-	</p>
-	<pre>
-	{{message.body}}
-	</pre>
+	<div class="headers">
+	  <p class="date">
+	    {{message.date}}
+	  </p>
+	  <p class="sender">
+	    {{message.sender}}
+	  </p>
+	  <p class="subject">
+	    {{message.subject}}
+	  </p>
+	</div>
+	<div class="body">
+	  <pre>
+	    {{message.body}}
+	  </pre>
+	</div>
       </li>
       {% endfor %}
-    </ul>
-  </div>
-  <div class="instructions">
-    <ul class="instructions">
-      <li>
-	<p class="top">What are these links?</p>
-	<p class="bottom">
-	  Postosaurus remembers any links sent to your list and stores them here to make
-	it easy for you to find them later.
-	</p>
-      </li>
     </ul>
   </div>
 </div>

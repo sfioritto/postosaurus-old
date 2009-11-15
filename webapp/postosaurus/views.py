@@ -219,13 +219,17 @@ class CleanMessage(object):
 
 
 def archive_by_day(request, listname, month, day, year):
+    month = int(month)
+    day = int(day)
+    year = int(year)
     mlist = mailinglist.find_list(listname)
     messages = [CleanMessage(msg) for msg in \
-                    archive.messages_by_day(mlist.email, int(year), int(month), int(day))]
-    print messages
+                    archive.messages_by_day(mlist.email, year, month, day)]
+
     return render_to_response('postosaurus/archivebyday.html', {
             'mlist': mlist,
-            'messages': messages
+            'messages': messages,
+            'date' : datetime(year, month, day),
             }, context_instance = RequestContext(request))
 
 

@@ -224,7 +224,7 @@ def archive_by_day(request, listname, month, day, year):
     year = int(year)
     mlist = mailinglist.find_list(listname)
     messages = [CleanMessage(msg) for msg in \
-                    archive.messages_by_day(mlist.email, year, month, day)]
+                    archive.messages_by_day(listname, year, month, day)]
 
     return render_to_response('postosaurus/archivebyday.html', {
             'mlist': mlist,

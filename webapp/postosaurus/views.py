@@ -1,15 +1,13 @@
 from django.shortcuts import render_to_response
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
-from app.model import mailinglist
+from app.model import mailinglist, archive
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from webapp.postosaurus.models import *
-from postosaurus.models import MailingList
-import datetime
-
+from email.utils import parseaddr  
 
 
 class SignupForm(forms.Form):
@@ -179,22 +177,57 @@ def links(request, listname):
             }, context_instance = RequestContext(request))
 
 
-def archive(request, listname):
+def archive_overview(request, listname):
 
     try:
-        mlist = MailingList.objects.get(pk=listname)
-        messages = mlist.message_set.all().order_by('-created_on')
+        mlist = mailinglist.find_list(listname)
+        dbmessages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
-
+    
+    messages = []
+    for msg in dbmessages:
+        month = msg.created_on.month
+        day = msg.created_on.day
+        year = msg.created_on.year
+        url = reverse(archive_by_day, args=[listname, month, day, year])
+        messages.append((msg, url))
     return render_to_response('postosaurus/archive.html', {
             'mlist': mlist,
             'messages': messages
             }, context_instance = RequestContext(request))
 
 
-def archive_by_day(request, year, month, day):
-    pass
+class CleanMessage(object):
+    
+    def __init__(self, message):
+
+        """
+        Takes json from the archive and turns
+        it into lean json for the archive template.
+        """
+        
+        if message['body']:
+            self.body = message['body']
+        else:
+            self.body = message['parts'][0]['body']
+
+        self.date = message['headers']['Date']
+        name, email = parseaddr(message['headers']['From'])
+        self.sender = name or email
+        self.subject = message['headers']['Subject']
+
+
+def archive_by_day(request, listname, month, day, year):
+    mlist = mailinglist.find_list(listname)
+    messages = [CleanMessage(msg) for msg in \
+                    archive.messages_by_day(mlist.email, int(year), int(month), int(day))]
+    print messages
+    return render_to_response('postosaurus/archivebyday.html', {
+            'mlist': mlist,
+            'messages': messages
+            }, context_instance = RequestContext(request))
+
 
 
 def user_main(request, useremail):

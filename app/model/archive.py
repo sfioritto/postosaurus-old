@@ -3,7 +3,7 @@ import pytyrant
 import simplejson as json
 import base64
 import hashlib
-from datetime import datetime
+import datetime
 from types import ListType
 from webapp.postosaurus.models import Message
 from app.model import mailinglist
@@ -48,8 +48,11 @@ def messages_by_day(list_addr, year, month, day):
     """
     Returns all messages for the given list and day.
     """
-    #todo write some django model query here.
-    pass
+    start = datetime.datetime(year, month, day)
+    end = start + datetime.timedelta(hours=23, minutes=59, seconds=59)
+    dbmessages = Message.objects.filter(created_on__range=(start, end)).all()
+    ids = [str(message.id) for message in dbmessages]
+    return [json.loads(msg) for msg in archive.multi_get(ids)]
     
 
 def get_message(messagekey):

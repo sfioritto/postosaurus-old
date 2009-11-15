@@ -62,7 +62,7 @@ def reboot():
             sudo("lamson stop -ALL run/")
             sudo("rm run/*")
             sudo("lamson start -gid 1000 -uid 1000")
-            sudo("lamson start -gid 1000 -uid 1000 -boot config.linksqueue -pid run/links.pid")
+            sudo("lamson start -gid 1000 -uid 1000 -boot config.queue -pid run/queue.pid")
             sudo("chown -R %s:%s ../postosaurus" % (env.user, env.user))
     
 

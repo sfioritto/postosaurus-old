@@ -12,13 +12,13 @@ basedir="/var/local/ttserver"
 port="1978"
 pidfile="$basedir/pid"
 #logfile="$basedir/log"
-#ulogdir="$basedir/ulog"
+#ulogdir="$basedir/ulog-1"
 #ulimsiz="256m"
 #sid=1
 #mhost="remotehost1"
 #mport="1978"
 #rtsfile="$basedir/rts"
-dbname="$basedir/archive.tch#bnum=1000000"
+dbname="$basedir/archive.tch#bnum=4000000"
 maxcon="65535"
 retval=0
 

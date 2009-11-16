@@ -1,6 +1,10 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 
+handler500 = 'webapp.postosaurus.views.server_error'
+handler404 = 'webapp.postosaurus.views.page_not_found'
+
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()

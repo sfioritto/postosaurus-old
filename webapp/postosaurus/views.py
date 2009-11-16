@@ -244,13 +244,11 @@ def user_main(request, useremail):
 
     return render_to_response('postosaurus/usermain.html', locals(), context_instance = RequestContext(request))
 
-def page_not_found(request, template_name='404.html'):
-    #404 error handler
-    return render_to_response('postosaurus/404.html',
-                              context_instance = RequestContext(request))
+def page_not_found(request):
+    #Handles 404 errors
+    return render_to_response('postosaurus/404.html', context_instance = RequestContext(request))
 
-def server_error(request, template_name='500.html'):
-    #500 error handler
-    return render_to_response('postosaurus/500.html',
-                              context_instance = RequestContext(request))
+def server_error(request):
+    #Handles 500 errors
+    return render_to_response('postosaurus/500.html', context_instance = RequestContext(request))
 

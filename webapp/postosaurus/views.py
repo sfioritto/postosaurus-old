@@ -1,48 +1,21 @@
 import random
 from django.shortcuts import render_to_response
-from django import forms
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from app.model import mailinglist, archive
 from django.core.mail import send_mail
 from django.template import RequestContext, Context, loader
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
+from django.contrib.auth.models import User as DjangoUser
+
+from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  
+import webapp.settings as settings
 
-
-class SignupForm(forms.Form):
-    email = forms.CharField(required=False)
-    groupname = forms.CharField(required=False)
-    links= forms.BooleanField(required=False)
-    files = forms.BooleanField(required=False)
-    tasks = forms.BooleanField(required=False)
-
-
-class ListNameField(forms.Field):
-
-    def clean(self, list_name):
-        """
-        Postosaurus only accepts list names that have alphanumeric
-        characters and a period.
-        """
-        if not list_name:
-            raise forms.ValidationError('You must provide a name for your list.')
-        
-        if not mailinglist.valid_name(list_name):
-            raise forms.ValidationError('List names are valid email addresses that contain letters, numbers and periods. e.g. awesome.list3')
-
-        mlist = mailinglist.find_list(list_name)
-        if mlist:
-            raise forms.ValidationError('That list name has already been taken.')
-
-        return list_name
-
-
-class MailingListForm(forms.Form):
-
-    email = forms.EmailField(max_length=512)
-    name = ListNameField()
+AuthenticationForm.base_fields['username'].max_length = 75 
 
 
 def index(request):
@@ -50,6 +23,12 @@ def index(request):
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
 
+
+def signup(request):
+    #Remove after changing index
+    return render_to_response("postosaurus/signup.html", {
+            'form' : MailingListForm(),
+            }, context_instance = RequestContext(request))
  
 def landing(request):
     number = str(random.randint(1, 2))
@@ -107,8 +86,42 @@ def create_list(request):
     return render_to_response('postosaurus/landing.html')
 
 
-def members(request, listname):
+def create_user(request):
+    
+    """
+    Creates an account for the web application.
+    """
 
+    if request.method == 'POST':
+        form = UserAccountForm(request.POST)
+        next = form.data['next']
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            repassword = form.cleaned_data['repassword']
+            email = form.cleaned_data['email']
+            user = DjangoUser.objects.create_user(username, email, password)
+            return HttpResponseRedirect(next)
+        else:
+            return render_to_response('postosaurus/create-user.html', {
+                    'form' : form,
+                    'next' : next
+                    }, context_instance = RequestContext(request))
+    else:
+        next = settings.LOGIN_URL
+
+        # override next if there is a value in the query string.
+        if request.GET.has_key('next'):
+            next = request.GET['next']
+
+        return render_to_response('postosaurus/create-user.html', {
+                'form' : UserAccountForm(),
+                'next' : next
+                }, context_instance = RequestContext(request))
+
+
+@login_required
+def members(request, listname):
     mlist = mailinglist.find_list(listname)
     subscriptions = mlist.subscription_set.all()
 
@@ -150,6 +163,7 @@ def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
+@login_required
 def links(request, listname):
 
     try:
@@ -175,7 +189,7 @@ def links(request, listname):
             'links': links
             }, context_instance = RequestContext(request))
 
-
+@login_required
 def archive_overview(request, listname):
 
     try:
@@ -217,6 +231,7 @@ class CleanMessage(object):
         self.subject = message['headers']['Subject']
 
 
+@login_required
 def archive_by_day(request, listname, month, day, year):
     month = int(month)
     day = int(day)
@@ -232,7 +247,7 @@ def archive_by_day(request, listname, month, day, year):
             }, context_instance = RequestContext(request))
 
 
-
+@login_required
 def user_main(request, useremail):
 
     try:

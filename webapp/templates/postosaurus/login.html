@@ -1,0 +1,53 @@
+<head>
+<title>Login to Postosaurus</title>
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
+</head>
+
+<body>
+
+<div id ="top">
+{% include 'postosaurus/header.html' %}
+</div>
+
+  <div id="middle">
+    <div id="left">
+      {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+
+      <form method="post" action="{% url django.contrib.auth.views.login %}">
+	<table>
+	  <tr>
+	    <td>{{ form.username.label_tag }}</td>
+	    <td>{{ form.username }}</td>
+	  </tr>
+	  <tr>
+	    <td>{{ form.password.label_tag }}</td>
+	    <td>{{ form.password }}</td>
+	  </tr>
+	</table>
+
+	<input type="submit" value="login" />
+	<input type="hidden" name="next" value="{{ next }}" />
+      </form>
+      <p>
+	If you've never logged in before you need to 
+	<a href="{% url webapp.postosaurus.views.create_user %}?next={{next}}">
+	  create an account.
+	</a>
+      </p>
+    </div>
+    <div class="instructions">
+      <ul class="instructions">
+      </ul>
+    </div>
+  </div>
+<div id="footer">
+ {% include 'postosaurus/footer.html' %}
+</div>
+
+ {% include 'postosaurus/googscript.html' %}
+
+</body>

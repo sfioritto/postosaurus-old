@@ -4,6 +4,8 @@ from email.utils import formataddr
 
 
 class User(models.Model):
+
+
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
     email = models.CharField(max_length=512, primary_key=True)
 

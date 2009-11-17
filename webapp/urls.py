@@ -13,7 +13,7 @@ urlpatterns = patterns(
     '',
 
     (r'^$', 'webapp.postosaurus.views.index'),
-    (r'^landing/(\d+)/$', 'webapp.postosaurus.views.landing'),
+    (r'^landing/$', 'webapp.postosaurus.views.landing'),
     (r'^signup/$', 'webapp.postosaurus.views.create_list'),
     (r'^app/', include('webapp.postosaurus.urls')),
 

@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render_to_response
 from django import forms
 from django.http import HttpResponseRedirect, Http404
@@ -50,8 +51,8 @@ def index(request):
             }, context_instance = RequestContext(request))
 
  
-def landing(request, number):
-    number = str(number)
+def landing(request):
+    number = str(random.randint(1, 2))
     url = "postosaurus/landing" + number + ".html/"
     return render_to_response(url, {
             }, context_instance = RequestContext(request))

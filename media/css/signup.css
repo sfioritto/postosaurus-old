@@ -273,3 +273,27 @@ span.hilight{
 .descheight {
     height: 80px;
 }
+
+ul#topnav{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+        padding-bottom: 5px;
+}
+
+
+ul#topnav li a{
+    font-size: 10px;
+    font-family: verdana;
+    float: right;
+    margin-right: 5px;
+}
+
+ul#topnav li{
+    display: inline;
+    font-size: 10px;
+    font-family: verdana;
+    float: right;
+    margin-right: 15px;
+
+}

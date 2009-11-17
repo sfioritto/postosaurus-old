@@ -52,7 +52,8 @@ def index(request):
 
  
 def landing(request):
-    number = str(random.randint(1, 2))
+    #set back to (1, 2)
+    number = str(random.randint(2, 2))
     url = "postosaurus/landing" + number + ".html/"
     return render_to_response(url, {
             }, context_instance = RequestContext(request))

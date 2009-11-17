@@ -49,17 +49,13 @@ def index(request):
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
 
-def signup(request):
-    return render_to_response("postosaurus/signup.html", {
-            'form' : MailingListForm(),
-            }, context_instance = RequestContext(request))
-
-
+ 
 def landing(request, number):
     number = str(number)
     url = "postosaurus/landing" + number + ".html/"
     return render_to_response(url, {
             }, context_instance = RequestContext(request))
+ 
 
 # def create_list(request):
 #     if request.method == 'POST':
@@ -91,6 +87,10 @@ def landing(request, number):
 
 
 def create_list(request):
+    if request.method =='GET':
+        return render_to_response("postosaurus/signup.html", {
+            'form' : MailingListForm(),
+            }, context_instance = RequestContext(request))
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():

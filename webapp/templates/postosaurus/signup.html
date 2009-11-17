@@ -19,8 +19,13 @@
     <div id="left">
       <div id="leftinner">
 	<form action="/app/lists/create/" method="POST">
+	  <div id="leadin">
+	    <h3>Group email for collaboration.</h3>
+	    <p>One email for the whole group. Easy to set up, easy to use</p>
+	    <p>Everyone sends email to a single address. Everyone receives it at the same email address they've been using for years.</p>
+	  </div>  
 	  <p class="directions">
-	    Step 1. Get started by filling out these two fields.
+	    Step 1. <span class="hilight">Enter</span> your email and pick a list name.
 	  </p>
 	  
 	  <div id="labels">
@@ -33,7 +38,7 @@
 	    <p id="emaildomain">@postosaurus.com</p>
 	    <p id="examples">Examples: MyProject, My.Project</p>
 	  </div>
-	  <p class="directions" id="extrafeatures">Step 2. Choose your extra features.</p>
+	  <p class="directions" id="extrafeatures">Step 2. <span class="hilight">Free</span> or choose your extra features.</p>
 	  <div id="links" class="extras">
 	    <h1>Save your links.</h1>
 	    <div class="descheight">
@@ -64,7 +69,7 @@
 	    <p class="buyme">Add this to your group.</p>
 	  </div>
 	  <div id="tasks" class="extras">
-	    <h1>Stay on task.</h1>
+	    <h1>Email tasks.</h1>
 	    <div class="descheight">
 	    <p>
 	      Sometimes you just need a to-do list.
@@ -77,10 +82,10 @@
 	    <input type="checkbox" name="tasks"/>
 	    <p class="buyme">Add this to your group.</p>
 	  </div>
-	    <p class="directions">Step 3. Create your list.</p>
+	    <p class="directions">Step 3. <span class="hilight">Create</span> your list.</p>
 	  <input id="submit" type="submit" value="Create my list." />
 	</form>
-	<p class="directions">Step 4. Get a confirmation email from Postosaurus.</p>
+	<p class="directions">Step 4. <span class="hilight">Reply</span> to the confirmation email from Postosaurus.</p>
 	<div class="finalwords">
 	<p>To add people to your list, just email your list (example: "mylist@postosaurus.com") and CC: them. That's it!
 	</p>

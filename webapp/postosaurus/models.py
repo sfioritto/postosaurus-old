@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from email.utils import formataddr
+from django.contrib.auth.models import User as DjangoUser
 
 
 class User(models.Model):
@@ -8,6 +9,7 @@ class User(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
     email = models.CharField(max_length=512, primary_key=True)
+    djangouser = models.ForeignKey(DjangoUser, null=True)
 
     def __unicode__(self):
         return self.email

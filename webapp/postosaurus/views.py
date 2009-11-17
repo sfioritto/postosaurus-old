@@ -8,8 +8,9 @@ from django.template import RequestContext, Context, loader
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from webapp.postosaurus.models import *
 from django.contrib.auth.models import User as DjangoUser
+from django.contrib.auth import login, authenticate
+from webapp.postosaurus.models import *
 
 from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  
@@ -100,9 +101,22 @@ def create_user(request):
             password = form.cleaned_data['password']
             repassword = form.cleaned_data['repassword']
             email = form.cleaned_data['email']
-            user = DjangoUser.objects.create_user(username, email, password)
+
+            djangouser = DjangoUser.objects.create_user(username, email, password)
+            user = mailinglist.find_user(email)
+            if not user:
+                user = User(email=email)
+                user.save()
+
+            user.djangouser = djangouser
+            user.save()
+            
+            djangouser = authenticate(username=djangouser.username, password=password)
+            login(request, djangouser)
+
             return HttpResponseRedirect(next)
         else:
+            print form.errors
             return render_to_response('postosaurus/create-user.html', {
                     'form' : form,
                     'next' : next

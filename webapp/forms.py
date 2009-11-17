@@ -1,5 +1,7 @@
 from app.model import mailinglist
+from webapp.postosaurus.models import User
 from django import forms
+from django.contrib.auth.models import User as DjangoUser
 
 class ListNameField(forms.Field):
 
@@ -19,12 +21,6 @@ class ListNameField(forms.Field):
             raise forms.ValidationError('That list name has already been taken.')
 
         return list_name
-
-
-class UserEmailField(forms.EmailField):
-
-    def clean(self, email):
-        return forms.EmailField.clean(self, email)
 
 
 class MailingListForm(forms.Form):
@@ -58,6 +54,38 @@ class UserAccountForm(forms.Form):
             return self.cleaned_data['password']
         else:
             raise forms.ValidationError("This passwords you entered in don't match.")
+
+
+    def clean_username(self):
+
+        username = self.cleaned_data['username']
+
+        try:
+            user = User.objects.get(pk=username)
+        except User.DoesNotExist:
+            user = None
+
+        if user:
+            raise forms.ValidationError("This username is already taken.")
+        else:
+            return username
+
+        
+    def clean_email(self):
+
+        email = self.cleaned_data['email']
+
+        try:
+            user = DjangoUser.objects.get(email=email)
+        except DjangoUser.DoesNotExist:
+            user = None
+
+        if user:
+            raise forms.ValidationError("An account for this email address has already been created.")
+        else:
+            return email
+
+            
 
 
         

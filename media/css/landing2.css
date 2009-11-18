@@ -23,7 +23,7 @@
 }
 
 #left{
-    height: 500px;
+
     float: left;
 }
 
@@ -34,6 +34,7 @@
     padding: 0px 20px;
     margin-top: 30px;
 }
+
 
 .extras input{
     margin: 0;
@@ -167,9 +168,9 @@ h2.directions{
     clear: both;
 }
 
-#left {
+span.hilight{
+     color: rgb(223, 126, 13);
 }
-
 
 #top {
     background-color: rgb(153, 205, 223);
@@ -191,5 +192,5 @@ body{
 }
 
 .descheight {
-    height: 120px;
+    height: 190px;
 }

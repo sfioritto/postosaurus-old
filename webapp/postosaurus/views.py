@@ -52,7 +52,6 @@ def index(request):
 
  
 def landing(request):
-    #set back to (1, 2)
     number = str(random.randint(2, 2))
     url = "postosaurus/landing" + number + ".html/"
     return render_to_response(url, {

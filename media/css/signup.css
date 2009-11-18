@@ -1,8 +1,4 @@
 /*start layout*/
-#top{
-    clear: both;
-    width: 750px;
-}
 
 #footer{
     clear: both;
@@ -226,16 +222,6 @@ p.signup {
     clear: both;
 }
 
-#top{
-    background-color: rgb(153, 205, 223);
-}
-
-#top {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 80px;
-}
-
 body{
     margin: 0;
 }
@@ -272,28 +258,4 @@ span.hilight{
 
 .descheight {
     height: 80px;
-}
-
-ul#topnav{
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-        padding-bottom: 5px;
-}
-
-
-ul#topnav li a{
-    font-size: 10px;
-    font-family: verdana;
-    float: right;
-    margin-right: 5px;
-}
-
-ul#topnav li{
-    display: inline;
-    font-size: 10px;
-    font-family: verdana;
-    float: right;
-    margin-right: 15px;
-
 }

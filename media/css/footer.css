@@ -14,3 +14,19 @@
 }
 
 /*end bottom styling*/
+#footer{
+    clear: both;
+    width: 830px;
+    height: 20px;
+    padding-top: 0px;
+    height: 20px;
+    font-size: 10px;
+    font-family: verdana;
+    text-align: center;
+}
+
+#footer a, #footer span{
+    margin-right: 5px;
+}
+
+/*end bottom styling*/

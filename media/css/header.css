@@ -71,3 +71,23 @@ ul#topnav li a{
     font-size: 12px;
     color: rgb(120, 120, 120);
 }
+
+/* top styling*/
+#top h1, h2{
+    margin: 0;
+}
+
+#top h1{
+    font-family: arial;
+    font-weight: normal;
+    font-size: 18px;
+    color: rgb(40, 40, 40);
+
+}
+
+#top h2{
+    font-family: verdana;
+    font-weight: normal;
+    font-size: 12px;
+    color: rgb(120, 120, 120);
+}

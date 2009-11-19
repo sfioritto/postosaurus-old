@@ -1,16 +1,10 @@
-<head>
-<title>Members of list {{ mlist.name }}</title>
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members.css" />
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/header.css" />
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/footer.css" />
-</head>
 
-<body>
-
-<div id ="top">
-{% include 'postosaurus/header.html' %}
-</div>
+{% block content %}
 
   <div id="middle">
     <div id="left">
@@ -43,10 +37,5 @@
     </div>
 
   </div>
-<div id="footer">
- {% include 'postosaurus/footer.html' %}
-</div>
 
- {% include 'postosaurus/googscript.html' %}
-
-</body>
+{% endblock %}

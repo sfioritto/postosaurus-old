@@ -1,13 +1,12 @@
 {% extends "postosaurus/base.html" %}
 
+{% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archive.css">
+{% endblock %}
 
 {% block content %}
 
-<div id="top">
-{% include 'postosaurus/header.html' %}
-</div>
 <div id="middle">
   <div id="left">
     <p id="description">Archive</p>

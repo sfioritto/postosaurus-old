@@ -1,0 +1,37 @@
+<head>
+<title>Postosaurus -- Lightweight Group Collaboration</title>
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/baselanding.css">
+
+{% block css %}
+{% endblock %}
+</head>
+<body>
+  <div id="top">
+    <h1>
+      Postosaurus
+    </h1>
+    <h2>
+      Run your project from your inbox.
+    </h2>
+    <ul id="topnav">
+      <li><a href="login.html">Log In</a>
+      <li>Already have a postosaurus list?</li>
+  </div>
+
+{% block content %}
+{% endblock %}
+
+  <div id="footer">
+    <a href="/site_media/html/contact.html">contact</a>
+    <a href="/site_media/html/privacy.html">privacy</a>
+  </div>
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-8964246-2");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+</body>

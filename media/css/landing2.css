@@ -1,13 +1,5 @@
 /*start layout*/
-#top{
-    clear: both;
-    width: 750px;
-}
 
-#footer{
-    clear: both;
-    width: 850px;
-}
 
 #leftinner, #right{
     margin-top: 30px;
@@ -23,7 +15,7 @@
 }
 
 #left{
-    height: 500px;
+
     float: left;
 }
 
@@ -34,6 +26,7 @@
     padding: 0px 20px;
     margin-top: 30px;
 }
+
 
 .extras input{
     margin: 0;
@@ -66,24 +59,6 @@
 /*end layout*/
 
 /* top styling*/
-#top h1, h2{
-    margin: 0;
-}
-
-#top h1{
-    font-family: arial;
-    font-weight: normal;
-    font-size: 18px;
-    color: rgb(40, 40, 40);
-
-}
-
-#top h2{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgb(120, 120, 120);
-}
 
 #extrafeatures{
     padding-top: 35px;
@@ -139,7 +114,6 @@
 
 /*end left styling*/
 
-/*bottom styling*/
 
 #leftinner h1{
     font-family: georgia;
@@ -148,16 +122,6 @@
     margin-top: 0px;
 }
 
-#footer {
-    height: 25px;
-    text-align: center;
-}
-
-#footer a{
-    font-family: arial;
-    font-size: 10px;
-}
-/*end bottom styling*/
 
 h2.directions{
     font-family: verdana;
@@ -167,16 +131,10 @@ h2.directions{
     clear: both;
 }
 
-#left {
+span.hilight{
+     color: rgb(223, 126, 13);
 }
 
-
-#top {
-    background-color: rgb(153, 205, 223);
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 80px;
-}
 
 body{
     margin: 0;
@@ -191,5 +149,5 @@ body{
 }
 
 .descheight {
-    height: 120px;
+    height: 190px;
 }

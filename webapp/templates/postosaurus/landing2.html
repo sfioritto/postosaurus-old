@@ -1,83 +1,79 @@
+{% extends "postosaurus/baselanding.html" %}
 
-<head>
-<title>Postosaurus -- Lightweight Group Collaboration</title>
+
+{% block css %}
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/landing2.css">
-</head>
+{% endblock%}
 
-<body>
-
-  <div id="top">
-    <h1>
-      Postosaurus
-    </h1>
-    <h2>
-      Run your project from your inbox.
-    </h2>
-  </div>
-
+{% block content %}
   <div id="middle">
     <div id="left">
       <div id="leftinner">
-	  <h2 class="directions">
-	    Email lists for project management.
-	  </h2>
-	  <div id="pitch">
+	<h2 class="directions">
+	  Email lists for project management.
+	</h2>
+	<div>
 	  <p>
 	    A single email address for the whole group. Easy to set up, easy to use.
 	  </p>
-	  <h2 class="directions">Run your project from your inbox!</h2>
-	   </div>
-	  <form action="/"
-		<input id="submit-top" type="submit" value="See Plans and Pricing" />
-	  </form>
-	  <div id="links" class="extras">
-	    <h1>No hassle group email.</h1>
-	    <div class="descheight">
-	      <p>
-		Everyone sends email to a single address. Everyone receives it at the same email address they've been using for years. No more contact management or wondering if everybody got that important message.
-	      </p>
-	    </div>
-	  </div>
-	  <div id="files" class="extras">
-	   <h1>Plans starting from free.</h1>
-	    <div class="descheight">	    
-	      <p>
-		The base email list is free, forever. That gets you a group email 
-		address that everyone can use to talk with everyone else. Some
-		optional features have a small one-time charge.
-	      </p>
-	    </div>
-	  </div>
-	  <div id="tasks" class="extras">
-	     <h1>Attach, archive, and share.</h1>
-	    <div class="descheight">
-	      <p>
-		It works like an email group. Everyone in your group uses one email
-		address to talk with everyone else in the group. Plus you get tasks,
-		document management and Postosaurus will even remember the links you
-		send to each other.
-	      </p>
-	    </div>
-	  </div>
+	  <h2>Run your project from your inbox!</h2>
+	</div>  
 	<form action="/"
-	  <input id="submit-bottom" type="submit" value="See Plans and Pricing" />
-	</form>
+	      <input id="submit-top" type="submit" value="See Plans and Pricing" />
+        </form>
+	<div id="links" class="extras">
+	  <h1><span class="hilight">Easy</span> to use.</h1>
+	  <div class="descheight">
+	    <p>
+	      Everyone sends email to a single address.
+	    </p>
+	    <p>Everyone receives it at the same email address they've been using for years.
+	    </p>
+	    <p>No more contact management or wondering if everybody got that important
+	      message. With Postosaurus add-ons, you can even share links and archive documents.
+	      Just attach it or write it an an email to the list.
+	    </p>
+	  </div>
+	</div>
+	<div id="files" class="extras">
+	  <h1>Plans starting from <span class="hilight">free</span>.</h1>
+	  <div class="descheight">	    
+	    <p>
+	      The base email list is free, forever. 
+	    </p>
+	    <p>
+	      That includes unlimited members for your list.
+	    </p>
+	    <p>The email list is an email address that everyone can use to talk with 
+	      everyone else. Optional features like link archives and file management 
+	      have a small one-time charge.
+	    </p>
+	  </div>
+	</div>
+	<div id="tasks" class="extras">
+	  <h1><span class="hilight">Attach</span>, archive, and share.</h1>
+	  <div class="descheight">
+	    <p>
+	      If you want it to, Postosaurus can also help you manage all the 
+	      information and files your group generates. 
+	    </p>
+	    <p>Postosaurus can do document management, send reminders for 
+	      to-dos, and even remember the links you send to each other. 
+	    </p>
+	    <p>
+	      Best part is; it's easy. Attach or write it in an email and 
+	      Postosaurus knows what to do. No strange codes to learn or steps
+	      to remember.
+	    </p>
+	  </div>
+	</div>
+	<form action="/"
+	      <input id="submit-bottom" type="submit" value="See Plans and Pricing" />
+        </form>
       </div>
+     </div>
     </div>
-  </div>
-  <div id="footer">
-    <a href="/site_media/html/contact.html">contact</a>
-    <a href="/site_media/html/privacy.html">privacy</a>
-  </div>
-  <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script>
-  <script type="text/javascript">
-    try {
-    var pageTracker = _gat._getTracker("UA-8964246-2");
-    pageTracker._trackPageview();
-    } catch(err) {}</script>
-</body>
+
+{% endblock %}
 
 

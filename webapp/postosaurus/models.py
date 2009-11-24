@@ -9,7 +9,7 @@ class User(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
     email = models.CharField(max_length=512, primary_key=True)
-    djangouser = models.ForeignKey(DjangoUser, null=True)
+    user = models.ForeignKey(DjangoUser, null=True)
 
     def __unicode__(self):
         return self.email

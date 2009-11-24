@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import login, authenticate
 from webapp.postosaurus.models import *
-
 from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  
 import webapp.settings as settings
@@ -102,13 +101,15 @@ def create_user(request):
             repassword = form.cleaned_data['repassword']
             email = form.cleaned_data['email']
 
-            djangouser = DjangoUser.objects.create_user(username, email, password)
+            #never populate the email address of the django model. This is duplicated
+            #in the postosaurus user model.
+            djangouser = DjangoUser.objects.create_user(username, '', password)
             user = mailinglist.find_user(email)
             if not user:
                 user = User(email=email)
                 user.save()
 
-            user.djangouser = djangouser
+            user.user = djangouser
             user.save()
             
             djangouser = authenticate(username=djangouser.username, password=password)
@@ -116,7 +117,6 @@ def create_user(request):
 
             return HttpResponseRedirect(next)
         else:
-            print form.errors
             return render_to_response('postosaurus/create-user.html', {
                     'form' : form,
                     'next' : next
@@ -126,7 +126,8 @@ def create_user(request):
 
         # override next if there is a value in the query string.
         if request.GET.has_key('next'):
-            next = request.GET['next']
+            if request.GET['next']:
+                next = request.GET['next']
 
         return render_to_response('postosaurus/create-user.html', {
                 'form' : UserAccountForm(),
@@ -262,19 +263,21 @@ def archive_by_day(request, listname, month, day, year):
 
 
 @login_required
-def user_main(request, useremail):
+def user_main(request):
 
     try:
-        user = User.objects.get(pk=useremail)
+        user = request.user.get_profile()
         subscriptions = user.subscription_set.all()
     except ValueError:
         raise Http404()
 
     return render_to_response('postosaurus/usermain.html', locals(), context_instance = RequestContext(request))
 
+
 def page_not_found(request):
     #Handles 404 errors
     return render_to_response('postosaurus/404.html', context_instance = RequestContext(request))
+
 
 def server_error(request):
     #Handles 500 errors

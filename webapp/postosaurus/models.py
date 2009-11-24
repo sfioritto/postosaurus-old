@@ -11,6 +11,19 @@ class User(models.Model):
     email = models.CharField(max_length=512, primary_key=True)
     user = models.ForeignKey(DjangoUser, null=True)
 
+    def is_subscribed(self, mlist):
+
+        subs = mlist.subscription_set\
+            .filter(user=self)\
+            .filter(mailing_list=mlist)\
+            .all()
+
+        if len(subs) > 0:
+            return True
+        else:
+            return False
+
+
     def __unicode__(self):
         return self.email
 

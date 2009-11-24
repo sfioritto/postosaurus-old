@@ -1,6 +1,7 @@
 import random
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, Http404
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from app.model import mailinglist, archive
 from django.core.mail import send_mail
@@ -30,6 +31,7 @@ def signup(request):
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
  
+
 def landing(request):
     number = str(random.randint(1, 2))
     url = "postosaurus/landing" + number + ".html/"
@@ -134,12 +136,26 @@ def create_user(request):
                 'next' : next
                 }, context_instance = RequestContext(request))
 
+def _authorize_or_raise(user, mlist):
+
+    """
+    Very simple authorization. This checks to see if the user is a member
+    of the list and raises a permission denied error if they aren't.
+    """
+
+    if not user.is_subscribed(mlist):
+        raise PermissionDenied
+
 
 @login_required
 def members(request, listname):
-    mlist = mailinglist.find_list(listname)
-    subscriptions = mlist.subscription_set.all()
 
+    user = request.user.get_profile()
+    mlist = mailinglist.find_list(listname)
+    _authorize_or_raise(user, mlist)
+
+    subscriptions = mlist.subscription_set.all()
+    
     if request.method == 'POST':
 
         if not request.POST.has_key('confirmed'):
@@ -182,7 +198,9 @@ def list_created(request):
 def links(request, listname):
 
     try:
+        user = request.user.get_profile()
         mlist = mailinglist.find_list(listname)
+        _authorize_or_raise(user, mlist)
         alllinks = mlist.link_set.all().order_by('-created_on')
         paginator = Paginator(alllinks, 20) #sets links per page
 
@@ -209,6 +227,8 @@ def archive_overview(request, listname):
 
     try:
         mlist = mailinglist.find_list(listname)
+        user = request.user.get_profile()
+        _authorize_or_raise(user, mlist)
         dbmessages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
@@ -252,6 +272,9 @@ def archive_by_day(request, listname, month, day, year):
     day = int(day)
     year = int(year)
     mlist = mailinglist.find_list(listname)
+    user = request.user.get_profile()
+    _authorize_or_raise(user, mlist)
+
     messages = [CleanMessage(msg) for msg in \
                     archive.messages_by_day(listname, year, month, day)]
 

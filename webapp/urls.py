@@ -4,6 +4,7 @@ from django.contrib import admin
 
 handler500 = 'webapp.postosaurus.views.server_error'
 handler404 = 'webapp.postosaurus.views.page_not_found'
+handler403 = 'webapp.postosaurus.views.permission_denied'
 admin.autodiscover()
 
 urlpatterns = patterns(

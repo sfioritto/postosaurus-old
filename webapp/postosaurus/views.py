@@ -306,3 +306,6 @@ def server_error(request):
     #Handles 500 errors
     return render_to_response('postosaurus/500.html', context_instance = RequestContext(request))
 
+def permission_denied(request):
+    #Handles 403 errors
+    return render_to_response('postosaurus/403.html', context_instance = RequestContext(request))

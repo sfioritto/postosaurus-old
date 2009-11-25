@@ -1,5 +1,5 @@
 <head>
-<title>500 Server Error</title>
+<title>404 Page Not Found</title>
 <STYLE type="text/css">
 body{
     margin-top: 0px;
@@ -91,8 +91,7 @@ ul#topnav li a{
 <span>
   <h2>Run your project from your inbox</h2>
   <ul id="topnav">
-    <li><a href="/logout.html">Log Out</a></li>
-    <li><a href="{{MEDIA_URL}}html/contact.html">Contact</a></li>
+    <li><a href="{% url django.contrib.auth.views.logout_then_login %}">Log Out</a></li>
     <li><a href="/help.html">Help</a></li>
   </ul>
 </span>

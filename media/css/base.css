@@ -1,29 +1,111 @@
-#top {
-    background-color: rgb(153, 205, 223);
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 80px;
+/*layout*/
+#top{
     clear: both;
-    width: 750px;
-}
-
-.header {
     width: 670px;
+    height: 65px;
 }
 
-.header h1, .header h2{
+#topnav{
+    float: right;
+}
+
+#left{
+    padding-left: 80px;
+    padding-top: 30px;
+    float: left;
+    width: 670px; /*top width - left margin*/
+    min-height: 500px;
+}
+
+div#instructions{
+    float: right;
+    width: 200px;
+}
+
+#middle{
+    width: 950px; /*top plus right*/
+}
+/*end layout*/
+
+#left{
+    background-color: rgb(250, 250, 250);
+}
+
+p#description{
+    font-family: georgia;
+    font-size: 18px;
+    color: rgb(40, 40, 40);
     margin: 0;
 }
 
-.header h1{
+
+ul#listnav{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+#listnav li{
+    display: inline;
+    font-family: verdana;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+
+div#instructions ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 15px;
+}
+
+div#instructions p{
+    margin: 0;
+    padding: 0;
+}
+
+div#instructions p.top{
+    font-family: georgia;
+    font-size: 12px;
+    color: rgb(0, 95, 57);
+    margin-top: 25px;
+}
+
+div#instructions p.bottom{
+    font-family: verdana;
+    font-size: 11px;
+    margin-left: 10px;
+    color: rgb(60, 60, 60);
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+body{
+    margin: 0;
+}
+
+#top {
+    background-color: rgb(153, 205, 223);
+    padding-top: 15px;
+    padding-left: 80px;
+}
+
+
+#top h1, #top h2{
+    margin: 0;
+}
+
+#top h1{
     font-family: arial;
     font-weight: normal;
     font-size: 18px;
     color: rgb(40, 40, 40);
-
 }
 
-.header h2{
+#top h2{
     font-family: verdana;
     font-weight: normal;
     font-size: 12px;
@@ -33,86 +115,33 @@
 ul#topnav{
     padding: 0;
     margin: 0;
+    margin-right: 5px;
     list-style-type: none;
-    padding-bottom: 5px;
 }
 
 ul#topnav li{
     display: inline;
-    font-size: 10px;
-    font-family: verdana;
-    float: right;
-    margin-right: 15px;
-
+    margin: 0;
+    padding: 0;
+    margin-right: 5px;
 }
 
 ul#topnav li a{
     font-size: 10px;
     font-family: verdana;
-    float: right;
-    margin-right: 5px;
 }
 
-.header{
-    background-color: rgb(153, 205, 223);
-    padding-top: 15px;
-    padding-bottom: 18px;
-    padding-left: 80px;
-}
 
-#top h1, h2{
-    margin: 0;
-}
-
-#top h1{
-    font-family: arial;
-    font-weight: normal;
-    font-size: 18px;
-    color: rgb(40, 40, 40);
-
-}
-
-#top h2{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgb(120, 120, 120);
-}
-
-#top h1, h2{
-    margin: 0;
-}
-
-#top h1{
-    font-family: arial;
-    font-weight: normal;
-    font-size: 18px;
-    color: rgb(40, 40, 40);
-
-}
-
-#top h2{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgb(120, 120, 120);
-}
-
-#top h1, h2{
-    margin: 0;
-}
-
-/* end header*/
-/*start footer*/
-#footer{
+#bottom{
     clear: both;
     width: 850px;
     height: 25px;
     text-align: center;
 }
 
-#footer a{
-    font-family: arial;
+#bottom a{
+    font-family: verdana;
     font-size: 10px;
 }
+
 /*end bottom styling*/

@@ -1,42 +1,30 @@
 {% extends "postosaurus/base.html" %}
 
-{% block css %}
-{% endblock %}
-
 {% block content %}
 
-<div id="middle">
-  <div id="left">
-    {{ form.errors }}
-    <form method="post" action="{% url webapp.postosaurus.views.create_user %}">
-      <table>
-	<tr>
-	  <td>{{ form.email.label_tag }}</td>
-	  <td>{{ form.email }}</td>
-	</tr>
-	<tr>
-	  <td>{{ form.username.label_tag }}</td>
-	  <td>{{ form.username }}</td>
-	</tr>
-	<tr>
-	  <td>{{ form.password.label_tag }}</td>
-	  <td>{{ form.password }}</td>
-	</tr>
-	<tr>
-	  <td>Enter your password again.</td>
-	  <td>{{ form.repassword }}</td>
-	</tr>
-      </table>
-      <input type="submit" value="login" />
-      <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-    
-  </div>
-  <div class="instructions">
-    <ul class="instructions">
-    </ul>
-  </div>
-
+{{ form.errors }}
+<form method="post" action="{% url webapp.postosaurus.views.create_user %}">
+  <table>
+    <tr>
+      <td>{{ form.email.label_tag }}</td>
+      <td>{{ form.email }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.username.label_tag }}</td>
+      <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+      <td>{{ form.password.label_tag }}</td>
+      <td>{{ form.password }}</td>
+    </tr>
+    <tr>
+      <td>Enter your password again.</td>
+      <td>{{ form.repassword }}</td>
+    </tr>
+  </table>
+  <input type="submit" value="login" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
 {% endblock %}
 
 

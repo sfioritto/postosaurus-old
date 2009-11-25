@@ -1,15 +1,15 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members.css" />
 {% endblock %}
 
 {% block content %}
+{% include 'postosaurus/listnav.html' %}
 <p id="description">
   Members
 </p>
-
-{% include 'postosaurus/listnav.html' %}
 <form action="" method="POST">
   <p class="Remove">
     Remove selected members.

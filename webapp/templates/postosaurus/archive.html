@@ -1,38 +1,33 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archive.css">
 {% endblock %}
 
 {% block content %}
+{% include 'postosaurus/listnav.html' %}
+<p id="description">Archive</p>
+<ul id="emails">
+  {% for message, url in messages %}
+  {% ifchanged %}
+  <li>
+    <a href="{{ url }}">
+      {{ message.created_on|date:"F j, Y"}}
+    </a>
+  </li>
+  {% endifchanged %}
+  {% endfor %}
+</ul>
+{% endblock %}
 
-<div id="middle">
-  <div id="left">
-    <p id="description">Archive</p>
-    {% include 'postosaurus/listnav.html' %}
-    <ul id="emails">
-      {% for message, url in messages %}
-      {% ifchanged %}
-      <li>
-	<a href="{{ url }}">
-	  {{ message.created_on|date:"F j, Y"}}
-	</a>
-      </li>
-      {% endifchanged %}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="instructions">
-    <ul class="instructions">
-      <li>
-	<p class="top">How do I use the archive?</p>
-	<p class="bottom">
-	  Click on a day to view all the messages sent to this group on that day.
-	</p>
-      </li>
-    </ul>
-  </div>
-</div>
-
+{% block instructions %}
+<ul class="instructions">
+  <li>
+    <p class="top">How do I use the archive?</p>
+    <p class="bottom">
+      Click on a day to view all the messages sent to this group on that day.
+    </p>
+  </li>
+</ul>
 {% endblock %}

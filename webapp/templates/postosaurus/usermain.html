@@ -1,59 +1,53 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/usermain.css" />
 {% endblock %}
 
 {% block content %}
 
-  <div id="middle">
-    <div id="left">
-      <p id="description">
-	These are your Postosaurus lists.
-      </p>
-      <table id="lists">   
-	<tbody>
-	{% for subscription in subscriptions %}
-	<tr>
-	  <td class="listname">
-	    <p class="listname">
-	      {{ subscription.mailing_list.name }}<span class="domain">@postosaurus.com</span>
-	    </p>
-	  </td>
-	  <td class="links">
-            <a href="{% url webapp.postosaurus.views.members listname=subscription.mailing_list.name %}">Members</a>
-	    <a href="{% url webapp.postosaurus.views.archive_overview listname=subscription.mailing_list.name %}">Archive</a>
-	    <a href="{% url webapp.postosaurus.views.links listname=subscription.mailing_list.name %}">Links</a>
-	  </td>
-	</tr>
-	{% endfor %}
-	</tbody>
-      </table>
-    </div>
-    <div class="instructions">
-      <ul class="instructions">
-	<li>
-	  <p class="top">What do I do next?</p>
-	</li>
-	<li>
-	  <p class="top">Members</p>
-	  <p class="bottom">The members link will show you all the members in the list.</p>
-	</li>
-	<li>
-	  <p class="top">Archive</p>
-	  <p class="bottom">The archive link will take you to a searchable archive of all emails sent to this list.</p>
-	</li>
-	<li>
-	  <p class="top">Links</p>
-	  <p class="bottom">
-	    If you click on "links" you will see every URL sent to this list. Postosaurus remembers them
-	    and stores them away by date for you to find later.
-	  </p>
-	</li>
-      </ul>
-    </div>
+<p id="description">
+  These are your Postosaurus lists.
+</p>
+<table id="lists">   
+  <tbody>
+    {% for subscription in subscriptions %}
+    <tr>
+      <td class="listname">
+	<p class="listname">
+	  {{ subscription.mailing_list.name }}<span class="domain">@postosaurus.com</span>
+	</p>
+      </td>
+      <td class="links">
+        <a href="{% url webapp.postosaurus.views.members listname=subscription.mailing_list.name %}">Members</a>
+	<a href="{% url webapp.postosaurus.views.archive_overview listname=subscription.mailing_list.name %}">Archive</a>
+	<a href="{% url webapp.postosaurus.views.links listname=subscription.mailing_list.name %}">Links</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
 
-  </div>
-
+{% block instructions %}
+<ul class="instructions">
+  <li>
+    <p class="top">What do I do next?</p>
+  </li>
+  <li>
+    <p class="top">Members</p>
+    <p class="bottom">The members link will show you all the members in the list.</p>
+  </li>
+  <li>
+    <p class="top">Archive</p>
+    <p class="bottom">The archive link will take you to a searchable archive of all emails sent to this list.</p>
+  </li>
+  <li>
+    <p class="top">Links</p>
+    <p class="bottom">
+      If you click on "links" you will see every URL sent to this list. Postosaurus remembers them
+      and stores them away by date for you to find later.
+    </p>
+  </li>
+</ul>
 {% endblock %}

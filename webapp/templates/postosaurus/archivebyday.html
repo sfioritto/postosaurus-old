@@ -1,39 +1,33 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list.css" />
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archivebyday.css">
 {% endblock %}
 
 {% block content %}
-
-<div id="middle">
-  <div id="left">
-    <p id="description">Archive for {{date|date:"F j, Y"}}</p>
-    {% include 'postosaurus/listnav.html' %}
-    <ul id="emails">
-      {% for message in messages %}
-      <li>
-	<div class="headers">
-	  <p class="date">
-	    {{message.date}}
-	  </p>
-	  <p class="sender">
-	    {{message.sender}}
-	  </p>
-	  <p class="subject">
-	    {{message.subject}}
-	  </p>
-	</div>
-	<div class="body">
-	  <pre>
-	    {{message.body}}
-	  </pre>
-	</div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
+{% include 'postosaurus/listnav.html' %}
+<p id="description">Archive for {{date|date:"F j, Y"}}</p>
+<ul id="emails">
+  {% for message in messages %}
+  <li>
+    <div class="headers">
+      <p class="date">
+	{{message.date}}
+      </p>
+      <p class="sender">
+	{{message.sender}}
+      </p>
+      <p class="subject">
+	{{message.subject}}
+      </p>
+    </div>
+    <div class="body">
+      <pre>
+	{{message.body}}
+      </pre>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

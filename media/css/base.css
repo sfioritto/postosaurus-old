@@ -38,23 +38,6 @@ p#description{
     margin: 0;
 }
 
-
-ul#listnav{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 30px;
-    margin-top: 5px;
-}
-
-#listnav li{
-    display: inline;
-    font-family: verdana;
-    font-size: 12px;
-    margin-right: 5px;
-}
-
-
 div#instructions ul{
     list-style: none;
     margin: 0;

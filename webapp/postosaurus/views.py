@@ -20,21 +20,21 @@ AuthenticationForm.base_fields['username'].max_length = 75
 
 
 def index(request):
-    return render_to_response("postosaurus/signup.html", { 
+    return render_to_response("landing/signup.html", { 
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
 
 
 def signup(request):
     #Remove after changing index
-    return render_to_response("postosaurus/signup.html", {
+    return render_to_response("landing/signup.html", {
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
  
 
 def landing(request):
     number = str(random.randint(1, 2))
-    url = "postosaurus/landing" + number + ".html/"
+    url = "landing/landing" + number + ".html/"
     return render_to_response(url, {
             }, context_instance = RequestContext(request))
  
@@ -63,14 +63,14 @@ def landing(request):
 #     else:
 #         form = MailingListForm() # An unbound form
 
-#     return render_to_response('postosaurus/landing.html', {
+#     return render_to_response('landing/landing.html', {
 #         'form': form,
 #     }, context_instance = RequestContext(request))
 
 
 def create_list(request):
     if request.method =='GET':
-        return render_to_response("postosaurus/signup.html", {
+        return render_to_response("landing/signup.html", {
             'form' : MailingListForm(),
             }, context_instance = RequestContext(request))
     if request.method == 'POST':
@@ -82,10 +82,10 @@ def create_list(request):
             tasks = form.cleaned_data['tasks']
             aRequest = Request(email=email, links=links, files=files, tasks=tasks)
             aRequest.save()
-            return render_to_response('postosaurus/beta.html', {
+            return render_to_response('landing/beta.html', {
                     'form' : form,
                     }, context_instance = RequestContext(request))
-    return render_to_response('postosaurus/landing.html')
+    return render_to_response('landing/landing.html')
 
 
 def create_user(request):
@@ -187,11 +187,11 @@ def out_of_space(request):
             email = form.cleaned_data['email']
             betaRequest = BetaRequest(email=email)
             betaRequest.save()
-    return render_to_response('postosaurus/thanks.html')
+    return render_to_response('landing/thanks.html')
 
 
 def list_created(request):
-    return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
+    return render_to_response('landing/thanks.html', context_instance = RequestContext(request))
 
 
 @login_required

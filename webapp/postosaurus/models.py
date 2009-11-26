@@ -56,6 +56,17 @@ class UserState(models.Model):
         return "%s:%s (%s)" % (self.key, self.address, self.state)
 
 
+class JoinConfirmation(models.Model):
+    address = models.EmailField()
+    date = models.DateTimeField(auto_now_add=True)
+    secret = models.CharField(max_length=50)
+    target = models.CharField(max_length=50)
+    mlist = models.ForeignKey(MailingList)
+
+    def __unicode__(self):
+        return self.address
+
+
 class Request(models.Model):
     email = models.CharField(max_length=512)
     links = models.BooleanField()

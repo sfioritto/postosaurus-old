@@ -17,10 +17,6 @@ def POSTING(message, list_name=None, host=None):
 
     We also ensure that they don't receive a duplicate of the
     email they were just sent.
-
-    TODO: Eventually this is where we will dump messages into
-    queues so we can do extra work on them, like extract links,
-    files, photos, etc.
     """
 
     allrecpts = mailinglist.all_recpts(message)
@@ -40,6 +36,11 @@ def POSTING(message, list_name=None, host=None):
         q.push(delivery)
 
     return POSTING
+
+
+@route_like(POSTING)
+def CONFIRMING_SUBSCRIBE(message, list_name=None, host=None):
+    pass
 
 
 @route_like(POSTING)

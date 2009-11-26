@@ -38,6 +38,10 @@ class JoinConfirmStorage(object):
                                 mlist=mlist)
         conf.save()
 
+    
+    def confirmations(self):
+        return JoinConfirmation.objects.all()
+
 
 class ConfirmationEngine(object):
 
@@ -51,7 +55,7 @@ class ConfirmationEngine(object):
         self.storage = storage
 
 
-    def cancel(self, mlist, target, address, secret):
+    def cancel(self, mlist, target, address, expect_secret):
 
         """
         Used to cancel a pending confirmation.
@@ -101,13 +105,13 @@ class ConfirmationEngine(object):
 
 
     def send(self, relay, mlist, target, message, template, vars):
-
-        confirm = self.register(mlist, target, message)
+        
+        address = message.route_from
+        confirm = self.register(mlist, target, address)
         vars.update(locals())
         msg = view.respond(vars, template, To=message['from'],
                            From="%(confirm)s@%(host)s",
                            Subject="Confirmation required")
-
         msg['Reply-To'] = "%(confirm)s@%(host)s" % vars
 
         relay.deliver(msg)

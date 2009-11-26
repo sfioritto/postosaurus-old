@@ -45,5 +45,5 @@ def CONFIRMING_SUBSCRIBE(message, list_name=None, host=None):
 
 @route_like(POSTING)
 def START(message, list_name=None, host=None):
-    POSTING(message, list_name=list_name, host=host)
+    return POSTING(message, list_name=list_name, host=host)
 

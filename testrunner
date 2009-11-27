@@ -1,1 +1,2 @@
-webapp/./manage.py test
+#!/bin/bash
+webapp/./manage.py test $1

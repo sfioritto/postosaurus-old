@@ -22,12 +22,13 @@ def POSTING(message, list_name=None, host=None):
 
     list_addr = "%s@%s" % (list_name, host)
     if mailinglist.is_subscribed(message['from'], list_name):
+        mlist = mailinglist.find_list(list_name)
 
         #send a request for confirmation to anyone cc'd on this list so they can
         #join the group if they want.    
         allrecpts = mailinglist.all_recpts(message)
         for address in [to for to in allrecpts if not to.endswith(host)]:
-            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', address, 'postosaurus/join-confirmation.msg')
+            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', address, 'postosaurus/join-confirmation.msg', host)
 
         delivery = mailinglist.craft_response(message, list_name, list_addr) 
         mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])
@@ -55,8 +56,8 @@ def START(message, list_name=None, id_number=None, host=None):
         if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
 
             # Let them know they've been added.
-            CONFIRM.notify(relay, mlist, target, message['from'])
-
+            name, address = parseaddr(message['from'])
+            CONFIRM.notify(relay, mlist, 'confirm', address)
             user = mailinglist.find_user(address)
             if not user:
                 user = mailinglist.create_user(address)

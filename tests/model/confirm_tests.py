@@ -23,7 +23,7 @@ teardown()
 
 storage = JoinConfirmStorage()
 engine = ConfirmationEngine(storage)
-
+relay = relay(port=settings.relay_config['port'])
 
 def test_ConfirmationStorage():
     mlist = MailingList.objects.filter(name='confirmtest').all()[0]
@@ -50,10 +50,7 @@ def test_ConfirmationEngine_send():
     action = 'subscribing to'
     host = 'localhost'
 
-    message = mail.MailRequest('fakepeer', 'somedude@localhost',
-                               'testing-subscribe@localhost', 'Fake body.')
-
-    engine.send(relay(port=settings.relay_config['port']), mlist, 'testing', message, 'postosaurus/join-confirmation.msg', locals())
+    engine.send(relay, mlist, 'confirm', 'somedude@localhost', 'postosaurus/join-confirmation.msg', host)
    
     confirm = delivered('confirm')
     assert confirm
@@ -65,6 +62,7 @@ def test_ConfirmationEngine_send():
 
     return confirm
 
+
 def test_ConfirmationEngine_verify():
 
     confirm = test_ConfirmationEngine_send()
@@ -72,14 +70,14 @@ def test_ConfirmationEngine_verify():
     
     resp = mail.MailRequest('fakepeer', '"Somedude Smith" <somedude@localhost>',
                            confirm['Reply-To'], 'Fake body')
-
-    target, _, expect_secret = confirm['Reply-To'].split('-')
+    listname, target, expect_secret = confirm['Reply-To'].split('-')
     expect_secret = expect_secret.split('@')[0]
 
     found = engine.verify(mlist, target, resp['from'], 'invalid_secret')
     assert not found
 
     pending = engine.verify(mlist, target, resp['from'], expect_secret)
+
     assert pending, "Verify failed: %r not in %r." % (expect_secret,
                                                       [c.secret for c in storage.confirmations()])
 

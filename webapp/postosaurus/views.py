@@ -48,10 +48,9 @@ def create_list(request):
             email = form.cleaned_data['email']
             list_name = form.cleaned_data['name']
             mlist = mailinglist.create_list(list_name)
-            user = mailinglist.create_user(email)
-            mailinglist.add_if_not_subscriber(email, list_name)
             CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
             
+            #todo: confirmation page, not list page.
             return HttpResponseRedirect(reverse(list_created))
     else:
         form = MailingListForm() # An unbound form

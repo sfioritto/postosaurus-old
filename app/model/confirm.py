@@ -2,6 +2,7 @@ import uuid
 from lamson import queue, view
 from email.utils import parseaddr
 from webapp.postosaurus.models import JoinConfirmation
+from app.model import mailinglist
 
 
 class JoinConfirmStorage(object):
@@ -104,30 +105,30 @@ class ConfirmationEngine(object):
             return False
 
 
-    def send_if_not_subscriber(self, relay, mlist, target, address, template, vars):
+    def send_if_not_subscriber(self, relay, mlist, target, address, template, host):
         
         name, addr = parseaddr(address)
         user = mailinglist.find_user(addr)
         if user:
             if mailinglist.find_subscription(addr, mlist.name):
-                self.send(relay, mlist, target, address, template, vars)
+                return self.send(relay, mlist, target, address, template, host)
         else:
-            self.send(relay, mlist, target, address, template, vars)
+            return self.send(relay, mlist, target, address, template, host)
 
 
-    def send(self, relay, mlist, target, address, template, vars):
+    def send(self, relay, mlist, target, address, template, host):
         
         name, addr = parseaddr(address)
         confirm = self.register(mlist, target, addr)
-        vars.update(locals())
-        msg = view.respond(vars, template, To=addr,
+        msg = view.respond(locals(), template, To=addr,
                            From="%(confirm)s@%(host)s",
                            Subject="Confirmation required")
-        msg['Reply-To'] = "%(confirm)s@%(host)s" % vars
+        msg['Reply-To'] = "%(confirm)s@%(host)s" % locals()
 
         relay.deliver(msg)
 
         return msg
+
 
     def notify(self, relay, mlist, target, address):
         

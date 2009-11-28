@@ -4,14 +4,16 @@ from webapp.postosaurus.models import *
 from nose import with_setup
 from email.utils import parseaddr
 from app.model import mailinglist
+from config.settings import CONFIRM
 
-relay = relay(port=8823)
+relay = relay(port=8825)
 sender = "send <sender@sender.com>"
 member = "member <member@member.com>"
 host = "postosaurus.com"
 list_name = "test.list"
 list_addr = "%s@%s" % (list_name, host)
 client = RouterConversation(sender, 'Admin Tests')
+mclient = RouterConversation(member, 'Admin Tests')
 user = None
 
 
@@ -24,16 +26,19 @@ def teardown_func():
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()    
-    JoinConfirmation.all().delete()
+    JoinConfirmation.objects.all().delete()
 
 
-def subscribe_user(address):
+@with_setup(setup_func, teardown_func)
+def test_subscribe_user(sender=sender, client=client):
+
     mlist = MailingList.objects.filter(email = list_addr)[0]
-    mlist.save()
-    sub_name, sub_addr = parseaddr(address)
-    user = mailinglist.create_user(sub_addr)
-    mailinglist.add_if_not_subscriber(address, list_name)
-
+    subs = len(mlist.subscription_set.all())
+    msg = CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', sender, 'postosaurus/join-confirmation.msg', host)
+    client.say(msg['from'], "subscribe me")
+    newsubs = len(mlist.subscription_set.all())
+    assert newsubs == subs + 1, "Should be %s subscriptions but there are %s" % (str(subs + 1), str(newsubs))
+    assert_in_state('app.handlers.admin', list_addr, msg['to'], 'POSTING')
 
 @with_setup(setup_func, teardown_func)
 def test_add_new_user():
@@ -44,9 +49,13 @@ def test_add_new_user():
     """
     
     client.begin()
-    subscribe_user(sender)
+    test_subscribe_user()
     client.say([list_addr, member], "Add member to this list.")
     mlist = MailingList.objects.filter(email = list_addr)[0]
+    assert len(mlist.subscription_set.all()) == 1
+    assert len(JoinConfirmation.objects.all()) == 1
+
+    test_subscribe_user(member, mclient)
     assert len(mlist.subscription_set.all()) == 2
     
 
@@ -59,8 +68,8 @@ def test_subscribers_no_duplicates():
     duplicate email.
     """
 
-    client.begin()
     test_add_new_user()
+    client.begin()
     assert queue().count() == 0, "There are %s messages in the queue should be 0." % queue().count()
 
 @with_setup(setup_func, teardown_func)
@@ -72,9 +81,8 @@ def test_existing_user_posts_message():
     """
 
     client.begin()
-    subscribe_user(sender)
-    subscribe_user(member)
-    test_forwards_to_posting()
+    test_subscribe_user()
+    test_subscribe_user(member, mclient)
     clear_queue()
     msg = client.say(list_addr, "My first message.")
     # only one message should be sent to member.
@@ -92,24 +100,3 @@ def test_non_user_posts_message():
     client.begin()
     msg = client.say(list_addr, "My first message.")
     assert not delivered(list_addr)
-
-
-@with_setup(setup_func, teardown_func)
-def test_forwards_to_posting():
-
-    """
-    Makes sure that the first message sent moves a user into the POSTING state.
-    """
-
-    subscribe_user(sender)
-    client.begin()
-    client.say(list_addr, "Test that forward works.")
-    name, addr = parseaddr(sender)
-    assert_in_state('app.handlers.admin', list_addr, addr, 'POSTING')
-
-
-
-
-
-
-

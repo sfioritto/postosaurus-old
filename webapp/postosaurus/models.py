@@ -41,15 +41,15 @@ class MailingList(models.Model):
 
     
     def links_url(self):
-        pass
+        reverse('webapp.postosaurus.views.links', args=[self.name])
 
 
     def members_url(self):
-        pass
+        reverse('webapp.postosaurus.views.members', args=[self.name])
 
 
     def archive_url(self):
-        reverse('webapp.postosaurus.views.archive_overview', listname=mlist.name)
+        reverse('webapp.postosaurus.views.archive_overview', args=[self.name])
 
 
     

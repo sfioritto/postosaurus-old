@@ -40,53 +40,33 @@ def landing(request):
             }, context_instance = RequestContext(request))
  
 
-# def create_list(request):
-#     if request.method == 'POST':
-#         form = MailingListForm(request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data['email']
-#             list_name = form.cleaned_data['name']
-#             mlist = mailinglist.create_list(list_name)
-#             user = mailinglist.create_user(email)
-#             mailinglist.add_if_not_subscriber(email, list_name)
-#             subject = 'Welcome to your first postosaurus group -- %s' % mlist.email
-#             t = loader.get_template('postosaurus/startemail.txt')
-#             c = Context({
-#                     'user' : user,
-#                     'mlist' : mlist
-#                     })
-
-#             body = t.render(c)
-#             send_mail(subject, body, mlist.email,
-#                       [user.email], fail_silently=False)
-
-#             return HttpResponseRedirect(reverse(list_created))
-#     else:
-#         form = MailingListForm() # An unbound form
-
-#     return render_to_response('landing/landing.html', {
-#         'form': form,
-#     }, context_instance = RequestContext(request))
-
-
 def create_list(request):
-    if request.method =='GET':
-        return render_to_response("landing/signup.html", {
-            'form' : MailingListForm(),
-            }, context_instance = RequestContext(request))
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = MailingListForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            links = form.cleaned_data['links']
-            files = form.cleaned_data['files']
-            tasks = form.cleaned_data['tasks']
-            aRequest = Request(email=email, links=links, files=files, tasks=tasks)
-            aRequest.save()
-            return render_to_response('landing/beta.html', {
-                    'form' : form,
-                    }, context_instance = RequestContext(request))
-    return render_to_response('landing/landing.html')
+            list_name = form.cleaned_data['name']
+            mlist = mailinglist.create_list(list_name)
+            user = mailinglist.create_user(email)
+            mailinglist.add_if_not_subscriber(email, list_name)
+            subject = 'Welcome to your first postosaurus group -- %s' % mlist.email
+            t = loader.get_template('postosaurus/startemail.txt')
+            c = Context({
+                    'user' : user,
+                    'mlist' : mlist
+                    })
+
+            body = t.render(c)
+            send_mail(subject, body, mlist.email,
+                      [user.email], fail_silently=False)
+
+            return HttpResponseRedirect(reverse(list_created))
+    else:
+        form = MailingListForm() # An unbound form
+
+    return render_to_response('landing/landing.html', {
+        'form': form,
+    }, context_instance = RequestContext(request))
 
 
 def create_user(request):
@@ -107,6 +87,7 @@ def create_user(request):
             #never populate the email address of the django model. This is duplicated
             #in the postosaurus user model.
             djangouser = DjangoUser.objects.create_user(username, '', password)
+            djangouser.save()
             user = mailinglist.find_user(email)
             if not user:
                 user = User(email=email)

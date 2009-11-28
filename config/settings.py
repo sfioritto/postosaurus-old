@@ -17,8 +17,10 @@ handlers = ['app.handlers.admin']
 
 queue_handlers = ['app.handlers.queue']
 
-router_defaults = {'host': 'postosaurus\\.com',
+router_defaults = {
+    'host': 'postosaurus\\.com',
     'list_name': '[a-zA-Z0-9\.]+',
+    'id_number': '[a-z0-9]+',
 }
 
 template_config = {'dir': 'webapp', 'module': 'templates'}

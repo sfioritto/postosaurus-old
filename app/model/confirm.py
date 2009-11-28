@@ -87,7 +87,7 @@ class ConfirmationEngine(object):
         secret = self.make_random_secret()
         self.storage.store(mlist, target, address, secret)
 
-        return "%s-confirm-%s" % (target, secret)
+        return "%s-%s-%s" % (mlist.name, target, secret)
 
 
     def verify(self, mlist, target, address, guess):
@@ -104,17 +104,30 @@ class ConfirmationEngine(object):
             return False
 
 
-    def send(self, relay, mlist, target, message, template, vars):
+    def send_if_not_subscriber(self, relay, mlist, target, address, template, vars):
         
-        address = message.route_from
-        confirm = self.register(mlist, target, address)
+        name, addr = parseaddr(address)
+        user = mailinglist.find_user(addr)
+        if user:
+            if mailinglist.find_subscription(addr, mlist.name):
+                self.send(relay, mlist, target, address, template, vars)
+        else:
+            self.send(relay, mlist, target, address, template, vars)
+
+
+    def send(self, relay, mlist, target, address, template, vars):
+        
+        name, addr = parseaddr(address)
+        confirm = self.register(mlist, target, addr)
         vars.update(locals())
-        msg = view.respond(vars, template, To=message['from'],
+        msg = view.respond(vars, template, To=addr,
                            From="%(confirm)s@%(host)s",
                            Subject="Confirmation required")
         msg['Reply-To'] = "%(confirm)s@%(host)s" % vars
 
         relay.deliver(msg)
+
+        return msg
 
 
     def clear(self):

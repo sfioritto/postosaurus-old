@@ -24,6 +24,7 @@ def teardown_func():
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()    
+    JoinConfirmation.all().delete()
 
 
 def subscribe_user(address):

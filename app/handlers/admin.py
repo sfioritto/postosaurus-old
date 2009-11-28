@@ -1,8 +1,8 @@
 import logging
 from lamson.routing import route, route_like, stateless
-from config.settings import relay
+from config.settings import relay, CONFIRM
 from lamson import view, queue
-from app.model import mailinglist, links, archive
+from app.model import mailinglist, links, archive, confirm
 from types import ListType
 from email.utils import parseaddr
 
@@ -19,31 +19,50 @@ def POSTING(message, list_name=None, host=None):
     email they were just sent.
     """
 
-    allrecpts = mailinglist.all_recpts(message)
-    
-    for address in [to for to in allrecpts if not to.endswith(host)]:
-        user = mailinglist.find_user(address)
-        if not user:
-            mailinglist.create_user(address)
-        mailinglist.add_if_not_subscriber(address, list_name)
 
     list_addr = "%s@%s" % (list_name, host)
     if mailinglist.is_subscribed(message['from'], list_name):
+
+        #send a request for confirmation to anyone cc'd on this list so they can
+        #join the group if they want.    
+        allrecpts = mailinglist.all_recpts(message)
+        for address in [to for to in allrecpts if not to.endswith(host)]:
+            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', address, 'postosaurus/join-confirmation.msg')
+
         delivery = mailinglist.craft_response(message, list_name, list_addr) 
         mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])
-        #if we end up with a queue model file, put this in there.
+
         q = queue.Queue("run/work")
         q.push(delivery)
 
     return POSTING
 
 
-@route_like(POSTING)
-def CONFIRMING_SUBSCRIBE(message, list_name=None, host=None):
-    pass
+@route('(list_name)-confirm-(id_number)@(host)')
+def START(message, list_name=None, id_number=None, host=None):
+    
+    """
+    The start state looks for confirmation emails and move users with valid
+    confirmation emails into a posting state. We also create the user's
+    postosaurus account (if needed) and subscription here.
 
+    This prevents users from being added to a list if they
+    don't want to be.
+    """
 
-@route_like(POSTING)
-def START(message, list_name=None, host=None):
-    return POSTING(message, list_name=list_name, host=host)
+    mlist = mailinglist.find_list(list_name)
+    if mlist:
+        if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
+
+            # Let them know they've been added.
+            CONFIRM.notify(mlist, target, message['from'])
+
+            user = mailinglist.find_user(address)
+            if not user:
+                user = mailinglist.create_user(address)
+            mailinglist.add_if_not_subscriber(address, list_name)
+
+            return POSTING
+
+    return START
 

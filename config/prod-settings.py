@@ -5,9 +5,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'webapp.settings'
 
 from app.model import confirm
 
-relay_config = {'host': 'localhost', 'port': 25}
+relay_config = {'host': 'localhost', 'port': 8825}
 
-receiver_config = {'host': '0.0.0.0', 'port': 8823}
+receiver_config = {'host': '0.0.0.0', 'port': 25}
 
 queue_config = {'queue' : 'run/work', 'sleep' : 10}
 

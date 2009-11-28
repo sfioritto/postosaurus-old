@@ -91,3 +91,6 @@ INSTALLED_APPS = (
 )
 
 STATIC_DOC_ROOT = '/home/sean/deploy/postosaurus/media'
+LOGIN_URL = '/app/login/'
+LOGIN_REDIRECT_URL = '/app/user/'
+AUTH_PROFILE_MODULE = 'postosaurus.user'

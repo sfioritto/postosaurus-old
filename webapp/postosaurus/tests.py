@@ -6,5 +6,5 @@ class MailingListTestCase(unittest.TestCase):
         self.list = MailingList(name="bob", email="bob")
 
     def testName(self):
-        self.assertEquals(self.list.name(), 'bob')
+        self.assertEquals(self.list.name, 'bob')
 

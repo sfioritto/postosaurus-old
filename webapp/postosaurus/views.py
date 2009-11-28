@@ -11,6 +11,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import login, authenticate
+from django.test.client import Client
 from webapp.postosaurus.models import *
 from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  

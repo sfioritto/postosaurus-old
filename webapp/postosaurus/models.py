@@ -49,8 +49,7 @@ class MailingList(models.Model):
 
 
     def archive_url(self):
-        # reverse('webapp.postosaurus.views.archive_overview')
-        pass
+        reverse('webapp.postosaurus.views.archive_overview', listname=mlist.name)
 
 
     

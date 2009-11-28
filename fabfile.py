@@ -53,6 +53,7 @@ def switch(hash):
         sudo("ln -s %s/snapshots/%s/config /tmp/live_tmp && sudo mv -Tf /tmp/live_tmp /var/local/postosaurus/config" % (env.prodhome, hash))
     with cd(env.approot):
         run("cp webappsettings.py webapp/settings.py")
+        run("cp config/prod-settings.py config/settings.py")
 
 
 def reboot():

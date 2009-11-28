@@ -1,4 +1,5 @@
 import random
+import jinja2
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, Http404
 from django.core.exceptions import PermissionDenied
@@ -12,11 +13,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import login, authenticate
 from django.test.client import Client
-from config.settings import relay, CONFIRM
 from webapp.postosaurus.models import *
 from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  
 import webapp.settings as settings
+from lamson import view
+
+# relay is created at runtime in boot.py for lamson, but django
+# doesn't know about it, so I create it here. Might be better
+# to just use built in django email stuff instead of lamson?
+from config import settings
+from lamson.server import Relay
+settings.relay = Relay(host=settings.relay_config['host'], 
+                       port=settings.relay_config['port'], debug=1)
+
+#same thing here for the loader.
+view.LOADER = jinja2.Environment(
+    loader=jinja2.PackageLoader(settings.template_config['dir'], 
+                                settings.template_config['module']))
+
+
+from config.settings import relay, CONFIRM
+
 
 AuthenticationForm.base_fields['username'].max_length = 75 
 
@@ -43,19 +61,25 @@ def landing(request):
 
 def create_list(request):
     if request.method == 'POST':
+
         form = MailingListForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            list_name = form.cleaned_data['name']
+            list_name = form.cleaned_data['groupname']
             mlist = mailinglist.create_list(list_name)
             CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
             
-            #todo: confirmation page, not list page.
             return HttpResponseRedirect(reverse(list_created))
+
+        else:
+            return render_to_response('landing/signup.html', {
+                    'form': form,
+                    }, context_instance = RequestContext(request))
+
     else:
         form = MailingListForm() # An unbound form
 
-    return render_to_response('landing/landing.html', {
+    return render_to_response('landing/signup.html', {
         'form': form,
     }, context_instance = RequestContext(request))
 

@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from email.utils import formataddr
 from django.contrib.auth.models import User as DjangoUser
+from django.core.urlresolvers import reverse
 
 
 class User(models.Model):
@@ -33,6 +34,26 @@ class MailingList(models.Model):
     name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
 
+
+    def list_url(self):
+        pass
+    url = property(list_url)
+
+    
+    def links_url(self):
+        pass
+
+
+    def members_url(self):
+        pass
+
+
+    def archive_url(self):
+        # reverse('webapp.postosaurus.views.archive_overview')
+        pass
+
+
+    
     def __unicode__(self):
         return self.name
 

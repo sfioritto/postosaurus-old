@@ -1,4 +1,3 @@
-import logging
 from lamson.routing import route, route_like, stateless
 from config.settings import relay, CONFIRM
 from lamson import view, queue
@@ -54,7 +53,6 @@ def START(message, list_name=None, id_number=None, host=None):
     mlist = mailinglist.find_list(list_name)
     if mlist:
         if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
-
             # Let them know they've been added.
             name, address = parseaddr(message['from'])
             CONFIRM.notify(relay, mlist, 'confirm', address)
@@ -64,6 +62,5 @@ def START(message, list_name=None, id_number=None, host=None):
             mailinglist.add_if_not_subscriber(address, list_name)
 
             return POSTING
-
     return START
 

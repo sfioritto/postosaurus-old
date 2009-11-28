@@ -95,9 +95,7 @@ class ConfirmationEngine(object):
 
         assert guess, "Must give an expected ID number."
         name, addr = parseaddr(address)
-
         secret = self.storage.get(mlist, target, addr)
-
         if secret == guess:
             self.storage.delete(mlist, target, addr)
             return True
@@ -105,7 +103,7 @@ class ConfirmationEngine(object):
             return False
 
 
-    def send_if_not_subscriber(self, relay, mlist, target, address, template, host):
+    def send_if_not_subscriber(self, relay, mlist, target, address, template, host='postosaurus.com'):
         
         name, addr = parseaddr(address)
         user = mailinglist.find_user(addr)

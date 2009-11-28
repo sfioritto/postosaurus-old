@@ -26,7 +26,7 @@ class ListNameField(forms.Field):
 class MailingListForm(forms.Form):
 
     email = forms.EmailField(max_length=75)
-    name = ListNameField()
+    groupname = ListNameField()
 
 
 class SignupForm(forms.Form):

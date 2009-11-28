@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User as DjangoUser
 from django.contrib.auth import login, authenticate
 from django.test.client import Client
+from config.settings import relay, CONFIRM
 from webapp.postosaurus.models import *
 from webapp.forms import SignupForm, MailingListForm, UserAccountForm
 from email.utils import parseaddr  
@@ -49,17 +50,8 @@ def create_list(request):
             mlist = mailinglist.create_list(list_name)
             user = mailinglist.create_user(email)
             mailinglist.add_if_not_subscriber(email, list_name)
-            subject = 'Welcome to your first postosaurus group -- %s' % mlist.email
-            t = loader.get_template('postosaurus/startemail.txt')
-            c = Context({
-                    'user' : user,
-                    'mlist' : mlist
-                    })
-
-            body = t.render(c)
-            send_mail(subject, body, mlist.email,
-                      [user.email], fail_silently=False)
-
+            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
+            
             return HttpResponseRedirect(reverse(list_created))
     else:
         form = MailingListForm() # An unbound form

@@ -129,6 +129,22 @@ class ConfirmationEngine(object):
 
         return msg
 
+    def notify(self, relay, mlist, target, address):
+        
+        if target == 'confirm':
+            name, addr = parseaddr(address)
+            msg = view.respond(locals(), 'postosaurus/welcome.msg', To=addr,
+                               From=mlist.email,
+                               Subject='Welcome to the "%s" group.' % mlist.name)
+            msg['Reply-To'] = mlist.email
+
+            relay.deliver(msg)
+
+            return msg
+
+        else:
+            return None
+
 
     def clear(self):
 

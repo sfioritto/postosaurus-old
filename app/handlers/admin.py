@@ -55,7 +55,7 @@ def START(message, list_name=None, id_number=None, host=None):
         if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
 
             # Let them know they've been added.
-            CONFIRM.notify(mlist, target, message['from'])
+            CONFIRM.notify(relay, mlist, target, message['from'])
 
             user = mailinglist.find_user(address)
             if not user:

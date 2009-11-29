@@ -202,10 +202,6 @@ p.directions{
     clear: both;
 }
 
-#left {
-    background-color: rgb(240, 240, 240);
-}
-
 #top{
     background-color: rgb(153, 205, 223);
 }

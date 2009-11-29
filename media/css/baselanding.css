@@ -1,31 +1,31 @@
+/*layout rules*/
+
+#left, #right{
+    margin-top: 30px;
+    float: left;
+}
+
+#left{
+    width: 750px;
+    float: left;
+}
+
+#right{
+    width: 200px;
+}
+
+#top, #left {
+    padding-left: 80px;
+}
+
 #top {
     background-color: rgb(153, 205, 223);
     padding-top: 15px;
     padding-bottom: 15px;
-    padding-left: 80px;
     clear: both;
     width: 750px;
 }
-
-
-.header h1, .header h2{
-    margin: 0;
-}
-
-.header h1{
-    font-family: arial;
-    font-weight: normal;
-    font-size: 18px;
-    color: rgb(40, 40, 40);
-
-}
-
-.header h2{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgb(120, 120, 120);
-}
+/* end layout rules*/
 
 ul#topnav{
     padding: 0;
@@ -35,29 +35,13 @@ ul#topnav{
 }
 
 ul#topnav li{
-    display: inline;
     font-size: 10px;
     font-family: verdana;
     float: right;
     margin-right: 15px;
-
 }
 
-ul#topnav li a{
-    font-size: 10px;
-    font-family: verdana;
-    float: right;
-    margin-right: 5px;
-}
-
-.header{
-    background-color: rgb(153, 205, 223);
-    padding-top: 15px;
-    padding-bottom: 18px;
-    padding-left: 80px;
-}
-
-#top h1, h2{
+#top h1, #top h2{
     margin: 0;
 }
 
@@ -95,11 +79,6 @@ ul#topnav li a{
     color: rgb(120, 120, 120);
 }
 
-#top h1, h2{
-    margin: 0;
-}
-
-/* end header*/
 /*start footer*/
 #footer{
     clear: both;
@@ -113,3 +92,40 @@ ul#topnav li a{
     font-size: 10px;
 }
 /*end bottom styling*/
+
+
+/* Right side styling */
+
+#right ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 15px;
+}
+
+#right p{
+    margin: 0;
+    padding: 0;
+}
+
+#right p.top{
+    font-family: georgia;
+    font-size: 12px;
+    color: rgb(0, 95, 57);
+    margin-top: 25px;
+}
+
+#right p.bottom{
+    font-family: verdana;
+    font-size: 11px;
+    margin-left: 10px;
+    color: rgb(60, 60, 60);
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+/* end right side styling*/
+
+body {
+    margin: 0;
+}

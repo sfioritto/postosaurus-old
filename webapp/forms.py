@@ -22,10 +22,23 @@ class ListNameField(forms.Field):
 
         return list_name
 
+class CustomEmailField(forms.EmailField):
+
+    def clean(self, list_name):
+        """
+        Postosaurus only accepts list names that have alphanumeric
+        characters and a period.
+        """
+        if not list_name:
+            raise forms.ValidationError("You must enter your email address to create a group.")
+        else:
+            return forms.EmailField.clean(self, list_name)
+
+
 
 class MailingListForm(forms.Form):
 
-    email = forms.EmailField(max_length=75)
+    email = CustomEmailField(max_length=75)
     groupname = ListNameField()
 
 

@@ -1,7 +1,6 @@
 <head>
 <title>Postosaurus -- Lightweight Group Collaboration</title>
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/baselanding.css">
-
 {% block css %}
 {% endblock %}
 </head>
@@ -18,8 +17,16 @@
       <li>Already have a postosaurus list?</li>
   </div>
 
-{% block content %}
-{% endblock %}
+<div id="middle">
+  <div id="left">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div id="right">
+    {% block right %}
+    {% endblock %}
+  </div>
+</div>
 
   <div id="footer">
     <a href="/site_media/html/contact.html">contact</a>

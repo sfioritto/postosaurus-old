@@ -104,6 +104,7 @@ class Message(models.Model):
 
             
 class Link(models.Model):
+
     message = models.ForeignKey(Message)
     mlist = models.ForeignKey(MailingList)
     url = models.CharField(max_length=2083)
@@ -116,7 +117,22 @@ class Link(models.Model):
         return self.url
     
 
+class File(models.Model):
 
+    message = models.ForeignKey(Message)
+    mlist = models.ForeignKey(MailingList)
+    user = models.ForeignKey(User)
+    sha = models.CharField(max_length=40)
+    name = models.CharField(max_length=260)
+    
+
+    def __get_path(self):
+        return ''
+    path = property(__get_path)
+
+
+    def __unicode__(self):
+        return self.name
 
 
 

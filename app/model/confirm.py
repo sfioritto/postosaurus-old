@@ -108,7 +108,7 @@ class ConfirmationEngine(object):
         name, addr = parseaddr(address)
         user = mailinglist.find_user(addr)
         if user:
-            if mailinglist.find_subscription(addr, mlist.name):
+            if not mailinglist.find_subscription(addr, mlist.name):
                 return self.send(relay, mlist, target, address, template, host)
         else:
             return self.send(relay, mlist, target, address, template, host)

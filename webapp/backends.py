@@ -1,6 +1,5 @@
-from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
-from webapp.models import User as PostUser
+from webapp.postosaurus.models import User as PostUser
 
 
 class SettingsBackend:
@@ -12,15 +11,19 @@ class SettingsBackend:
 
     def authenticate(self, username=None, password=None):
         try:
-            user = DjangoUser.objects.get(pk=username)
-            if user.check_password(password):
+            puser = PostUser.objects.get(pk=username)
+            user = puser.user
+            print user.check_password(password)
+            if user and user.check_password(password):
                 return user
-        except DjangoUser.DoesNotExist:
+            else:
+                return None
+        except PostUser.DoesNotExist:
             return None
 
 
     def get_user(self, user_id):
         try:
-            return PostUser.objects.get(pk=user_id)
+            return DjangoUser.objects.get(pk=user_id)
         except PostUser.DoesNotExist:
             return None

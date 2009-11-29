@@ -1,6 +1,7 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/login.css"/>
 {% endblock %}
 
 {% block content %}
@@ -11,16 +12,24 @@
 <form method="post" action="{% url django.contrib.auth.views.login %}">
   <table>
     <tr>
-      <td>{{ form.username.label_tag }}</td>
-      <td>{{ form.username }}</td>
+      <td>
+	<label>
+	  Username or email address
+	</label>
+	{{ form.username }}
+      </td>
     </tr>
     <tr>
-      <td>{{ form.password.label_tag }}</td>
-      <td>{{ form.password }}</td>
+      <td>
+	<label>
+	  {{ form.password.label_tag }}
+	</label>
+	{{ form.password }}
+      </td>
     </tr>
   </table>
   
-  <input type="submit" value="login" />
+  <input type="submit" value="Sign in" />
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
 <p>

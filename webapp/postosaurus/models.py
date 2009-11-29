@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from datetime import datetime
 from email.utils import formataddr
@@ -124,12 +125,19 @@ class File(models.Model):
     user = models.ForeignKey(User)
     sha = models.CharField(max_length=40)
     name = models.CharField(max_length=260)
+    ext = models.CharField(max_length=260)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def hash_name(self):
+        return self.hash + self.ext
+
+    def hash_path(self):
+        filepath = os.path.join(self.mlist.name[0], mlist.name, self.hash_name())
+        return filepath
     
-
-    def __get_path(self):
-        return ''
-    path = property(__get_path)
-
+    def recent_path(self):
+        path = os.path.join(self.mlist.name[0], mlist.name, self.name)
+        return path
 
     def __unicode__(self):
         return self.name

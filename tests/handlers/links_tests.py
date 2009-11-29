@@ -82,6 +82,14 @@ def test_chopped_url():
     assert 'http://www.artic.edu/aic/collections/artwork/34145' in [link.url for link in links]
 
 
+@with_setup(setup_func, teardown_func)
+def test_long_url_1():
+    msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/long-url-1.msg").read())
+    Router.deliver(msg)
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    links = mlist.link_set.all()
+    assert len(links) == 1
+    assert 'http://www.google.com/reader/view/#stream/feed%2Fhttp%3A%2F%2Fsethgodin.typepad.com%2Fseths_blog%2Findex.rdf' in [link.url for link in links]
 
 
 

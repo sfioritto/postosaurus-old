@@ -53,8 +53,6 @@ def not_added(mlist, url):
 def extract_urls_from_text(body):
     
     candidates = re.findall(findurls, body, re.VERBOSE)
-    print candidates
-    print body
     urls = []
     for url in candidates:
         if re.match(crazy, url):

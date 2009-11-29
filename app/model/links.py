@@ -4,6 +4,23 @@ from webapp.postosaurus.models import *
 from app.model import mailinglist
 
 
+# This is some crazy regular expression I found on the internets for validating a url.
+crazy = "(?#Protocol)(?:(?:ht|f)tp(?:s?)\:\/\/|~/|/)?(?#Username:Password)(?:\w+:\w+@)?(?#Subdomains)(?:(?:[-\w]+\.)+(?#TopLevel Domains)(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|travel|[a-z]{2}))(?#Port)(?::[\d]{1,5})?(?#Directories)(?:(?:(?:/(?:[-\w~!$+|.,=]|%[a-f\d]{2})+)+|/)+|\?|#)?(?#Query)(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)(?:&(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*(?#Anchor)(?:#(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)?"
+
+
+# This is my dead simple regular expression for extracting urls. I run this first and then check it against
+# the crazy regular expression.   
+findurls = """
+[\n\b"\(,]+                 # urls must be enclosed in quotes, parenthesis, commas, or word breaks
+(?:(?:.+://)?(?:www\.)?){1,2}     # Anything like http:// and www is accepted, but optional. At least one required.
+[\n\b"\),]+                 # closing boundary
+"""
+
+findurls = """
+\s((?:.+://)(?:www\.))
+"""
+
+
 def add_link(list_name, url, message):
     mlist = mailinglist.find_list(list_name)
     if not_added(mlist, url):
@@ -30,7 +47,15 @@ def not_added(mlist, url):
 
 
 def extract_urls_from_text(body):
-    crazy = "(?#Protocol)(?:(?:ht|f)tp(?:s?)\:\/\/|~/|/)?(?#Username:Password)(?:\w+:\w+@)?(?#Subdomains)(?:(?:[-\w]+\.)+(?#TopLevel Domains)(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|travel|[a-z]{2}))(?#Port)(?::[\d]{1,5})?(?#Directories)(?:(?:(?:/(?:[-\w~!$+|.,=]|%[a-f\d]{2})+)+|/)+|\?|#)?(?#Query)(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)(?:&(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*(?#Anchor)(?:#(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)?"
-    return re.findall(crazy, body)
+    
+    candidates = re.findall(findurls, body, re.VERBOSE)
+    print candidates
+    print body
+    urls = []
+    for url in candidates:
+        if re.match(crazy, url):
+            urls.append(url)
+
+    return urls
 
 

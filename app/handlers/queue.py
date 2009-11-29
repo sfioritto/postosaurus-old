@@ -23,7 +23,7 @@ def START(message, list_name=None, host=None):
         # relational data, like what links are related to a message? A
         # key value store is not good at storing this kind of data.
         dbmessage = archive.store_message(list_name, message)
-
+        
         body = message.body()
         if body:
             urls = links.extract_urls_from_text(body)

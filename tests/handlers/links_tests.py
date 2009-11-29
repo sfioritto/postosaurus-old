@@ -1,3 +1,4 @@
+from config import settings, testing
 from lamson import server
 from lamson.testing import *
 from lamson.mail import MailRequest
@@ -6,6 +7,7 @@ from webapp.postosaurus.models import *
 from nose import with_setup
 from email.utils import parseaddr
 from app.model import mailinglist
+from tests.handlers.admin_tests import test_subscribe_user
 
 
 sender = "send <sender@sender.com>"
@@ -31,6 +33,8 @@ def teardown_func():
     Subscription.objects.all().delete()
     User.objects.all().delete()
     Link.objects.all().delete()
+    clear_queue()
+    clear_queue('run/work')
 
 
 @with_setup(setup_func, teardown_func)

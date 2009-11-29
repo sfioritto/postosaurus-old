@@ -92,6 +92,20 @@ def test_long_url_1():
     assert 'http://www.google.com/reader/view/#stream/feed%2Fhttp%3A%2F%2Fsethgodin.typepad.com%2Fseths_blog%2Findex.rdf' in [link.url for link in links]
 
 
+@with_setup(setup_func, teardown_func)
+def test_two_urls():
+    msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/two-urls.msg").read())
+    Router.deliver(msg)
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    links = mlist.link_set.all()
+    assert len(links) == 2
+    assert 'http://www.rolfnelson.com/2009/11/your-work-habits-and-happiness.html' in [link.url for link in links]
+    assert 'http://www.rolfnelson.com/2009/11/how-to-follow-through-emerging-science.html' in [link.url for link in links]
+
+
+
+
+
 
 
 

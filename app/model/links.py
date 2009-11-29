@@ -16,10 +16,6 @@ findurls = """
 [\n\b"\),]+                 # closing boundary
 """
 
-findurls = """
-\s((?:.+://)(?:www\.))
-"""
-
 
 def add_link(list_name, url, message):
     mlist = mailinglist.find_list(list_name)

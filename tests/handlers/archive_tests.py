@@ -53,7 +53,7 @@ def test_archive_message():
 
 @with_setup(setup_func, teardown_func)
 def test_complicated_archive_message():
-    msg = MailRequest('fakeperr', sender, list_addr, open("tests/archive.msg").read())
+    msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/archive.msg").read())
     Router.deliver(msg)
     mlist = MailingList.objects.filter(email = list_addr)[0]
     messageid = mlist.message_set.all()[0].id
@@ -65,11 +65,11 @@ def test_complicated_archive_message():
 
 
 def test_to_json():
-    msg = MailRequest('fakeperr', None, None, open("tests/bounce.msg").read())
+    msg = MailRequest('fakeperr', None, None, open("tests/data/bounce.msg").read())
 
     resp = mailinglist.craft_response(msg, 'test.list', 'test.list@librelist.com')
 
-    resp.attach(filename="tests/bounce.msg", content_type="image/png", disposition="attachment")
+    resp.attach(filename="tests/data/bounce.msg", content_type="image/png", disposition="attachment")
     resp.to_message() 
 
     js = archive.to_json(resp.base)

@@ -22,15 +22,15 @@ from lamson import view
 # relay is created at runtime in boot.py for lamson, but django
 # doesn't know about it, so I create it here. Might be better
 # to just use built in django email stuff instead of lamson?
-from config import settings
+from config import settings as appsettings
 from lamson.server import Relay
-settings.relay = Relay(host=settings.relay_config['host'], 
-                       port=settings.relay_config['port'], debug=1)
+appsettings.relay = Relay(host=appsettings.relay_config['host'], 
+                       port=appsettings.relay_config['port'], debug=1)
 
 #same thing here for the loader.
 view.LOADER = jinja2.Environment(
-    loader=jinja2.PackageLoader(settings.template_config['dir'], 
-                                settings.template_config['module']))
+    loader=jinja2.PackageLoader(appsettings.template_config['dir'], 
+                                appsettings.template_config['module']))
 
 
 from config.settings import relay, CONFIRM

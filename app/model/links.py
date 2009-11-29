@@ -8,14 +8,22 @@ from app.model import mailinglist
 crazy = "(?#Protocol)(?:(?:ht|f)tp(?:s?)\:\/\/|~/|/)?(?#Username:Password)(?:\w+:\w+@)?(?#Subdomains)(?:(?:[-\w]+\.)+(?#TopLevel Domains)(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|travel|[a-z]{2}))(?#Port)(?::[\d]{1,5})?(?#Directories)(?:(?:(?:/(?:[-\w~!$+|.,=]|%[a-f\d]{2})+)+|/)+|\?|#)?(?#Query)(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)(?:&(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*(?#Anchor)(?:#(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)?"
 
 
-# This is my dead simple regular expression for extracting urls. I run this first and then check it against
+# This is my 'simpler' regular expression for extracting urls. I run this first and then check it against
 # the crazy regular expression.   
 findurls = """
-[\n\b"\(,]+                 # urls must be enclosed in quotes, parenthesis, commas, or word breaks
-(?:(?:.+://)?(?:www\.)?){1,2}     # Anything like http:// and www is accepted, but optional. At least one required.
-[\n\b"\),]+                 # closing boundary
+(?:^|[\^\n\s"\(,]+)                    # urls must be enclosed in quotes, parenthesis, commas, or word breaks
+(                              # group the url
+(?:\w+://)?                    # Anything like http:// is accepted, but optional.
+(?:www)?                       # Optionally followed by www
+(?:[^@.\s]+\.)+                # (Sub)domain(s)
+(?:com|org|net|gov|mil|biz|    # Top level domains.
+info|mobi|name|aero|jobs|
+museum|travel|[a-z]{2}){1}
+(?:\S+)?                            # Path to resource
+)                              # end url group
+(?:$|[\n\s"\),]+)                    # closing boundary
 """
-
+#
 
 def add_link(list_name, url, message):
     mlist = mailinglist.find_list(list_name)

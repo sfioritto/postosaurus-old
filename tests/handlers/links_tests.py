@@ -48,9 +48,9 @@ def test_extract_urls_from_text():
     client.begin()
     client.say(list_addr, "Add member to this list. postosaurus.com http://www.google.com")
     mlist = MailingList.objects.filter(email = list_addr)[0]
-    assert len(mlist.link_set.all()) == 2
+    assert len(mlist.link_set.all()) == 1
     client.say(list_addr, "Add member to this list. www.postosaurus.com http://www.google.com")
-    assert len(mlist.link_set.all()) == 3
+    assert len(mlist.link_set.all()) == 2
 
 
 @with_setup(setup_func, teardown_func)

@@ -44,8 +44,7 @@ Create your account
 -------------------
 
 Before you can use the site for your group you'll need
-to create an account. To do that visit any of the urls above
-or just go here: {{ mlist.url }}
+to create an account. To do that visit any of the urls above.
 
 
 If you have any questions or have any problems getting started just let us

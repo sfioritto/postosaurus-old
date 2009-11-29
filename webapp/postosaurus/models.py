@@ -34,22 +34,17 @@ class MailingList(models.Model):
     name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
 
-
-    def list_url(self):
-        pass
-    url = property(list_url)
-
     
     def links_url(self):
-        reverse('webapp.postosaurus.views.links', args=[self.name])
+        return reverse('webapp.postosaurus.views.links', args=[self.name])
 
 
     def members_url(self):
-        reverse('webapp.postosaurus.views.members', args=[self.name])
+        return reverse('webapp.postosaurus.views.members', args=[self.name])
 
 
     def archive_url(self):
-        reverse('webapp.postosaurus.views.archive_overview', args=[self.name])
+        return reverse('webapp.postosaurus.views.archive_overview', args=[self.name])
 
 
     

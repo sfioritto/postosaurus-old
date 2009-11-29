@@ -1,23 +1,25 @@
-<style>
-  body{
-  padding: 20px;
-}
+{% extends "postosaurus/base.html" %}
 
-  p{
-  font-family: verdana;
-  font-size: 18px;
-}
-</style>
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/thanks.css">
+{% endblock %}
 
-<p>
-  We'll let you know as soon as we open up more beta accounts!
+{% block content %}
+<p class="message">
+  Hi,
 </p>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-8964246-2");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+<p class="message">
+  Thanks for creating a Postosaurus account. You will receive a confirmation email shortly.
+</p>
+<p class="message">
+  Sincerely,<br/>
+  Postosaurus Rex<br/>
+</p>
+<p class="message">
+  P.S.
+  <br/>
+  Roooaaar!
+</p>
+{% endblock %}
+
+

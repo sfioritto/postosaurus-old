@@ -1,7 +1,7 @@
 from lamson.routing import route, route_like, stateless
 from config.settings import relay, CONFIRM
 from lamson import view, queue
-from app.model import mailinglist, links, archive, confirm
+from app.model import mailinglist
 from types import ListType
 from email.utils import parseaddr
 

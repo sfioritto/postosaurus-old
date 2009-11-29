@@ -1,5 +1,7 @@
-from lamson.testing import *
 from lamson import server
+from lamson.testing import *
+from lamson.mail import MailRequest
+from lamson.routing import Router
 from webapp.postosaurus.models import *
 from nose import with_setup
 from email.utils import parseaddr
@@ -66,6 +68,14 @@ def test_text_query_string():
     assert len(mlist.link_set.all()) == 2
 
 
+@with_setup(setup_func, teardown_func)
+def test_chopped_url():
+    msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/chopped-url.msg").read())
+    Router.deliver(msg)
+    mlist = MailingList.objects.filter(email = list_addr)[0]
+    links = mlist.link_set.all()
+    assert len(links) == 2
+    assert 'http://www.artic.edu/aic/collections/artwork/34145' in [link.url for link in links]
 
 
 

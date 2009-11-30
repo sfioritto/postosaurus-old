@@ -15,6 +15,7 @@ member = "member <member@member.com>"
 
 deneen_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/deneen-attachment.msg").read())
 text_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/text-attachment.msg").read())
+two_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/two-attachments.msg").read())
 
 
 def setup_func():
@@ -53,9 +54,14 @@ def test_file_names():
     assert len(names) == 1
     assert names[0] == "customerinterviews.txt"
 
+    names = files.file_names(two_msg)
+    assert len(names) == 2
+    assert names[0] == "sean-text.txt"
+    assert names[1] == "bfioritto_tutoring_reflection.doc"
+
 
 @with_setup(setup_func, teardown_func)
-def test_store_file():
+def test_store_files():
     
     """
     Stores a file in the file system and creates a database record.
@@ -65,3 +71,9 @@ def test_store_file():
     dbmessage = archive.store_message(list_name, text_msg)
     dbfile = files.store_file(list_name, text_msg, "customerinterviews.txt", dbmessage)
     assert dbfile.name == "customerinterviews.txt"
+
+    user = mailinglist.create_user(two_msg['from'])
+    dbmessage = archive.store_message(list_name, two_msg)
+    dbfile = files.store_file(list_name, two_msg, "sean-text.txt", dbmessage)
+    assert dbfile.name == "sean-text.txt"
+

@@ -1,5 +1,5 @@
 import re
-from app.model import links, archive
+from app.model import links, archive, files
 from lamson.routing import route, stateless
 from lamson import queue
 from django.db import transaction
@@ -24,6 +24,8 @@ def START(message, list_name=None, host=None):
         # key value store is not good at storing this kind of data.
         dbmessage = archive.store_message(list_name, message)
         
+        for name in files.file_names(message):
+            files.store_file(list_name, message, name, dbmessage)
         body = message.body()
         if body:
             urls = links.extract_urls_from_text(body)

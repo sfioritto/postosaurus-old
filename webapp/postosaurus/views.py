@@ -249,7 +249,7 @@ class CleanMessage(object):
 
         """
         Takes json from the archive and turns
-        it into lean json for the archive template.
+        it into clean json for the archive template.
         """
         
         if message['body']:

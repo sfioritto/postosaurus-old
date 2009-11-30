@@ -34,9 +34,10 @@ def create_list(list_name):
     return mlist
 
 def create_user(address):
-    user = find_user(address)
+    name, addr = parseaddr(address)
+    user = find_user(addr)
     if not user:
-        user = User(email = address)
+        user = User(email = addr)
         user.save()
     return user
 

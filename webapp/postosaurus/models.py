@@ -123,21 +123,25 @@ class File(models.Model):
     message = models.ForeignKey(Message)
     mlist = models.ForeignKey(MailingList)
     user = models.ForeignKey(User)
-    sha = models.CharField(max_length=40)
+    sha = models.CharField(max_length=40, unique = True)
     name = models.CharField(max_length=260)
     ext = models.CharField(max_length=260)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def hash_name(self):
-        return self.hash + self.ext
+        return self.sha + self.ext
 
     def hash_path(self):
-        filepath = os.path.join(self.mlist.name[0], mlist.name, self.hash_name())
+        filepath = os.path.join(self.mlist.name[0], self.mlist.name, self.hash_name())
         return filepath
     
     def recent_path(self):
-        path = os.path.join(self.mlist.name[0], mlist.name, self.name)
+        path = os.path.join(self.mlist.name[0], self.mlist.name, self.name)
         return path
+
+    def directory_parts(self):
+        path = os.path.split(self.hash_path())[0]
+        return path.split("/")
 
     def __unicode__(self):
         return self.name

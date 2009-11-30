@@ -29,3 +29,4 @@ CONFIRM_STORAGE = confirm.JoinConfirmStorage()
 CONFIRM = confirm.ConfirmationEngine(CONFIRM_STORAGE)
 
 # the config/boot.py will turn these values into variables set in settings
+FILES_DIR = "files"

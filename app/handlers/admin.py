@@ -67,6 +67,6 @@ def POSTING(message, list_name=None, id_number=None, host=None):
             mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])
 
             q = queue.Queue("run/work")
-            q.push(delivery)
+            q.push(message)
 
     return POSTING

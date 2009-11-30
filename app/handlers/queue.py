@@ -24,8 +24,10 @@ def START(message, list_name=None, host=None):
         # key value store is not good at storing this kind of data.
         dbmessage = archive.store_message(list_name, message)
         
+        # store attached files for retrieval
         for name in files.file_names(message):
             files.store_file(list_name, message, name, dbmessage)
+
         body = message.body()
         if body:
             urls = links.extract_urls_from_text(body)

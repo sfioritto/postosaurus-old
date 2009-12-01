@@ -219,6 +219,33 @@ def links(request, listname):
             'links': links
             }, context_instance = RequestContext(request))
 
+
+@login_required
+def files(request, listname):
+
+    user = request.user.get_profile()
+    mlist = mailinglist.find_list(listname)
+    _authorize_or_raise(user, mlist)
+    files = mlist.file_set.all().order_by('-created_on')
+
+    paginator = Paginator(files, 20) #sets links per page
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        files = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        files = paginator.page(paginator.num_pages)
+    
+    return render_to_response('postosaurus/files.html', {
+            'mlist': mlist, 
+            'files': files
+            }, context_instance = RequestContext(request))
+
+
 @login_required
 def archive_overview(request, listname):
 
@@ -288,6 +315,7 @@ def user_main(request):
     try:
         user = request.user.get_profile()
         subscriptions = user.subscription_set.all()
+        mlists = [sub.mailing_list for sub in subscriptions]
     except ValueError:
         raise Http404()
 

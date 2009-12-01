@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     (r'^lists/(?P<listname>.+)/links/$', 'webapp.postosaurus.views.links'),
+    (r'^lists/(?P<listname>.+)/files/$', 'webapp.postosaurus.views.files'),
     (r'^lists/(?P<listname>.+)/members/$', 'webapp.postosaurus.views.members'),
     (r'^lists/(?P<listname>.+)/archive/$', 'webapp.postosaurus.views.archive_overview'),
     (r'^lists/(?P<listname>.+)/archive/(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/$', 

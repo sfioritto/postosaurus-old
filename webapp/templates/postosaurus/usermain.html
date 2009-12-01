@@ -11,17 +11,18 @@
 </p>
 <table id="lists">   
   <tbody>
-    {% for subscription in subscriptions %}
+    {% for mlist in mlists %}
     <tr>
       <td class="listname">
 	<p class="listname">
-	  {{ subscription.mailing_list.name }}<span class="domain">@postosaurus.com</span>
+	  {{ mlist.name }}<span class="domain">@postosaurus.com</span>
 	</p>
       </td>
       <td class="links">
-        <a href="{% url webapp.postosaurus.views.members listname=subscription.mailing_list.name %}">Members</a>
-	<a href="{% url webapp.postosaurus.views.archive_overview listname=subscription.mailing_list.name %}">Archive</a>
-	<a href="{% url webapp.postosaurus.views.links listname=subscription.mailing_list.name %}">Links</a>
+        <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
+	<a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
+	<a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
+	<a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
       </td>
     </tr>
     {% endfor %}

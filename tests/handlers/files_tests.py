@@ -1,10 +1,10 @@
 from lamson.testing import *
 from lamson.mail import MailRequest
 from lamson.routing import Router
+from config import settings, testing
 from webapp.postosaurus.models import *
 from nose import with_setup
 from app.model import mailinglist, files
-from config import settings
 from tests.handlers.admin_tests import test_subscribe_user
 import os
 import shutil
@@ -22,6 +22,7 @@ two_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/two-attach
 
 
 def setup_func():
+
     Subscription.objects.all().delete()
     User.objects.all().delete()
 
@@ -38,7 +39,7 @@ def teardown_func():
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()
-    
+
 
 @with_setup(setup_func, teardown_func)
 def test_one_attachment():

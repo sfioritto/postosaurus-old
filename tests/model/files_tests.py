@@ -1,8 +1,8 @@
 from nose import with_setup
+from config import settings
 from webapp.postosaurus.models import *
 from app.model import files, mailinglist, archive
 from lamson.mail import MailRequest
-from config import settings
 import os
 import shutil
 import re

@@ -127,16 +127,17 @@ class File(models.Model):
     name = models.CharField(max_length=260)
     ext = models.CharField(max_length=260)
     created_on = models.DateTimeField(auto_now_add=True)
+    prefix = "/files/"
 
     def hash_name(self):
         return self.sha + self.ext
 
     def hash_path(self):
-        filepath = os.path.join(self.mlist.name[0], self.mlist.name, self.hash_name())
+        filepath = os.path.join(self.prefix, self.mlist.name[0], self.mlist.name, self.hash_name())
         return filepath
     
     def recent_path(self):
-        path = os.path.join(self.mlist.name[0], self.mlist.name, self.name)
+        path = os.path.join(self.prefix, self.mlist.name[0], self.mlist.name, self.name)
         return path
 
     def directory_parts(self):

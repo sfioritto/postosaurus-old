@@ -1,6 +1,6 @@
 from nose.tools import *
 from app.model.confirm import *
-from config import settings
+from config import settings, testing
 from webapp.postosaurus.models import *
 from lamson.testing import *
 from lamson import mail, queue
@@ -23,7 +23,6 @@ teardown()
 
 storage = JoinConfirmStorage()
 engine = ConfirmationEngine(storage)
-relay = relay(port=settings.relay_config['port'])
 
 def test_ConfirmationStorage():
     mlist = MailingList.objects.filter(name='confirmtest').all()[0]
@@ -49,8 +48,8 @@ def test_ConfirmationEngine_send():
     mlist = MailingList.objects.filter(name='confirmtest').all()[0]
     action = 'subscribing to'
     host = 'localhost'
-
-    engine.send(relay, mlist, 'confirm', 'somedude@localhost', 'postosaurus/join-confirmation.msg', host)
+    from config import settings
+    engine.send(settings.relay, mlist, 'confirm', 'somedude@localhost', 'postosaurus/join-confirmation.msg', host)
    
     confirm = delivered('confirm')
     assert confirm

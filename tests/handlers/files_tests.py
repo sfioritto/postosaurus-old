@@ -2,6 +2,7 @@ from lamson.testing import *
 from lamson.mail import MailRequest
 from lamson.routing import Router
 from config import settings, testing
+from webapp import settings as websettings
 from webapp.postosaurus.models import *
 from nose import with_setup
 from app.model import mailinglist, files
@@ -29,9 +30,9 @@ def setup_func():
     mlist = MailingList(name = list_name, email = list_addr)
     mlist.save()
 
-    if os.path.isdir(settings.FILES_DIR):
-        shutil.rmtree(settings.FILES_DIR)
-    os.mkdir(settings.FILES_DIR)
+    if os.path.isdir(websettings.FILES_DIR):
+        shutil.rmtree(websettings.FILES_DIR)
+    os.mkdir(websettings.FILES_DIR)
 
 
 def teardown_func():
@@ -51,7 +52,7 @@ def test_one_attachment():
     
     assert len(msg.file_set.all()) == 1
     attached = msg.file_set.all()[0]
-    path = os.path.join(settings.FILES_DIR, os.path.split(attached.hash_path())[0])
+    path = attached.pathprefix
     assert os.listdir(path)[0] == attached.hash_name()
 
 
@@ -65,11 +66,11 @@ def test_two_attachments():
     msg = mlist.message_set.all()[0]
     assert len(msg.file_set.all()) == 2
     attached = msg.file_set.all()[0]
-    path = os.path.join(settings.FILES_DIR, os.path.split(attached.hash_path())[0])
+    path = attached.pathprefix
     assert os.listdir(path)[0] == attached.hash_name()
 
     attached = msg.file_set.all()[1]
-    path = os.path.join(settings.FILES_DIR, os.path.split(attached.hash_path())[0])
+    path = attached.pathprefix
     assert os.listdir(path)[1] == attached.hash_name()
 
 

@@ -3,7 +3,6 @@ import logging
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'webapp.settings'
 
-from app.model import confirm
 
 relay_config = {'host': 'localhost', 'port': 8825}
 
@@ -25,8 +24,10 @@ router_defaults = {
 
 template_config = {'dir': 'webapp', 'module': 'templates'}
 
+from app.model import confirm
+
 CONFIRM_STORAGE = confirm.JoinConfirmStorage()
 CONFIRM = confirm.ConfirmationEngine(CONFIRM_STORAGE)
 
 # the config/boot.py will turn these values into variables set in settings
-FILES_DIR = "files"
+

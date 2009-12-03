@@ -74,16 +74,17 @@ def store_file(list_name, message, filename, dbmessage):
                   name = filename,
                   ext = os.path.splitext(filename)[1])
     dbfile.save()
+
     try:
         # try to just open the file and create it, assumes the directories already
         # exist, which they may not.
-        pfile = open(os.path.join(settings.FILES_DIR, dbfile.hash_path()), 'w')
+        pfile = open(dbfile.local_path(), 'w')
         pfile.write(file_text(message, filename))
         pfile.close()
     except IOError:
         # The directories haven't been created yet, go
         # through and make 'em.
-        path = settings.FILES_DIR
+        path = ""
         for part in dbfile.directory_parts():
             path = os.path.join(path, part)
             if not os.path.isdir(path):
@@ -91,7 +92,7 @@ def store_file(list_name, message, filename, dbmessage):
 
         #try again. Code duplicated to avoid performance hit checking to see if directory exists every
         #single time. This only needs to be done once per group.
-        pfile = open(os.path.join(settings.FILES_DIR, dbfile.hash_path()), 'w')
+        pfile = open(dbfile.local_path(), 'w')
         pfile.write(file_text(message, filename))
         pfile.close()
 

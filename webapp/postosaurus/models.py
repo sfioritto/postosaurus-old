@@ -1,4 +1,5 @@
 import os
+from webapp import settings
 from django.db import models
 from datetime import datetime
 from email.utils import formataddr
@@ -127,22 +128,69 @@ class File(models.Model):
     name = models.CharField(max_length=260)
     ext = models.CharField(max_length=260)
     created_on = models.DateTimeField(auto_now_add=True)
-    prefix = "/files/"
 
     def hash_name(self):
         return self.sha + self.ext
 
-    def hash_path(self):
-        filepath = os.path.join(self.prefix, self.mlist.name[0], self.mlist.name, self.hash_name())
-        return filepath
-    
-    def recent_path(self):
-        path = os.path.join(self.prefix, self.mlist.name[0], self.mlist.name, self.name)
-        return path
+    def __get_url_prefix(self):
+
+        """
+        The relative path to the file. Tack
+        on prefixes to get the url or path to
+        the file in the filesystem.
+        """
+
+        return os.path.join("files/", self.mlist.name[0], self.mlist.name)
+    urlprefix = property(__get_url_prefix)
+
+
+    def __get_path_prefix(self):
+
+        """
+        The relative path to the file. Tack
+        on prefixes to get the url or path to
+        the file in the filesystem.
+        """
+        return os.path.join(settings.FILES_DIR, self.mlist.name[0], self.mlist.name)
+    pathprefix = property(__get_url_prefix)
+
+    def local_path(self):
+
+        """
+        The local path to the file.
+        """
+
+        return os.path.join(self.pathprefix, self.hash_name())
+
+    def url_path(self):
+        """
+        The files url.
+        """
+        
+#        return os.path.join(self.urlprefix, self.__get_path(self.hash_name()))
+        return os.path.join(self.urlprefix, self.hash_name())
+
+    def recent_local_path(self):
+        """
+        Every file has a most recent version. This is the
+        path to that file.
+        """
+        return os.path.join(self.pathprefix, self.name)
+
+    def recent_url_path(self):
+
+        """
+        Every file has a most recent version. This is the
+        url to that file.
+        """
+
+        return os.path.join(self.urlprefix, self.name)
 
     def directory_parts(self):
-        path = os.path.split(self.hash_path())[0]
-        return path.split("/")
+        """
+        Used to create the directories initially.
+        """
+        return self.pathprefix.split("/")
 
     def __unicode__(self):
         return self.name

@@ -24,7 +24,7 @@
   {% ifchanged %}
   <p class ="date">{{ file.created_on|date:"F j, Y"}}<p>
     {% endifchanged %}
-    <li><a href="{{file.recent_path}}">{{file.name}}</a></li>
+    <li><a href="{{file.recent_url_path}}">{{file.name}}</a></li>
     {% endfor %}
 </ul>          
 {% endblock %}

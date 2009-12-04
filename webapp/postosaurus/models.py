@@ -1,4 +1,5 @@
 import os
+import hashlib
 from webapp import settings
 from django.db import models
 from datetime import datetime
@@ -129,6 +130,10 @@ class File(models.Model):
     ext = models.CharField(max_length=260)
     created_on = models.DateTimeField(auto_now_add=True)
 
+
+    def file_name_hash(self):
+        return hashlib.sha1(self.name).hexdigest()
+    
     def hash_name(self):
         return self.sha + self.ext
 
@@ -139,8 +144,12 @@ class File(models.Model):
         on prefixes to get the url or path to
         the file in the filesystem.
         """
+        path = os.path.join("/files/",
+                            self.mlist.name[0], 
+                            self.mlist.name, 
+                            self.file_name_hash())
+        return path
 
-        return os.path.join("files/", self.mlist.name[0], self.mlist.name)
     urlprefix = property(__get_url_prefix)
 
 
@@ -151,8 +160,13 @@ class File(models.Model):
         on prefixes to get the url or path to
         the file in the filesystem.
         """
-        return os.path.join(settings.FILES_DIR, self.mlist.name[0], self.mlist.name)
-    pathprefix = property(__get_url_prefix)
+
+        path = os.path.join(settings.FILES_DIR,
+                            self.mlist.name[0], 
+                            self.mlist.name, 
+                            self.file_name_hash())
+        return path
+    pathprefix = property(__get_path_prefix)
 
     def local_path(self):
 
@@ -166,8 +180,7 @@ class File(models.Model):
         """
         The files url.
         """
-        
-#        return os.path.join(self.urlprefix, self.__get_path(self.hash_name()))
+        print self.urlprefix
         return os.path.join(self.urlprefix, self.hash_name())
 
     def recent_local_path(self):
@@ -175,6 +188,7 @@ class File(models.Model):
         Every file has a most recent version. This is the
         path to that file.
         """
+
         return os.path.join(self.pathprefix, self.name)
 
     def recent_url_path(self):
@@ -190,6 +204,7 @@ class File(models.Model):
         """
         Used to create the directories initially.
         """
+
         return self.pathprefix.split("/")
 
     def __unicode__(self):

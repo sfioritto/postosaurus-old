@@ -23,6 +23,9 @@ two_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/two-attach
 
 
 def setup_func():
+    MailingList.objects.all().delete()
+    Subscription.objects.all().delete()
+    User.objects.all().delete()
 
     Subscription.objects.all().delete()
     User.objects.all().delete()
@@ -37,10 +40,7 @@ def setup_func():
 
 def teardown_func():
     # clear the database
-    MailingList.objects.all().delete()
-    Subscription.objects.all().delete()
-    User.objects.all().delete()
-
+    pass
 
 @with_setup(setup_func, teardown_func)
 def test_one_attachment():
@@ -71,7 +71,7 @@ def test_two_attachments():
 
     attached = msg.file_set.all()[1]
     path = attached.pathprefix
-    assert os.listdir(path)[1] == attached.hash_name()
+    assert os.listdir(path)[0] == attached.hash_name()
 
 
 

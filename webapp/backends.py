@@ -13,7 +13,6 @@ class SettingsBackend:
         try:
             puser = PostUser.objects.get(pk=username)
             user = puser.user
-            print user.check_password(password)
             if user and user.check_password(password):
                 return user
             else:

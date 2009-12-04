@@ -95,6 +95,9 @@ def store_file(list_name, message, filename, dbmessage):
         pfile = open(dbfile.local_path(), 'w')
         pfile.write(file_text(message, filename))
         pfile.close()
+        if os.path.islink(dbfile.name):
+            os.remove(dbfile.name)
+        os.symlink(dbfile.hash_name(), dbfile.recent_local_path())
 
     return dbfile
 

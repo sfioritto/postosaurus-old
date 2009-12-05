@@ -134,8 +134,6 @@ class File(models.Model):
     def file_name_hash(self):
         return hashlib.sha1(self.name).hexdigest()
     
-    def hash_name(self):
-        return self.sha + self.ext
 
     def __get_url_prefix(self):
 
@@ -174,14 +172,13 @@ class File(models.Model):
         The local path to the file.
         """
 
-        return os.path.join(self.pathprefix, self.hash_name())
+        return os.path.join(self.pathprefix, self.sha, self.name)
 
     def url_path(self):
         """
         The files url.
         """
-        print self.urlprefix
-        return os.path.join(self.urlprefix, self.hash_name())
+        return os.path.join(self.urlprefix, self.sha, self.name)
 
     def recent_local_path(self):
         """
@@ -199,13 +196,6 @@ class File(models.Model):
         """
 
         return os.path.join(self.urlprefix, self.name)
-
-    def directory_parts(self):
-        """
-        Used to create the directories initially.
-        """
-
-        return self.pathprefix.split("/")
 
     def __unicode__(self):
         return self.name

@@ -52,8 +52,8 @@ def test_one_attachment():
     
     assert len(msg.file_set.all()) == 1
     attached = msg.file_set.all()[0]
-    path = attached.pathprefix
-    assert os.listdir(path)[0] == attached.hash_name()
+    path = os.path.join(attached.pathprefix, attached.sha)
+    assert os.listdir(path)[0] == attached.name
 
 
 @with_setup(setup_func, teardown_func)
@@ -66,12 +66,12 @@ def test_two_attachments():
     msg = mlist.message_set.all()[0]
     assert len(msg.file_set.all()) == 2
     attached = msg.file_set.all()[0]
-    path = attached.pathprefix
-    assert os.listdir(path)[0] == attached.hash_name()
+    path = os.path.join(attached.pathprefix, attached.sha)
+    assert os.listdir(path)[0] == attached.name
 
     attached = msg.file_set.all()[1]
-    path = attached.pathprefix
-    assert os.listdir(path)[0] == attached.hash_name()
+    path = os.path.join(attached.pathprefix, attached.sha)
+    assert os.listdir(path)[0] == attached.name
 
 
 

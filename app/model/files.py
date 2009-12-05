@@ -85,7 +85,7 @@ def store_file(list_name, message, filename, dbmessage):
         # The directories haven't been created yet, go
         # through and make 'em.
         path = ""
-        for part in dbfile.directory_parts():
+        for part in dbfile.local_path().split("/")[:-1]:
             path = os.path.join(path, part)
             if not os.path.isdir(path):
                 os.mkdir(path)
@@ -95,9 +95,10 @@ def store_file(list_name, message, filename, dbmessage):
         pfile = open(dbfile.local_path(), 'w')
         pfile.write(file_text(message, filename))
         pfile.close()
-        if os.path.islink(dbfile.name):
-            os.remove(dbfile.name)
-        os.symlink(dbfile.hash_name(), dbfile.recent_local_path())
+        
+        if os.path.islink(dbfile.recent_local_path()):
+            os.remove(dbfile.recent_local_path())
+        os.symlink(os.path.join(dbfile.sha, dbfile.name), dbfile.recent_local_path())
 
     return dbfile
 

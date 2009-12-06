@@ -30,15 +30,16 @@ def teardown_func():
 
 
 @with_setup(setup_func, teardown_func)
-def test_subscribe_user(sender=sender, client=client):
+def test_subscribe_user(sender=sender, client=client, mlist=None):
 
-    mlist = MailingList.objects.filter(email = list_addr)[0]
+    if not mlist:
+        mlist = MailingList.objects.filter(email = list_addr)[0]
     subs = len(mlist.subscription_set.all())
     msg = CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', sender, 'postosaurus/join-confirmation.msg', host)
     client.say(msg['from'], "subscribe me")
     newsubs = len(mlist.subscription_set.all())
     assert newsubs == subs + 1, "Should be %s subscriptions but there are %s" % (str(subs + 1), str(newsubs))
-    assert_in_state('app.handlers.admin', list_addr, msg['to'], 'POSTING')
+    assert_in_state('app.handlers.admin', mlist.email, msg['to'], 'POSTING')
 
 
 @with_setup(setup_func, teardown_func)

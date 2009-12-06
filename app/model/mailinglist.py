@@ -182,7 +182,11 @@ def craft_response(message, list_name, list_addr):
             response["In-Reply-To"] = message['Message-Id']
 
     if message.all_parts():
-        response.attach_all_parts(message)
+        for part in message.all_parts():
+            if part:
+                response.attach_part(part)
+
+        response.base.content_encoding = message.base.content_encoding.copy()
     else:
         response.Body = message.body()
 

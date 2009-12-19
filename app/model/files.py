@@ -84,6 +84,7 @@ def store_file(list_name, message, filename, dbmessage):
     except IOError:
         # The directories haven't been created yet, go
         # through and make 'em.
+
         path = ""
         for part in dbfile.local_path().split("/")[:-1]:
             path = os.path.join(path, part)

@@ -20,4 +20,6 @@ urlpatterns = patterns(
             'template_name': 'postosaurus/login.html'
             }),
     (r'logout/$', 'django.contrib.auth.views.logout_then_login'),
+    (r'plans/$', 'webapp.postosaurus.views.plans'),
+    (r'createplan/(?P<planid>.+)$', 'webapp.postosaurus.views.create_plan'),
 )

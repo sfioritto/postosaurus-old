@@ -61,7 +61,7 @@ def create_list(request):
     }, context_instance = RequestContext(request))
 
 
-def create_user(request):
+def create_user(request, template='postosaurus/create-user.html', next=settings.LOGIN_URL):
     
     """
     Creates an account for the web application.
@@ -93,19 +93,18 @@ def create_user(request):
 
             return HttpResponseRedirect(next)
         else:
-            return render_to_response('postosaurus/create-user.html', {
+            return render_to_response(template, {
                     'form' : form,
                     'next' : next
                     }, context_instance = RequestContext(request))
     else:
-        next = settings.LOGIN_URL
 
         # override next if there is a value in the query string.
         if request.GET.has_key('next'):
             if request.GET['next']:
                 next = request.GET['next']
 
-        return render_to_response('postosaurus/create-user.html', {
+        return render_to_response(template, {
                 'form' : UserAccountForm(),
                 'next' : next
                 }, context_instance = RequestContext(request))

@@ -1,8 +1,12 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from webapp.forms import UserAccountForm
 from webapp.postosaurus.views import create_user
+
+
+
 
 def __create_url(user, planid):
     puser = user.get_profile()
@@ -12,6 +16,7 @@ def __create_url(user, planid):
 def plans(request):
     return render_to_response('postosaurus/plans.html', {
             }, context_instance = RequestContext(request))
+
 
 def create_subscription(request, planid):
 
@@ -28,3 +33,21 @@ def create_subscription(request, planid):
     else:
         return HttpResponseRedirect(__create_url(request.user, planid))
 
+
+def update_subscriptions(request):
+
+    """
+    Receives a comma delimited list of user ids from spreedly. This view
+    updates the users spreedly data for each id. Should probably dump
+    this into a file and run a cron job once we actually have users...
+    """
+
+    ids = [int(id) for id in request.POST['subscriber_ids'].split(',')]
+    print ids
+    users = User.objects.filter(id__in=ids).all()
+    print users
+    for user in users:
+        profile = user.get_profile()
+        profile.update_from_spreedly()
+    return render_to_response('postosaurus/plans.html', {
+            }, context_instance = RequestContext(request))

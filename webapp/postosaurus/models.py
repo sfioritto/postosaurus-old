@@ -27,6 +27,9 @@ class User(models.Model):
         else:
             return False
 
+    def update_from_spreedly(self):
+        print 'update'
+
 
     def __unicode__(self):
         return self.email

@@ -6,6 +6,7 @@ from datetime import datetime
 from email.utils import formataddr
 from django.contrib.auth.models import User as DjangoUser
 from django.core.urlresolvers import reverse
+from pyspreedly import api
 
 
 class User(models.Model):
@@ -28,8 +29,10 @@ class User(models.Model):
             return False
 
     def update_from_spreedly(self):
-        print 'update'
-
+        client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
+        info = client.get_info(self.user.id)
+        print info
+        
 
     def __unicode__(self):
         return self.email
@@ -37,6 +40,7 @@ class User(models.Model):
 
 class MailingList(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User, null=True)
     name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
 

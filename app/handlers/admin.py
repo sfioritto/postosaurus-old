@@ -54,7 +54,7 @@ def POSTING(message, list_name=None, id_number=None, host=None):
     else:
 
         list_addr = "%s@%s" % (list_name, host)
-        if mailinglist.is_subscribed(message['from'], list_name):
+        if mailinglist.is_subscribed(message['from'], list_name) and mailinglist.is_active(list_name):
             mlist = mailinglist.find_list(list_name)
 
         #send a request for confirmation to anyone cc'd on this list so they can
@@ -63,7 +63,7 @@ def POSTING(message, list_name=None, id_number=None, host=None):
             for address in [to for to in allrecpts if not to.endswith(host)]:
                 CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', address, 'postosaurus/join-confirmation.msg', host)
 
-            delivery = mailinglist.craft_response(message, list_name, list_addr) 
+            delivery = mailinglist.craft_response(message, list_name, list_addr)
             mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])
 
             q = queue.Queue("run/work")

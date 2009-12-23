@@ -55,8 +55,6 @@ class User(models.Model):
         """
         Returns true or false if the user has paid in order to create the list.
         """
-        print self.num_lists_allowed()
-        print len(self.mailinglist_set.all())
         return self.num_lists_allowed() > len(self.mailinglist_set.all())
         
     

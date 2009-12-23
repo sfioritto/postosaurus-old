@@ -90,7 +90,19 @@ def find_subscription(address, list_name):
         return None
 
 
+def is_active(list_name):
+    mlist = find_list(list_name)
+    assert mlist, "The list %s needs to actually exist." % list_name
+    return mlist.active
+
+
 def post_message(relay, message, delivery, list_name, host, fromaddress):
+    
+    """
+    Takes a message and delivers it to everyone in the group
+    that should receive it.
+    """
+
     name, addr = parseaddr(fromaddress)
     mlist = find_list(list_name)
     sender = find_user(addr)

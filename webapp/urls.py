@@ -12,7 +12,6 @@ urlpatterns = patterns(
 
     (r'^$', 'webapp.postosaurus.views.index'),
     (r'^landing/$', 'webapp.postosaurus.views.landing'),
-    (r'^signup/$', 'webapp.postosaurus.views.create_list'),
     (r'^app/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),
 )

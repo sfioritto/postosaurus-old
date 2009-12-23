@@ -11,12 +11,17 @@ from pyspreedly import api
 
 class User(models.Model):
 
-
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
     email = models.CharField(max_length=512, primary_key=True)
+    level = models.CharField(max_length=512, null=True) # the feature level from spreedly
     user = models.ForeignKey(DjangoUser, null=True)
 
     def is_subscribed(self, mlist):
+
+        """
+        Returns true or false to indicate if the user is subscribed
+        to the given mailing list.
+        """
 
         subs = mlist.subscription_set\
             .filter(user=self)\
@@ -29,13 +34,23 @@ class User(models.Model):
             return False
 
     def update_from_spreedly(self):
+        
+        """
+        Call this method to update application state based on the user's status
+        in spreedly. If they aren't paying anymore, deactivate their lists.
+        """
+
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
         info = client.get_info(self.user.id)
-        print info
+        if info['active'] is False:
+            for mlist in self.mailinglist_set.all():
+                mlist.active = False
+                mlist.save()
         
 
     def __unicode__(self):
         return self.email
+    
 
 
 class MailingList(models.Model):
@@ -43,7 +58,7 @@ class MailingList(models.Model):
     owner = models.ForeignKey(User, null=True)
     name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
-
+    active = models.BooleanField(default=True)
     
     def links_url(self):
         return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.links', args=[self.name])

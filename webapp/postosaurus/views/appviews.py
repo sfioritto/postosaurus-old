@@ -32,11 +32,13 @@ view.LOADER = jinja2.Environment(
 
 from config.settings import relay, CONFIRM
 
-
+#Django hack to let us put emails in the username field in the login form
 AuthenticationForm.base_fields['username'].max_length = 75 
  
 
+@login_required
 def create_list(request):
+    
     if request.method == 'POST':
 
         form = MailingListForm(request.POST)
@@ -49,14 +51,14 @@ def create_list(request):
             return HttpResponseRedirect(reverse(list_created))
 
         else:
-            return render_to_response('landing/signup.html', {
+            return render_to_response('postosaurus/create-list.html', {
                     'form': form,
                     }, context_instance = RequestContext(request))
 
     else:
         form = MailingListForm() # An unbound form
 
-    return render_to_response('landing/signup.html', {
+    return render_to_response('postosaurus/create-list.html', {
         'form': form,
     }, context_instance = RequestContext(request))
 

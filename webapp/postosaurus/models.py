@@ -47,21 +47,34 @@ class User(models.Model):
             for mlist in self.mailinglist_set.all():
                 mlist.active = False
                 mlist.save()
-        
+        self.save()
 
+        
+    def can_create_list(self):
+        
+        """
+        Returns true or false if the user has paid in order to create the list.
+        """
+        print self.num_lists_allowed()
+        print len(self.mailinglist_set.all())
+        return self.num_lists_allowed() > len(self.mailinglist_set.all())
+        
+    
     def num_lists_allowed(self):
+
         """
         Returns the number of lists the user is allowed to own/create.
-        For now there is only the 'Basic' feature level, so we just return
-        one. In the near future this will be a lookup based on the feature
-        which is stored in self.level.
+        For now there is only the 'Basic' feature level.
 
         SUPER_USERS are allowed to create as many lists as they would like.
         """
+        self.update_from_spreedly()
         if self.email in settings.SUPER_USERS:
             return 100
-        else:
+        elif self.level == 'Basic':
             return 1
+        else:
+            return 0
 
 
     def __unicode__(self):

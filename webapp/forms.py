@@ -38,7 +38,6 @@ class CustomEmailField(forms.EmailField):
 
 class MailingListForm(forms.Form):
 
-    email = CustomEmailField(max_length=75)
     groupname = ListNameField()
 
 

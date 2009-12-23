@@ -4,7 +4,16 @@
 {% endblock %}
 
 {% block content %}
-Create your list here.
+{% if payup %}
+pay now.
+{% endif %}
+<form action="{% url webapp.postosaurus.views.create_list %}" method="POST">
+{{ form.groupname.errors }}
+{{ form.groupname }}
+<input id="submit" type="submit" value="Create my list." />
+</form>
+<p id="emaildomain">@postosaurus.com</p>
+<p id="examples">Examples: MyProject, My.Project</p>
 {% endblock %}
 
 

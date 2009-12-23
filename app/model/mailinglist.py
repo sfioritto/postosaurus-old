@@ -13,6 +13,7 @@ def is_subscribed(address, list_name):
     else:
         return False;
 
+
 def valid_name(name):
 
     """
@@ -22,16 +23,18 @@ def valid_name(name):
 
     return len(name) <= 100 and re.match("^[a-zA-Z0-9]+\.*[a-zA-Z0-9]+$", name)
 
-def create_list(list_name):
+
+def create_list(list_name, owner = None):
     list_name = list_name.lower()
     mlist = find_list(list_name)
     assert valid_name(list_name)
     
     if not mlist:
-        mlist = MailingList(name=list_name, email=list_name + '@postosaurus.com')
+        mlist = MailingList(name=list_name, email=list_name + '@postosaurus.com', owner=owner)
         mlist.save()
 
     return mlist
+
 
 def create_user(address):
     name, addr = parseaddr(address)

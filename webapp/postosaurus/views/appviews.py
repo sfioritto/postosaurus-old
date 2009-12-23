@@ -39,13 +39,23 @@ AuthenticationForm.base_fields['username'].max_length = 75
 @login_required
 def create_list(request):
     
+    profile = request.user.get_profile()
     if request.method == 'POST':
-
+        
         form = MailingListForm(request.POST)
+
+        # Let them know they need to pay up to create another list.
+        if not profile.can_create_list():
+            return render_to_response('postosaurus/create-list.html', {
+                    'form': form,
+                    'payup' : True,
+                    }, context_instance = RequestContext(request))
+
+        #Check if the mailing list is valid.
         if form.is_valid():
-            email = form.cleaned_data['email']
+            email = profile.email
             list_name = form.cleaned_data['groupname']
-            mlist = mailinglist.create_list(list_name)
+            mlist = mailinglist.create_list(list_name, profile)
             CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
             
             return HttpResponseRedirect(reverse(list_created))

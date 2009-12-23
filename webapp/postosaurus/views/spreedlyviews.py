@@ -43,9 +43,7 @@ def update_subscriptions(request):
     """
 
     ids = [int(id) for id in request.POST['subscriber_ids'].split(',')]
-    print ids
     users = User.objects.filter(id__in=ids).all()
-    print users
     for user in users:
         profile = user.get_profile()
         profile.update_from_spreedly()

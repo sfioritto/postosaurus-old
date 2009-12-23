@@ -42,11 +42,27 @@ class User(models.Model):
 
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
         info = client.get_info(self.user.id)
+        self.level = info['feature_level']
         if info['active'] is False:
             for mlist in self.mailinglist_set.all():
                 mlist.active = False
                 mlist.save()
         
+
+    def num_lists_allowed(self):
+        """
+        Returns the number of lists the user is allowed to own/create.
+        For now there is only the 'Basic' feature level, so we just return
+        one. In the near future this will be a lookup based on the feature
+        which is stored in self.level.
+
+        SUPER_USERS are allowed to create as many lists as they would like.
+        """
+        if self.email in settings.SUPER_USERS:
+            return 100
+        else:
+            return 1
+
 
     def __unicode__(self):
         return self.email

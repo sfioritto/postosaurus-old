@@ -13,11 +13,6 @@ def __create_url(user, planid):
     return "https://spreedly.com/postosaurus/subscribers/%s/subscribe/%s/%s" % (str(user.id), planid, puser.email)
 
 
-def plans(request):
-    return render_to_response('postosaurus/plans.html', {
-            }, context_instance = RequestContext(request))
-
-
 def create_subscription(request, planid):
 
     """

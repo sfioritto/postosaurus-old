@@ -165,7 +165,7 @@ def members(request, listname):
     else:
         return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
 
-p
+
 def list_created(request):
     return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 

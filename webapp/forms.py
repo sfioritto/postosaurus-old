@@ -3,13 +3,17 @@ from webapp.postosaurus.models import User
 from django import forms
 from django.contrib.auth.models import User as DjangoUser
 
+
 class ListNameField(forms.Field):
 
+
     def clean(self, list_name):
+
         """
         Postosaurus only accepts list names that have alphanumeric
         characters and a period.
         """
+
         if not list_name:
             raise forms.ValidationError('You must provide a name for your list.')
         
@@ -22,7 +26,9 @@ class ListNameField(forms.Field):
 
         return list_name
 
+
 class CustomEmailField(forms.EmailField):
+
 
     def clean(self, list_name):
         """
@@ -33,7 +39,6 @@ class CustomEmailField(forms.EmailField):
             raise forms.ValidationError("You must enter your email address to create a group.")
         else:
             return forms.EmailField.clean(self, list_name)
-
 
 
 class MailingListForm(forms.Form):
@@ -58,8 +63,8 @@ class UserAccountForm(forms.Form):
                                widget=forms.PasswordInput(render_value=False)) 
     repassword = forms.CharField(label=(u'Password'),
                                widget=forms.PasswordInput(render_value=False)) 
-
     next = forms.CharField()
+
 
     def clean_password(self):
         if self.cleaned_data['password'] == self.data['repassword']:

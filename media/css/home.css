@@ -1,179 +1,64 @@
-/*start layout*/
-
-.extras{
-    float: left;
-    width: 200px;
-    margin-left: 5px;
-    padding: 0px 20px;
-    margin-top: 5px;
-    margin-bottom: 30px;
-}
-
-.extras input{
-    margin: 0;
-    padding: 0;
-    display: inline;
-}
-
-#links{
-    margin-left: 0px;
-    padding-left: 0px;
-}
-
-#inputs{
-    width: 385px;
-}
-
-#labels, #inputs{
-    float: left;
-    height: 110px;
-}
-
-#inputs input{
-    margin: 0;
-    float: left;
-    width: 250px;
-}
-
-
-#examples{
-    clear: both;
-}
-
-/*end layout*/
-
-
-/*left styling*/
-
-#extrafeatures, #stepone{
-    padding-top: 35px;
-}
-
-ul.errorlist {
-    font-family: arial;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-#leadin h3{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 24px;
-    margin-bottom: 0px;
-}
-
-#labels{
-    margin-right: 5px;
-}
-
-#labels label{
-    display: block;
-    text-align: right;
-    padding-top: 5px;
-    float: left;
-    clear: left;
-}
-
-#left div p{
-    font-family: georgia;
-    font-size: 11px;
-    color: rgb(80, 80, 80);
-    margin: 0;
-    margin-top: 5px;
+/*layout*/
+#top, #middle, #bottom{
     margin-left: 15px;
+    margin-right: 15px;
 }
-
-#left p#examples {
-    margin: 0;
-    font-size: 10px;
-}
-
-#inputs p#emaildomain{
-    float: left;
-    padding-top: 5px;
-    margin: 0;
-    margin-top: 15px;
-}
-
-#labels label, #inputs p#emaildomain{
-    font-family: georgia;
-    font-size: 10px;
-    color: rgb(120, 120, 120);
-}
-
-
-#labels label, #inputs input{
-    height: 30px;
+/*top layout*/
+#top {
+    height: 50px;
     margin-top: 10px;
 }
 
-#inputs input{
-    font-family: georgia;
-    font-size: 12px;
-    color: rgb(60, 60, 60);
+#top h1, #top h2{
+    float: left;
 }
 
-#files {
-    border-left: 1px solid grey;
-    border-right: 1px solid grey;
+#top h2{
+    clear: left;
 }
 
-#submit{
-    margin-top: 0px;
-    clear: both;
-    display: block;
-    position: relative;
-    top: 0px;
-    padding: 10px;
+#globalnav{
+    float: right;
 }
 
-/*end left styling*/
-
-#left h1{
-    font-family: georgia;
-    font-size: 16px;
-    color: rgb(60, 60, 60);
-    font-weight: normal;
-    margin-top: 0px;
-}
-
-p.directions{
-    font-family: verdana;
-    font-size: 18px;
-    color: rgb(60, 60, 60);
-    clear: both;
-}
-    
-#left div p.buyme{
+#globalnav li{
     display: inline;
-    margin: 0;
-    font-family: arial;
-    font-size: 11px;
-    color: rgb(40, 40, 40);
-    font-weight: bold;
+}
+/*end top layout*/
+
+/*middle layout*/
+#middle {
+    height: 400px;
 }
 
-#left div p.price{
-    font-family: arial;
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(223, 126, 13);
+#copy {
+    float: left;
 }
 
-span.hilight{
-    font-family: verdana;
-    font-size: 20px;
-    font-weight: normal;
-    color: rgb(223, 126, 13);
+#features {
+    float: right;
 }
 
-span.price{
-    font-family: verdana;
-    font-size: 10px;
-    color: rgb(120, 120, 120);
-    font-weight: normal;
+#copy, #features{
+    width: 50%;
+}
+/*end middle layout*/
+
+/*bottom layout*/
+#bottomcopy{
+    width: 40%;
+}
+#bottomcopy, .question{
+    float: left;
 }
 
-.descheight{
-    height: 100px;
+#questions{
+    clear: both;
+}
+/*end bottom layout*/
+/*end layout*/
+
+.question{
+    border: 1px solid red;
+    width: 150px;
 }

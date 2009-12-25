@@ -1,12 +1,16 @@
 /*layout*/
 #top, #middle, #bottom{
-    margin-left: 15px;
-    margin-right: 15px;
+    padding-left: 45px;
+    padding-right: 15px;
 }
 /*top layout*/
-#top {
-    height: 50px;
-    margin-top: 10px;
+#top{
+    height: 60px;
+}
+
+#topright, #topleft{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #top h1, #top h2{
@@ -17,8 +21,20 @@
     clear: left;
 }
 
-#globalnav{
+#topleft, #topright{
+    width: 50%;
+}
+
+#topleft{
+    float: left;
+}
+
+#topright{
     float: right;
+}
+
+#globalnav{
+    float: left;
 }
 
 #globalnav li{
@@ -29,6 +45,7 @@
 /*middle layout*/
 #middle {
     height: 400px;
+    margin-top: 40px;
 }
 
 #copy {
@@ -58,7 +75,82 @@
 /*end bottom layout*/
 /*end layout*/
 
+#top {
+    background-color: rgb(40, 40, 80);
+}
+
+#top h1 {
+    font-family: georgia;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(240, 240, 240);
+}
+
+#top h2{
+    font-family: georgia;
+    font-size: 14px;
+    color: rgb(200, 200, 200);
+}
+
+#globalnav {
+    text-align: center;
+    margin-right: 25%;
+    margin-top: 15px;
+}
+
+#globalnav li{
+    font-family: verdana;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#globalnav li a{
+    color: rgb(240, 240, 240);
+}
+
+#copy h2, #copy h3, #copy p{
+    width: 450px;
+    font-family: georgia;
+}
+#copy h2, #copy h3, #copy p, #copy img{
+    margin-bottom: 25px;
+}
+
+#copy h2{
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(40, 40, 40);
+}
+
+#copy h3{
+    font-size: 18px;
+    color: rgb(80, 80, 80);
+}
+
+#copy p{
+    font-size: 14px;
+    color: rgb(100, 100, 100);
+}
+
+#features ul li{
+    width: 450px;
+    margin-bottom: 25px;
+}
+
+#features h2{
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(40, 40, 40);
+    margin-bottom: 5px;
+}
+
+#features p{
+    font-family: georgia;
+    font-size: 14px;
+    color: rgb(40, 40, 40);
+}
+
 .question{
-    border: 1px solid red;
     width: 150px;
 }

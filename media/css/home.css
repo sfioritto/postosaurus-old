@@ -1,8 +1,12 @@
 /*layout*/
-#top, #middle, #bottom{
+#top, #middle, #bottom, hr{
     padding-left: 45px;
     padding-right: 15px;
 }
+#middle, #bottom, hr {
+    width: 900px;
+}
+
 /*top layout*/
 #top{
     height: 60px;
@@ -11,6 +15,7 @@
 #topright, #topleft{
     padding-top: 10px;
     padding-bottom: 10px;
+    float: left;
 }
 
 #top h1, #top h2{
@@ -22,15 +27,7 @@
 }
 
 #topleft, #topright{
-    width: 50%;
-}
-
-#topleft{
-    float: left;
-}
-
-#topright{
-    float: right;
+    width: 450px;/*half of total width*/
 }
 
 #globalnav{
@@ -50,27 +47,47 @@
 
 #copy {
     float: left;
+    width: 400px;
 }
 
 #features {
     float: right;
 }
 
-#copy, #features{
+#features{
     width: 50%;
 }
 /*end middle layout*/
 
 /*bottom layout*/
-#bottomcopy{
-    width: 40%;
+#bottom{
+    margin-top: 15px;
 }
-#bottomcopy, .question{
+
+#bottomcopy{
+    width: 450px; /*Added to margin should equal 570px to keep everythin lined up*/
+    margin-right: 120px;
+    float: left;
+    clear: left;
+}
+
+#bottom img{
     float: left;
 }
 
+.question{
+    float: left;
+    margin-right: 35px;
+}
+
 #questions{
-    clear: both;
+    margin-bottom: 25px;
+    height: 150px;
+}
+
+hr {
+    float: left;
+    margin-left: 45px;
 }
 /*end bottom layout*/
 /*end layout*/
@@ -100,17 +117,16 @@
 
 #globalnav li{
     font-family: verdana;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     margin-right: 10px;
 }
 
 #globalnav li a{
-    color: rgb(240, 240, 240);
+    color: rgb(220, 220, 220);
 }
 
 #copy h2, #copy h3, #copy p{
-    width: 450px;
     font-family: georgia;
 }
 #copy h2, #copy h3, #copy p, #copy img{
@@ -134,7 +150,7 @@
 }
 
 #features ul li{
-    width: 450px;
+    width: 400px;
     margin-bottom: 25px;
 }
 
@@ -148,9 +164,35 @@
 #features p{
     font-family: georgia;
     font-size: 14px;
-    color: rgb(40, 40, 40);
+    color: rgb(80, 80, 80);
 }
 
 .question{
-    width: 150px;
+    width: 250px;
+}
+
+.question h2{
+    font-family: georgia;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(40, 40, 40);
+    height: 40px;
+}
+
+.question p{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(80, 80, 80);
+}
+
+#bottomcopy{
+    font-family: georgia;
+    color: rgb(40, 40, 40);
+    font-size: 15px;
+}
+
+hr{
+    color: rgb(200, 200, 200);
+    background-color: rgb(200, 200, 200);
+    margin-bottom: 30px;
 }

@@ -62,6 +62,7 @@
 /*bottom layout*/
 #bottom{
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #bottomcopy{
@@ -100,7 +101,7 @@ hr {
     font-family: georgia;
     font-size: 24px;
     font-weight: bold;
-    color: rgb(240, 240, 240);
+    color: white;
 }
 
 #top h2{
@@ -155,16 +156,23 @@ hr {
 }
 
 #features h2{
-    font-size: 16px;
+    font-family: verdana;
+    font-size: 15px;
     font-weight: bold;
-    color: rgb(40, 40, 40);
-    margin-bottom: 5px;
+    color: rgb(80, 80, 80);
+    margin-bottom: 10px;
+}
+
+#features p.scannable{
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 
 #features p{
     font-family: georgia;
-    font-size: 14px;
-    color: rgb(80, 80, 80);
+    font-size: 11px;
+    color: rgb(40, 40, 40);
+    margin-bottom: 5px;
 }
 
 .question{
@@ -172,27 +180,38 @@ hr {
 }
 
 .question h2{
-    font-family: georgia;
-    font-size: 16px;
+    font-family: verdana;
+    font-size: 14px;
     font-weight: bold;
     color: rgb(40, 40, 40);
     height: 40px;
+    margin-bottom: 8px;
 }
 
 .question p{
-    font-family: verdana;
+    font-family: georgia;
     font-size: 12px;
     color: rgb(80, 80, 80);
 }
 
 #bottomcopy{
     font-family: georgia;
-    color: rgb(40, 40, 40);
-    font-size: 15px;
+    color: rgb(80, 80, 80);
+    font-size: 14px;
 }
 
 hr{
     color: rgb(200, 200, 200);
     background-color: rgb(200, 200, 200);
     margin-bottom: 30px;
+}
+
+#soon {
+    font-size: 9px;
+}
+
+.callout{
+    font-weight: bold;
+    font-size: 17px;
+    color: rgb(40, 40, 40);
 }

@@ -24,24 +24,84 @@
     </ul>
   </div>
 </div>
+
 <div id="middle">
-  
-<h2>
-15 day free trial.
-</h2>
+<div  id="plans">
+  <h2>
+  15 day free trial for all plans.
+  </h2>
+<div class="plan">
 <div id="3108">
   <h3>
   Basic
   </h3>
   <ul>
-    <li>9.99/month</li>
-    <li>1 project</li>
-    <li>5 GB storage</li>
-    <li>Unlimited users</li>
+    <li>
+    <p>
+    <span class="number">$9.99</span>/month</li>
+    </p>
+    <li>
+    <p>
+    <span class="number">1</span> project</li>
+    </p>
+    <li>
+    <p>
+    <span class="number">5</span> GB storage</li>
+    </p>
+    <li>
+    <p>
+    <span class="number">Unlimited</span> users
+    </p>
+    </li>
   </ul>
+  <a href="{% url webapp.postosaurus.views.create_subscription planid=3108 %}">test</a>
 </div>
-<a href="{% url webapp.postosaurus.views.create_subscription planid=3108 %}">test</a>
-
+</div>
+</div>
+<div id="rightcontent">
+  <ul id="questions">
+    <li>
+    <h3>
+    How does the 15 day free trial work?
+    </h3>
+    <p>
+    If you choose to cancel during your 15-day free trial, you won't
+    be charged for anything. After your free trial you will be charged
+    a prorated fee for the remainder of the month and at your plan's
+    normal rate for each month thereafter. We do not issue refunds
+    once your 15 day trial has ended and we do not prorate partial months.
+    </p>
+    </li>
+    <li>
+    <h3>
+    What if I need another plan?
+    </h3>
+    <p>
+    We will be releasing more plans soon so you can upgrade and downgrade
+    to whatever works the best for you. If you need a different plan right
+    away, contact us <a href="/site_media/html/contact.html">here</a>, and we'll set you up.
+    </p>
+    </li>
+    <li>
+    <h3>
+    Do I need to sign a long-term contract?
+    </h3>
+    <p>
+    No. Postosaurus plans are month-to-month. You can cancel, upgrade
+    or downgrade at any time.
+    </p>
+    </li>
+    <li>
+    <h3>
+    What types of payment do you accept?
+    </h3>
+    <p>
+    We accept Visa, Mastercard, American Express and
+    Discover card.
+    </p>
+    </li>
+   </ul>
+</div>
 </div>
 <div id="bottom">
 </div>

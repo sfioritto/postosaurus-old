@@ -1,9 +1,9 @@
 /*layout*/
-#top, #middle, #bottom, hr{
+#top, #middle, #bottom{
     padding-left: 45px;
     padding-right: 15px;
 }
-#middle, #bottom, hr {
+#middle, #bottom {
     width: 900px;
 }
 
@@ -12,7 +12,7 @@
     height: 60px;
 }
 
-#topright, #topleft{
+#topright, #topleft, #plans, #rightcontent{
     padding-top: 10px;
     padding-bottom: 10px;
     float: left;
@@ -26,7 +26,7 @@
     clear: left;
 }
 
-#topleft, #topright{
+#topleft, #topright, #plans, #rightcontent{
     width: 450px;/*half of total width*/
 }
 
@@ -45,51 +45,13 @@
     margin-top: 40px;
 }
 
-#copy {
-    float: left;
-    width: 400px;
-}
-
-#features {
-    float: right;
-}
-
-#features{
-    width: 50%;
-}
-/*end middle layout*/
-
 /*bottom layout*/
 #bottom{
     margin-top: 15px;
     margin-bottom: 15px;
+    clear: both;
 }
 
-#bottomcopy{
-    width: 450px; /*Added to margin should equal 570px to keep everythin lined up*/
-    margin-right: 120px;
-    float: left;
-    clear: left;
-}
-
-#bottom img{
-    float: left;
-}
-
-.question{
-    float: left;
-    margin-right: 35px;
-}
-
-#questions{
-    margin-bottom: 25px;
-    height: 150px;
-}
-
-hr {
-    float: left;
-    margin-left: 45px;
-}
 /*end bottom layout*/
 /*end layout*/
 
@@ -125,4 +87,65 @@ hr {
 
 #globalnav li a{
     color: rgb(220, 220, 220);
+}
+
+#plans {
+    font-family: verdana;
+}
+
+#plans h2{
+    font-size: 22px;
+    font-weight: bold;
+/*    color: rgb(255, 153, 51);*/
+    color: rgb(20, 20, 20);
+}
+
+.number{
+    color: rgb(255, 153, 51);
+    font-weight: bold;
+}
+
+#plans h3{
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(20, 20, 20);
+    margin-top: 50px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+}
+
+#plans li{
+    font-size: 20px;
+    color: rgb(40, 40, 40);
+    margin-bottom: 5px;
+}
+
+#plans ul{
+    width: 200px;
+/*    border: 1px dashed grey;*/
+    padding-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#plans a{
+    margin-left: 25px;
+    padding-top: 15px;
+}
+
+#rightcontent h3{
+    font-family: verdana;
+    font-size: 16px;
+    color: rgb(40, 40, 40);
+}
+
+#rightcontent p{
+    font-family: georgia;
+    font-size: 12px;
+    color: rgb(80, 80, 80);
+    margin-top: 10px;
+}
+
+#rightcontent li{
+    height: 100px;
 }

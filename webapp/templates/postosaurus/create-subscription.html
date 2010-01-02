@@ -1,31 +1,94 @@
-{% extends "postosaurus/base.html" %}
+<head>
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/reset.css">
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/create-subscription.css">
+</head>
 
-{% block content %}
+<body>
+<div id="top">
+  <div id="topleft">
+  <h1>Postosaurus</h1>
+  <h2>Manage your project from your inbox.</h2>
+  </div>
+  <div id="topright">
+    <ul id="globalnav">
+      <li><a href="/fake">Tour</a></li>
+      <li><a href="{{ MEDIA_URL }}html/aboutus.html">About Us</a></li>
+      <li><a href="{{ MEDIA_URL }}html/contact.html">Contact</a></li>
+      <li><a href="{% url django.contrib.auth.views.logout_then_login %}">
+      {% if user.is_authenticated %}
+      Sign Out
+      {% else %}
+      Sign In
+      {% endif %}
+      </a></li>
+    </ul>
+  </div>
+</div>
 
-{{ form.errors }}
-<form method="post" action="{{request.path}}">
+<div id="middle">
+<form id="createsub" method="post" action="{{request.path}}">
   <table>
-    <tr>
-      <td>{{ form.email.label_tag }}</td>
-      <td>{{ form.email }}</td>
+    <tr class="step">
+      <td><span class="number">1.</span></td>
+      <td><p id="stepone" class="step">Create your Postosaurus user account.</p></td>
     </tr>
+   {% if form.email.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.email.errors }}</td>
+   </tr>
+   {% endif %}
+   
     <tr>
+      <td>
+	{{ form.email.label_tag }}
+      </td>
+      <td>
+	{{ form.email }}
+      </td>
+    </tr>
+    
+    {% if form.username.errors %}
+   <tr class="errorrow">
+      <td></td><td>{{ form.username.errors }}</td>
+    </tr>
+    {% endif %}
+    
+   <tr>
       <td>{{ form.username.label_tag }}</td>
       <td>{{ form.username }}</td>
     </tr>
+
+    {% if form.password.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.password.errors }}</td>
+    </tr>
+    {% endif %}
+    
     <tr>
       <td>{{ form.password.label_tag }}</td>
       <td>{{ form.password }}</td>
     </tr>
+    
     <tr>
-      <td>Enter your password again.</td>
+      <td><label>Password Again</label></td>
       <td>{{ form.repassword }}</td>
     </tr>
+    <tr></tr>
+    <tr class="step">
+      <td><span class="number">2.</span></td>
+      <td><p id="steptwo">Enter your billing information.</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td id="submit">
+	<input type="submit" value="Create my account" id="createbutton" />
+	<p id="spreedly">(This will take you to Spreedly which securely handles our billing)</p>
+     </td>
   </table>
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next }}" />
+ <input type="hidden" name="next" value="{{ next }}" />
 </form>
-{% endblock %}
-
-
-
+</div>
+<div id="rightcontent">
+</div>
+<div id="bottom">
+</div>

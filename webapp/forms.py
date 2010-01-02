@@ -70,7 +70,7 @@ class UserAccountForm(forms.Form):
         if self.cleaned_data['password'] == self.data['repassword']:
             return self.cleaned_data['password']
         else:
-            raise forms.ValidationError("This passwords you entered in don't match.")
+            raise forms.ValidationError("The passwords you entered in don't match.")
 
 
     def clean_username(self):

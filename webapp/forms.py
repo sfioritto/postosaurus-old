@@ -2,6 +2,7 @@ from app.model import mailinglist
 from webapp.postosaurus.models import User
 from django import forms
 from django.contrib.auth.models import User as DjangoUser
+from email.utils import parseaddr
 
 
 class ListNameField(forms.Field):
@@ -78,11 +79,11 @@ class UserAccountForm(forms.Form):
         username = self.cleaned_data['username']
 
         try:
-            user = User.objects.get(pk=username)
-        except User.DoesNotExist:
-            user = None
+            duser = DjangoUser.objects.get(username=username)
+        except DjangoUser.DoesNotExist:
+            duser = None
 
-        if user:
+        if duser:
             raise forms.ValidationError("This username is already taken.")
         else:
             return username
@@ -93,11 +94,16 @@ class UserAccountForm(forms.Form):
         email = self.cleaned_data['email']
 
         try:
-            user = DjangoUser.objects.get(email=email)
+            duser = DjangoUser.objects.get(email=email)
         except DjangoUser.DoesNotExist:
+            duser = None
+
+        try:
+            user = User.objects.get(pk=email)
+        except User.DoesNotExist:
             user = None
 
-        if user:
+        if user or duser:
             raise forms.ValidationError("An account for this email address has already been created.")
         else:
             return email

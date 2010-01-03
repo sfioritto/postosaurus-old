@@ -1,92 +1,11 @@
-/*layout*/
-#top, #middle, #bottom{
-    padding-left: 45px;
-    padding-right: 15px;
-}
-#middle, #bottom {
-    width: 900px;
-}
-
-/*top layout*/
-#top{
-    height: 60px;
-}
-
-#topright, #topleft, #plans, #rightcontent{
+#plans, #rightcontent{
     padding-top: 10px;
     padding-bottom: 10px;
     float: left;
 }
 
-#top h1, #top h2{
-    float: left;
-}
-
-#top h2{
-    clear: left;
-}
-
-#topleft, #topright, #plans, #rightcontent{
+#plans, #rightcontent{
     width: 450px;/*half of total width*/
-}
-
-#globalnav{
-    float: left;
-}
-
-#globalnav li{
-    display: inline;
-}
-/*end top layout*/
-
-/*middle layout*/
-#middle {
-    height: 400px;
-    margin-top: 40px;
-}
-
-/*bottom layout*/
-#bottom{
-    margin-top: 15px;
-    margin-bottom: 15px;
-    clear: both;
-}
-
-/*end bottom layout*/
-/*end layout*/
-
-#top {
-    background-color: rgb(40, 40, 80);
-}
-
-#top h1 {
-    font-family: georgia;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-}
-
-#top h2{
-    font-family: georgia;
-    font-size: 14px;
-    color: rgb(200, 200, 200);
-}
-
-#globalnav {
-    text-align: center;
-    margin-right: 25%;
-    margin-top: 15px;
-}
-
-#globalnav li{
-    font-family: verdana;
-    font-size: 15px;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-#globalnav li a{
-    color: rgb(220, 220, 220);
 }
 
 #plans {
@@ -96,7 +15,6 @@
 #plans h2{
     font-size: 22px;
     font-weight: bold;
-/*    color: rgb(255, 153, 51);*/
     color: rgb(20, 20, 20);
 }
 

@@ -1,0 +1,25 @@
+#linkslist p.date {
+    font-family: verdana;
+    font-size: 20px;
+    color: rgb(40, 40, 40);
+    margin-bottom: 10px;
+}
+
+#linkslist li{
+    font-family: georgia;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+div.pagination{
+    margin-top: 20px;
+}
+
+div.pagination a{
+    font-family: georgia;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+
+

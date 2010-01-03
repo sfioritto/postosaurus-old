@@ -4,6 +4,12 @@
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
 {% endblock %}
 
+{% block nav %}
+ <div id="nav">
+   {% include 'postosaurus/list-nav.html' %}
+ </div>
+{% endblock %}
+ 
 {% block content %}
 
 <div id="breadcrumb">
@@ -13,21 +19,7 @@
 <span class="divider">></span>
 <a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
 <span class="divider">></span>
-Page {{ links.number }}
-</div>
-
-<div class="pagination">
-  <span class="step-links">
-    {% if links.has_previous %}
-    <a href="?page={{ links.previous_page_number }}">previous</a>
-    {% endif %}
-    {% if links.has_next %}
-    <a href="?page={{ links.next_page_number }}">next</a>
-    {% endif %}  
-    <span class="current">
-      <p>Page {{ links.number }} of {{ links.paginator.num_pages }}.</p>
-    </span>
-  </span>
+Page {{ links.number }} of {{ links.paginator.num_pages }}
 </div>
 
 <ul id="linkslist">
@@ -37,7 +29,19 @@ Page {{ links.number }}
     {% endifchanged %}
     <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
     {% endfor %}
-</ul>          
+</ul>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if links.has_previous %}
+    <a href="?page={{ links.previous_page_number }}">Previous Page</a>
+    {% endif %}
+    {% if links.has_next %}
+    <a href="?page={{ links.next_page_number }}">Next Page</a>
+    {% endif %}  
+ </span>
+</div>
+
 {% endblock %}
 
 

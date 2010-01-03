@@ -1,0 +1,15 @@
+<div id="search">
+  <form id="searchform" method="post" action="/">
+  <input name="searchtext" id="searchtext"/>
+  <input type="submit" value="Search" id="searchbutton" />
+  </form>
+</div>
+<div id="listname">
+  <p>
+  <a href="/">{{ mlist.name }}</a>
+  </p>
+</div>
+<div id="listtabs">
+  {% include 'postosaurus/list-tabs.html' %}
+</div>
+

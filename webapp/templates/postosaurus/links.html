@@ -1,13 +1,11 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
 {% endblock %}
 
 {% block content %}
-{% include 'postosaurus/listnav.html' %}
-<p id="description">Links</p>
+
 <div class="pagination">
   <span class="step-links">
     {% if links.has_previous %}
@@ -33,14 +31,3 @@
 {% endblock %}
 
 
-{% block instructions %}
-<ul class="instructions">
-  <li>
-    <p class="top">What are these links?</p>
-    <p class="bottom">
-      Postosaurus remembers any links sent to your list and stores them here to make
-      it easy for you to find them later.
-    </p>
-  </li>
-</ul>
-{% endblock %}

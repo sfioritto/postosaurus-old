@@ -1,34 +1,55 @@
 <head>
+
 <title>
 {% block title %}
 Postosaurus -- Lightweight Group Collaboration
 {% endblock %}
 </title>
 
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL}}css/reset.css" />
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/base.css">
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
+
 {% block css %}
 {% endblock %}
-
 </head>
+
 <body>
   <div id="top">
-    <h1>Postosaurus</h1>
+    <div id="topleft">
+      <h1>Postosaurus</h1>
       <h2>Manage your project from your inbox</h2>
+    </div>
+    <div id="topright">
       <ul id="topnav">
 	<li><a href="{{MEDIA_URL}}html/help.html">Help</a></li>
 	<li><a href="{% url django.contrib.auth.views.logout_then_login %}">Logout</a></li>
       </ul>
+    </div>
   </div>
+
+  <div id="nav">
+    <div id="search">
+      <form id="searchform" method="post" action="/">
+      <input name="searchtext" id="searchtext"/>
+      <input type="submit" value="Search" id="searchbutton" />
+     </form>
+    </div>
+    <div id="listname">
+      <p>
+      <a href="/">{{ mlist.name }}</a>
+      </p>
+    </div>
+    <div id="listtabs">
+      {% include 'postosaurus/listnav.html' %}
+    </div>
+  </div>
+  
   <div id="middle">
-    <div id="left">
-      {% block content %}
-      {% endblock %}
-    </div>
-    <div id="instructions">
-      {% block instructions %}
-      {% endblock %}
-    </div>
-  </div>
+   {% block content %}
+    {% endblock %}
+ </div>
+ 
   <div id="bottom">
     <a href="/site_media/html/contact.html">contact</a>
     <a href="/site_media/html/privacy.html">privacy</a>

@@ -55,7 +55,9 @@
 }
 
 #bottom a{
-    margin-left: 10px;
+    margin-left: 5px;
+    font-family: georgia;
+    font-size: 12px;
 }
 /*end bottom layout*/
 /*end layout*/

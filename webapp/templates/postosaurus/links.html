@@ -22,6 +22,11 @@
 Page {{ links.number }} of {{ links.paginator.num_pages }}
 </div>
 
+{% if links.object_list %}
+<p class="hint">
+Send an email to {{ mlist.email }} with a link in the body to add
+a link to this page
+</p>
 <ul id="linkslist">
   {% for link in links.object_list %}
   {% ifchanged %}
@@ -30,6 +35,19 @@ Page {{ links.number }} of {{ links.paginator.num_pages }}
     <li><a href="{{ link.cleaned }}">{{ link.url }}</a></li>
     {% endfor %}
 </ul>
+
+{% else %}
+<h3>Add a link to this page</h3>
+<p id="scannable">
+Send an email to {{ mlist.email }} with a link in the body to add
+a link to this page
+</p>
+<p id="detail">
+As you and your group members send emails back and forth, Postosaurus
+will collect any links you send and keep them here where you can
+easily find them later.
+</p>
+{% endif %}
 
 <div class="pagination">
   <span class="step-links">

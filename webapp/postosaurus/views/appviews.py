@@ -160,10 +160,18 @@ def members(request, listname):
             if sub:
                 sub.delete()
 
-        return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
+        return render_to_response('postosaurus/members.html', {
+                'mlist' : mlist,
+                'subscriptions' : subscriptions,
+                'membertab' : True,
+                }, context_instance = RequestContext(request))
 
     else:
-        return render_to_response('postosaurus/members.html', locals(), context_instance = RequestContext(request))
+        return render_to_response('postosaurus/members.html', {
+                'mlist' : mlist,
+                'subscriptions' : subscriptions,
+                'membertab' : True,
+                }, context_instance = RequestContext(request))
 
 
 def list_created(request):

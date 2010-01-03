@@ -1,21 +1,30 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members.css" />
 {% endblock %}
 
+{% block nav %}
+<div id="nav">
+  {% include 'postosaurus/list-nav.html' %}
+</div>
+{% endblock %}
+
 {% block content %}
-{% include 'postosaurus/listnav.html' %}
-<p id="description">
-  Members
-</p>
+<div id="breadcrumb">
+<a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+{{ mlist.name }}
+</a>
+<span class="divider">></span>
+<a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
+</div>
+
 <form action="" method="POST">
   <p class="Remove">
     Remove selected members.
   </p>
   <input type="submit" value="Remove" id="submit" />
-  <ul id="members">   
+  <ul id="memberslist">   
     {% for sub in subscriptions %}
     <li>
       <input type="checkbox" name="{{sub.user.email}}" />
@@ -27,11 +36,4 @@
 {% endblock %}
 
 
-{% block instructions %}
-<ul class="instructions">
-  <li>
-    <p class="top">Remove Members</p>
-    <p class="bottom">Put checks next to the members you would like to remove from this list and then click the "Remove" button.</p>
-  </li>
-</ul>
-{% endblock %}
+

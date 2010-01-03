@@ -1,31 +1,24 @@
-#members{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    margin-top: 20px;
-}
-   
-#members li p.email{
-    font-family: verdana;
-    font-size: 12px;
-    display: inline;
-    margin: 0;
+#memberslist {
+    margin-top: 15px;
 }
 
-#members li input{
-    margin: 0;
-    padding: 0;
-}
-
-p.remove{
-    display: inline;
+#memberslist li p.email{
     font-family: georgia;
-    font-size: 14px;
-    color: rgb(100, 100, 100);
+    font-size: 16px;
+    display: inline;
+    color: rgb(80, 80, 80);
 }
 
-#submit{
+
+p.remove, #submit{
+    display: inline;
     font-family: verdana;
-    font-size: 10px;
+    font-size: 14px;
+    color: rgb(80, 80, 80);
+}
+
+#submit {
     margin-left: 10px;
 }
+
+

@@ -28,11 +28,13 @@
 
 #middle{
     min-height: 400px;
+    clear: both;
 }
 
 #listtabs{
     clear: both;
     padding-top: 20px;
+    float: left;
 }
 
 #search{
@@ -51,9 +53,19 @@
     font-size: 30px;
 }
 
-#top, #middle, #bottom, #nav {
+#top, #middle, #bottom, #nav{
     margin-left: 60px;
     margin-right: 80px;
+}
+
+#middle, #nav li.current{
+    background-color: rgb(240, 240, 240);
+}
+
+#middle{
+    border: 1px solid;
+    border-color: rgb(200, 200, 200);
+    padding: 10px;
 }
 
 #top{

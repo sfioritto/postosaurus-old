@@ -1,19 +1,34 @@
 <ul id="listnav">
-  <li id="members">
-    <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">members</a>
-  </li>
-  <li id="archive">
-    <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">archive</a>
-  </li>
-  <li id="links">
-    <a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">links</a>
-  </li>
-  <li id="files">
-    <a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">files</a>
-  </li>
-
-  <li>
-    <a href="{% url webapp.postosaurus.views.user_main %}" id="yourlists">your lists</a>
+  
+  <li
+  {% if membertab %}
+  class="current"
+  {% endif %}
+  id="members">
+    <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
   </li>
   
+  <li
+  {% if archivetab %}
+  class="current"
+  {% endif %}
+  id="archive">
+    <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
+  </li>
+  
+  <li
+  {% if linktab %}
+  class="current"
+  {% endif %}
+  id="links">
+    <a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
+  </li>
+  
+  <li
+  {% if filetab %}
+  class="current"
+  {% endif %}
+  id="files">
+    <a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
+  </li>
 </ul>

@@ -195,7 +195,8 @@ def links(request, listname):
 
     return render_to_response('postosaurus/links.html', {
             'mlist': mlist, 
-            'links': links
+            'links': links,
+            'linktab' : True,
             }, context_instance = RequestContext(request))
 
 

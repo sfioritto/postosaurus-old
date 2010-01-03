@@ -1,30 +1,29 @@
-#top, middle, footer{
-    width: 750px;
-}
-
-h1{
+#middle h1{
     font-family: georgia;
     font-size: 20px;
     color: rgb(40, 40, 40);
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
-p{
+#middle p{
     font-family: verdana;
     font-size: 14px;
     color: rgb(100, 100, 100);
 }
 
-li p{
+#memberslist{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#middle li p{
     font-family: verdana;
-    font-size: 12px;
-    color: black;
+    font-size: 16px;
+    color: rgb(40, 40, 40);
+    margin-left: 10px;
 }
 
-#middle{
-    min-height: 500px;
-    margin-left: 30px;
-}
-
-body{
-    margin: 0;
+#cancel{
+    margin-left: 10px;
 }

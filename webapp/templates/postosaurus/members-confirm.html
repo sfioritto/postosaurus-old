@@ -4,10 +4,13 @@
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members-confirm.css" />
 {% endblock %}
 
-{% block content %}
-
+{% block nav %}
+<div id="nav">
+  {% include 'postosaurus/list-nav.html' %}
 </div>
-<div id="middle">
+{% endblock %}
+
+{% block content %}
 <h1>
 Are you sure?
 </h1>
@@ -15,7 +18,7 @@ Are you sure?
   Are you sure you wanted to remove the following members from the list <span class="listname">{{mlist.name}}</span>?
 </p>
 <form action="" method="POST">
-  <ul id="members">   
+  <ul id="memberslist">   
     {% for email in toremove %}
     <li>
       <input type="hidden" name="{{ email }}" value="{{ email }}"/>
@@ -25,8 +28,8 @@ Are you sure?
   </ul>
   <input type="hidden" value="1" name="confirmed" />
   <input type="submit" value="Yes, I'm sure." id="submit" />
+  <a id="cancel" href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Cancel</a>
 </form>
-</div>
 
 {% endblock %}
 

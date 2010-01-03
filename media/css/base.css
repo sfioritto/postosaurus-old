@@ -112,3 +112,13 @@ ul#topnav li a{
     font-size: 10px;
 }
 
+#breadcrumb{
+    font-family: georgia;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+#breadcrumb .divider{
+    margin-left: 5px;
+    margin-right: 5px;
+}

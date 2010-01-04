@@ -73,10 +73,11 @@
 }
 
 
-#top h1{
+#top h1 a{
     font-family: georgia;
     font-size: 16px;
     font-weight: bold;
+    text-decoration: none;
     color: rgb(40, 40, 40);
 }
 

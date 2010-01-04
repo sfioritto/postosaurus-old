@@ -1,0 +1,38 @@
+ul#usertabs{
+    margin-top: 5px;
+    border-top: 1px;
+    border-right: 1px;
+    float: left;
+}
+
+#usertabs{
+    height: 28px; /*li height plus padding and margin*/
+}
+
+#usertabs li{
+    height: 25px;
+    float: left;
+    font-family: verdana;
+    font-size: 12px;
+    border-left: 1px;
+    width: 100px;
+    text-align: center;
+    padding-top: 3px;
+}
+
+#usertabs li, ul#usertabs {
+    border-style: solid;
+    border-color: rgb(200, 200, 200);
+}
+
+#usertabs li a{
+    display: block;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+#usertabs li.current{
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(240, 240, 240);
+    margin-bottom: -1px;
+}

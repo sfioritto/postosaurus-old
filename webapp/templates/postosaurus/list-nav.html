@@ -6,8 +6,10 @@
 </div>
 <div id="listname">
   <p>
-  <a href="/">{{ mlist.name }}</a>
-  </p>
+  <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">
+  {{ mlist.name }}
+  </a>
+ </p>
 </div>
 <div id="listtabs">
   {% include 'postosaurus/list-tabs.html' %}

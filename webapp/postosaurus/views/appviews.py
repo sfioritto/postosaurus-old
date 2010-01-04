@@ -299,17 +299,4 @@ def archive_by_day(request, listname, month, day, year):
             'archivetab' : True,
             }, context_instance = RequestContext(request))
 
-
-@login_required
-def user_main(request):
-
-    try:
-        user = request.user.get_profile()
-        subscriptions = user.subscription_set.all()
-        mlists = [sub.mailing_list for sub in subscriptions]
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/usermain.html', locals(), context_instance = RequestContext(request))
-
-
+    

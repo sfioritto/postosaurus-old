@@ -1,0 +1,30 @@
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/user-tabs.css">
+{% endblock %}
+
+<ul id="usertabs">
+  
+  <li
+  {% if groupstab %}
+  class="current"
+  {% endif %}
+  id="groupstab">
+    <a href="{% url webapp.postosaurus.views.user_main %}">Groups</a>
+  </li>
+  
+ <li
+  {% if passwordtab %}
+  class="current"
+  {% endif %}
+  id="passwordtab">
+      <a href="{% url webapp.postosaurus.views.user_password %}">Password</a>
+ </li>
+  
+  <li
+  {% if billingtab %}
+  class="current"
+  {% endif %}
+  id="billingtab">
+ <a href="{% url webapp.postosaurus.views.user_main %}">Billing</a>
+ </li>
+</ul>

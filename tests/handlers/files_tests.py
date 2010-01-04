@@ -26,11 +26,6 @@ gzip_msg = MailRequest('fakepeer', 'sean@allicator.com', list_addr, open("tests/
 
 def setup_func():
 
-    MailingList.objects.all().delete()
-    Subscription.objects.all().delete()
-    User.objects.all().delete()
-    UserState.objects.all().delete()
-
     Subscription.objects.all().delete()
     User.objects.all().delete()
 
@@ -45,7 +40,12 @@ def setup_func():
 def teardown_func():
 
     # clear the database
-    pass
+
+    MailingList.objects.all().delete()
+    Subscription.objects.all().delete()
+    User.objects.all().delete()
+    UserState.objects.all().delete()
+
 
 @with_setup(setup_func, teardown_func)
 def test_one_attachment():

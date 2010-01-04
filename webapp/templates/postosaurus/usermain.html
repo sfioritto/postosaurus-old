@@ -4,8 +4,13 @@
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/usermain.css" />
 {% endblock %}
 
-{% block content %}
+{% block nav %}
+<div id="nav">
+{% include 'postosaurus/user-tabs.html' %}
+</div>
+{% endblock %}
 
+{% block content %}
 <p id="description">
   These are your Postosaurus lists.
 </p>
@@ -30,25 +35,4 @@
 </table>
 {% endblock %}
 
-{% block instructions %}
-<ul class="instructions">
-  <li>
-    <p class="top">What do I do next?</p>
-  </li>
-  <li>
-    <p class="top">Members</p>
-    <p class="bottom">The members link will show you all the members in the list.</p>
-  </li>
-  <li>
-    <p class="top">Archive</p>
-    <p class="bottom">The archive link will take you to a searchable archive of all emails sent to this list.</p>
-  </li>
-  <li>
-    <p class="top">Links</p>
-    <p class="bottom">
-      If you click on "links" you will see every URL sent to this list. Postosaurus remembers them
-      and stores them away by date for you to find later.
-    </p>
-  </li>
-</ul>
-{% endblock %}
+

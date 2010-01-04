@@ -21,4 +21,38 @@ p.remove, #submit{
     margin-left: 10px;
 }
 
+/* These widths are the same as the nav
+   widths in the base template.
+   */
+#membersleft{
+    width: 60%;
+}
+
+#membersright{
+    width: 30%;
+    padding-right: 10%;
+}
+
+#membersleft, #membersright{
+    float: left;
+}
+
+#membersright h3{
+    font-family: georgia;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(40, 40, 40);
+    margin-bottom: 10px;
+}
+
+#membersright p{
+    font-family: verdana;
+}
+#membersright p.scannable{
+    font-family: verdana;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
 

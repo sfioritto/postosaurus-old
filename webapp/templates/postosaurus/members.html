@@ -19,6 +19,7 @@
 <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
 </div>
 
+<div id="membersleft">
 <form action="" method="POST">
   <p class="Remove">
     Remove selected members.
@@ -33,6 +34,20 @@
     {% endfor %}
   </ul>
 </form>
+</div>
+<div id="membersright">
+  <h3>Add new members.</h3>
+  <p class="scannable">
+  Send an email to {{ mlist.email }} and CC the person you would like
+  to add.
+  </p>
+  <p>
+  Postosaurus will send a confirmation email to each person carbon
+  copied on an email to the list. Invited group members simply reply
+  to the confirmation message and they are added to the group.
+  </p>
+  
+</div>
 {% endblock %}
 
 

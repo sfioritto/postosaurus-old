@@ -1,23 +1,33 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/files.css" />
 {% endblock %}
 
-{% block content %}
-{% include 'postosaurus/listnav.html' %}
-<p id="description">Files</p>
-<div class="pagination">
-  {% if files.has_previous %}
-  <a href="?page={{ files.previous_page_number }}">previous</a>
-  {% endif %}
-  {% if files.has_next %}
-  <a href="?page={{ files.next_page_number }}">next</a>
-  {% endif %}  
-  <p>Page {{ files.number }} of {{ files.paginator.num_pages }}.</p>
-
+{% block nav %}
+<div id="nav">
+  {% include 'postosaurus/list-nav.html' %}
 </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div id="breadcrumb">
+<a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+{{ mlist.name }}
+</a>
+<span class="divider">></span>
+<a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
+<span class="divider">></span>
+Page {{ files.number }} of {{ files.paginator.num_pages }}
+</div>
+
+{% if files.object_list %}
+<p class="hint">
+Send an email to {{ mlist.email }} with a link in the body to add
+a link to this page
+</p>
 
 <ul id="filelist">
   {% for file in files.object_list %}
@@ -26,17 +36,29 @@
     {% endifchanged %}
     <li><a href="{{file.recent_url_path}}">{{file.name}}</a></li>
     {% endfor %}
-</ul>          
-{% endblock %}
-
-
-{% block instructions %}
-<ul class="instructions">
-  <li>
-    <p class="top">What are these files?</p>
-    <p class="bottom">
-      Postosaurus remembers any files sent to your list as an attachment.
-    </p>
-  </li>
 </ul>
+
+<div class="pagination">
+  {% if files.has_previous %}
+  <a href="?page={{ files.previous_page_number }}">previous</a>
+  {% endif %}
+  {% if files.has_next %}
+  <a href="?page={{ files.next_page_number }}">next</a>
+  {% endif %}  
+</div>
+
+
+{% else %}
+<h3>Add a file to your project</h3>
+<p id="scannable">
+Attach a file to an email and send it to {{ mlist.email }} to add it
+to your project's files.
+</p>
+<p id="detail">
+As you and your group members send emails back and forth, Postosaurus
+will collect any attachements you send and keep them here where you can
+easily find and download them later.
+</p>
+
+{% endif %}
 {% endblock %}

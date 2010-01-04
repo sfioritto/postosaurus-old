@@ -216,7 +216,7 @@ def files(request, listname):
     _authorize_or_raise(user, mlist)
     files = mlist.file_set.all().order_by('-created_on')
 
-    paginator = Paginator(files, 20) #sets links per page
+    paginator = Paginator(files, 15) #sets links per page
 
     try:
         page = int(request.GET.get('page', '1'))
@@ -230,7 +230,8 @@ def files(request, listname):
     
     return render_to_response('postosaurus/files.html', {
             'mlist': mlist, 
-            'files': files
+            'files': files,
+            'filetab' : True,
             }, context_instance = RequestContext(request))
 
 

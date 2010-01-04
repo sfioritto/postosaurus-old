@@ -29,8 +29,8 @@ p.remove, #submit{
 }
 
 #membersright{
-    width: 30%;
-    padding-right: 10%;
+    width: 35%;
+    padding-right: 5%;
 }
 
 #membersleft, #membersright{
@@ -40,19 +40,20 @@ p.remove, #submit{
 #membersright h3{
     font-family: georgia;
     font-size: 20px;
-    font-weight: bold;
     color: rgb(40, 40, 40);
     margin-bottom: 10px;
 }
 
 #membersright p{
     font-family: verdana;
+    font-size: 12px;
 }
+
 #membersright p.scannable{
     font-family: verdana;
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 

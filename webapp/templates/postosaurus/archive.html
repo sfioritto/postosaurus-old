@@ -1,13 +1,26 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archive.css">
 {% endblock %}
 
+{% block nav %}
+<div id="nav">
+  {% include 'postosaurus/list-nav.html' %}
+</div>
+{% endblock %}
+
+
 {% block content %}
-{% include 'postosaurus/listnav.html' %}
-<p id="description">Archive</p>
+
+<div id="breadcrumb">
+<a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+{{ mlist.name }}
+</a>
+<span class="divider">></span>
+<a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
+</div>
+
 <ul id="emails">
   {% for message, url in messages %}
   {% ifchanged %}
@@ -21,13 +34,3 @@
 </ul>
 {% endblock %}
 
-{% block instructions %}
-<ul class="instructions">
-  <li>
-    <p class="top">How do I use the archive?</p>
-    <p class="bottom">
-      Click on a day to view all the messages sent to this group on that day.
-    </p>
-  </li>
-</ul>
-{% endblock %}

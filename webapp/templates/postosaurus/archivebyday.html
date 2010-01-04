@@ -1,12 +1,31 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/listnav.css">
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/archivebyday.css">
 {% endblock %}
 
+{% block nav %}
+<div id="nav">
+  {% include 'postosaurus/list-nav.html' %}
+</div>
+{% endblock %}
+
+
 {% block content %}
-{% include 'postosaurus/listnav.html' %}
+
+<div id="breadcrumb">
+  <a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+  {{ mlist.name }}
+  </a>
+  <span class="divider">></span>
+  <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
+  <span class="divider">></span>
+  <a href="{% url webapp.postosaurus.views.archive_by_day listname=mlist.name day=date.day month=date.month year=date.year %}">
+  {{ date.month }}/{{ date.day }}/{{ date.year }}
+  </a>
+</div>
+
+
 <p id="description">Archive for {{date|date:"F j, Y"}}</p>
 <ul id="emails">
   {% for message in messages %}
@@ -24,7 +43,9 @@
     </div>
     <div class="body">
       <pre>
+{% if message.body %}
 	{{message.body}}
+{% endif %}
       </pre>
     </div>
   </li>

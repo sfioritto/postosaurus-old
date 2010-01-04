@@ -255,7 +255,8 @@ def archive_overview(request, listname):
         messages.append((msg, url))
     return render_to_response('postosaurus/archive.html', {
             'mlist': mlist,
-            'messages': messages
+            'messages': messages,
+            'archivetab' : True,
             }, context_instance = RequestContext(request))
 
 
@@ -295,6 +296,7 @@ def archive_by_day(request, listname, month, day, year):
             'mlist': mlist,
             'messages': messages,
             'date' : datetime(year, month, day),
+            'archivetab' : True,
             }, context_instance = RequestContext(request))
 
 

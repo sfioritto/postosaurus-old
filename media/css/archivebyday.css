@@ -8,12 +8,12 @@ div.headers{
     border-size: 2px;
     padding: 5px;
     padding-left: 10px;
-    border-color: rgb(200, 200, 200)
+    border-color: rgb(200, 200, 200);
+    background-color: white;
 }
 
 
 div.headers p{
-    margin: 0;
     margin-top: 5px;
 }
 
@@ -24,7 +24,9 @@ div.body{
     border: 1px solid;
     border-color: rgb(200, 200, 200);
     padding-left: 10px;
+    padding-top: 10px;
     margin-bottom: 10px;
+    background-color: white;
 }
 
 ul#emails{
@@ -34,5 +36,12 @@ ul#emails{
 }
 
 ul#emails li{
-    width: 600px;
+    width: 60%;
+}
+
+#description{
+    font-family: georgia;
+    font-size: 16px;
+    color: rgb(80, 80, 80);
+    margin-bottom: 15px;
 }

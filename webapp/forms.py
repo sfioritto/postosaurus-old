@@ -56,6 +56,22 @@ class SignupForm(forms.Form):
     tasks = forms.BooleanField(required=False)
 
 
+class PasswordForm(forms.Form):
+    
+    oldpass = forms.CharField(label=(u'Your current password'),
+                              widget=forms.PasswordInput(render_value=False))
+    newpass = forms.CharField(label=(u'Password'),
+                               widget=forms.PasswordInput(render_value=False)) 
+    verify = forms.CharField(label=(u'Password again'),
+                               widget=forms.PasswordInput(render_value=False)) 
+
+    def clean_newpass(self):
+        if self.cleaned_data['newpass'] == self.data['verify']:
+            return self.cleaned_data['newpass']
+        else:
+            raise forms.ValidationError("The passwords you entered in don't match.")
+
+
 class UserAccountForm(forms.Form):
 
     email = forms.EmailField(max_length=75)

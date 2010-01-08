@@ -16,6 +16,7 @@ urlpatterns = patterns(
     (r'^user/$', 'webapp.postosaurus.views.user_main'),
     (r'^user/profile/$', 'webapp.postosaurus.views.user_profile'),
     (r'^user/password/$', 'webapp.postosaurus.views.user_password'),
+    (r'^user/billing/$', 'webapp.postosaurus.views.user_billing'),
     (r'^thanks/$', 'webapp.postosaurus.views.list_created'),
     (r'^login/$', 'django.contrib.auth.views.login', {
             'template_name': 'postosaurus/login.html'

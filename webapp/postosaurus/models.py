@@ -1,5 +1,6 @@
 import os
 import hashlib
+import settings
 from webapp import settings
 from django.db import models
 from datetime import datetime
@@ -14,6 +15,7 @@ class User(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
     email = models.CharField(max_length=512, primary_key=True)
     level = models.CharField(max_length=512, null=True) # the feature level from spreedly
+    token = models.CharField(max_length=512, null=True) # the subscriber token from spreedly
     user = models.ForeignKey(DjangoUser, null=True)
 
     def is_subscribed(self, mlist):
@@ -43,6 +45,7 @@ class User(models.Model):
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
         info = client.get_info(self.user.id)
         self.level = info['feature_level']
+        self.token = info['token']
         if info['active'] is False:
             for mlist in self.mailinglist_set.all():
                 mlist.active = False
@@ -73,6 +76,11 @@ class User(models.Model):
             return 1
         else:
             return 0
+        
+
+    def spreedly_account_url(self):
+        return "https://spreedly.com/%s/subscriber_accounts/%s" % (settings.SPREEDLY_SITE, self.token)
+
 
 
     def __unicode__(self):

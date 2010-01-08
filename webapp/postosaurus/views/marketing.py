@@ -1,4 +1,4 @@
-import random
+import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -7,6 +7,7 @@ from webapp.postosaurus.views import user_main
 from webapp.postosaurus.models import BetaRequest
 from webapp.forms import SignupForm, MailingListForm
 from lamson import view
+
 
 
 def index(request):
@@ -20,6 +21,7 @@ def index(request):
 
 def plans(request):
     return render_to_response('postosaurus/plans.html', {
+            'basic' : settings.SPREEDLY_PLAN_BASIC,
             }, context_instance = RequestContext(request))
 
 

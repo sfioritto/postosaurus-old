@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from webapp.forms import UserAccountForm
 from webapp.postosaurus.views import create_user
+from webapp import settings
 
 
 
@@ -43,4 +45,23 @@ def update_subscriptions(request):
         profile = user.get_profile()
         profile.update_from_spreedly()
     return render_to_response('postosaurus/plans.html', {
+            }, context_instance = RequestContext(request))
+
+
+@login_required
+def user_billing(request):
+
+    try:
+        user = request.user.get_profile()
+    except ValueError:
+        raise Http404()
+
+    if user.token:
+        url = user.spreedly_account_url()
+    else:
+        url = __create_url(request.user, settings.SPREEDLY_PLAN_BASIC)
+    return render_to_response('postosaurus/user-billing.html', {
+            'user' : user,
+            'url' : url,
+            'billingtab' : True,
             }, context_instance = RequestContext(request))

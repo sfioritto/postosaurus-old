@@ -24,19 +24,11 @@ def user_main(request):
 
 @login_required
 def user_profile(request):
-    #implement this later when it's actually used.
+    # todo: implement this later when it's actually used.
     # it is currently unused.
     """
     """
-    try:
-        user = request.user.get_profile()
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/user-profile.html', {
-            'user' : user,
-            'profiletab' : True,
-            }, context_instance = RequestContext(request))
+    raise Http404()
 
 @login_required
 def user_password(request):
@@ -75,3 +67,5 @@ def user_password(request):
             'passwordtab' : True,
             'success' : changed,
             }, context_instance = RequestContext(request))
+
+

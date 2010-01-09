@@ -1,51 +1,36 @@
-#center{
-    width: 600px;
-    margin-top: 25px;
-}
-
-#center, #footer{
-    margin-left: 250px;
-}
-
-a {
-    font-family: arial;
-    font-size: 12px;
-}
-
-#goback{
-    float: left;
-}
-
-#center h1{
+#middle h3{
     font-weight: normal;
     font-family: arial;
     font-size: 16px;
-    font-color: rgb(40, 40, 40);
+    color: rgb(40, 40, 40);
     padding-top: 25px;
     clear: both;
 }
 
-#center p{
+#middle p{
     font-family: verdana;
-    font-size: 12px;
+    font-size: 14px;
     color: rgb(80, 80, 80);
+    width: 60%;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
-#footer {
-    padding-left: 200px;
+#contacttitle{
+    font-size: 30px;
+    font-family: verdana;
+    color: rgb(40, 40, 40);
+    float: right;
+    width: 40%;
 }
 
-#footer ul li{
-    display: inline;
+#middle{
+    margin-top: 80px;
+    padding-top: 40px;
 }
 
-#footer ul{
-    list-style: none;
-}
-
-#email {
-    font-weight: bold;
-    font-family: arial;
-    font-size: 16px;
-    color: rgb(109, 147, 159);
+#middle #intro{
+    font-family: georgia;
+    font-size: 18px;
+    color: rgb(40, 40, 40);
 }

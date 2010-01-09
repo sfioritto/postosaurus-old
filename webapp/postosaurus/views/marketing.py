@@ -25,5 +25,7 @@ def plans(request):
             }, context_instance = RequestContext(request))
 
 
-
-
+def contact(request):
+    return render_to_response('postosaurus/contact.html', 
+                              context_instance = RequestContext(request))
+    

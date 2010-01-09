@@ -42,7 +42,9 @@ p#scannable{
     font-family: verdana;
     font-size: 14px;
     font-weight: bold;
-    rgb(80, 80, 80);
+    color: rgb(40, 40, 40);
+    width: 60%;
+    margin-top: 30px;
 }
 
 p#detail{

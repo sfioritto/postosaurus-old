@@ -56,12 +56,14 @@ def user_billing(request):
     except ValueError:
         raise Http404()
 
+    url, plans = None, None
     if user.token:
         url = user.spreedly_account_url()
     else:
-        url = __create_url(request.user, settings.SPREEDLY_PLAN_BASIC)
+        plans = __create_url(request.user, settings.SPREEDLY_PLAN_BASIC)
     return render_to_response('postosaurus/user-billing.html', {
             'user' : user,
             'url' : url,
+            'plans' : plans,
             'billingtab' : True,
             }, context_instance = RequestContext(request))

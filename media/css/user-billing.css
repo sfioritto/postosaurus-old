@@ -1,0 +1,17 @@
+#topblurb {
+    font-family: georgia;
+    font-size: 20px;
+    color: rgb(40, 40, 40);
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#bottomblurb, #needmore{
+    font-family: verdana;
+    font-size: 16px;
+    color: rgb(40, 40, 40);
+}
+
+#needmore{
+    margin-top: 10px;
+}

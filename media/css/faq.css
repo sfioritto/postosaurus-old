@@ -1,0 +1,25 @@
+#middle h2{
+    font-family: georgia;
+    font-size: 16px;
+    color: rgb(40, 40, 40);
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 30px;
+}
+
+#questions{
+    width: 60%;
+}
+
+#faqtitle{
+    font-size: 30px;
+    font-family: verdana;
+    color: rgb(40, 40, 40);
+    float: right;
+    width: 40%;
+}
+
+#middle{
+    margin-top: 80px;
+    padding-top: 40px;
+}

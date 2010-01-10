@@ -14,6 +14,7 @@ urlpatterns = patterns(
     (r'^app/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^contact/', 'webapp.postosaurus.views.contact'),
+    (r'^faq/', 'webapp.postosaurus.views.faq'),
     )
 
 if settings.DEBUG:

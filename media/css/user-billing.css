@@ -1,4 +1,4 @@
-#topblurb {
+#middle p#topblurb {
     font-family: georgia;
     font-size: 20px;
     color: rgb(40, 40, 40);
@@ -6,12 +6,18 @@
     margin-bottom: 30px;
 }
 
-#bottomblurb, #needmore{
+#middle p#needmore{
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+#nav ul#usertabs{
+    margin-top: 80px;
+}
+
+#middle p{
+    width: 60%;
     font-family: verdana;
     font-size: 16px;
     color: rgb(40, 40, 40);
-}
-
-#needmore{
-    margin-top: 10px;
 }

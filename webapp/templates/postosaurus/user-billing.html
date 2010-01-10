@@ -2,11 +2,13 @@
 
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/user-billing.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/user-tabs.css" />
 {% endblock %}
 
 {% block nav %}
-<div id="nav">
 {% include 'postosaurus/user-tabs.html' %}
+<div id="pagetitle">
+  <h2>Billing</h2>
 </div>
 {% endblock %}
 
@@ -20,9 +22,10 @@ Change or cancel your plan <a href="{{ url }}">here</a>.
 </p>
 {% else %}
 <p id="topblurb">Create your own Postosaurus groups.</p>
-<p id="bottomblurb">Sign up for a basic account <a href="{{ plans }}">here</a>.</p>
+<p id="bottomblurb">Sign up for a basic account right <a href="{{ plans }}">here</a>.</p>
+<p>See plans and pricing <a href="{% url webapp.postosaurus.views.plans %}">here</a>.
 {% endif %}
-<p id="needmore">More plans are on the way. Need another plan right
+<p id="needmore">There are more plans are on the way. Do you need another plan right
 now? Have any questions? Contact us <a href="{{ MEDIA_URL }}html/contact.html">here</a>.
 </p>
 {% endblock %}

@@ -13,13 +13,13 @@ Postosaurus -- Lightweight Group Collaboration
 <body>
 <div id="top">
   <div id="topleft">
-    <h1>Postosaurus</h1>
-    <h2>Manage your project from your inbox.</h2>
+    <h1><a href="/">Postosaurus</a></h1>
+    <h2><a href="/">Manage your project from your inbox.</a></h2>
   </div>
   <div id="topright">
     <ul id="globalnav">
-      <li><a href="{{ MEDIA_URL }}html/aboutus.html">About Us</a></li>
-      <li><a href="{% url webapp.postosaurus.views.contact %}">Contact</a></li>
+      <li><a href="{% url webapp.postosaurus.views.about %}">About</a></li>
+      <li><a href="{% url webapp.postosaurus.views.landing_contact %}">Contact</a></li>
       <li><a href="{% url django.contrib.auth.views.logout_then_login %}">
       {% if user.is_authenticated %}
       Sign Out
@@ -37,7 +37,7 @@ Postosaurus -- Lightweight Group Collaboration
 </div>
 
 <div id="bottom">
-  <a href="{% url webapp.postosaurus.views.contact %}">Contact</a>
+  <a href="{% url webapp.postosaurus.views.landing_contact %}">Contact</a>
  <a href="/site_media/html/privacy.html">Privacy</a>
 </div>
 

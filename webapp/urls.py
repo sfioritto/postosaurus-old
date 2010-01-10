@@ -13,8 +13,9 @@ urlpatterns = patterns(
     (r'^plans/$', 'webapp.postosaurus.views.plans'),
     (r'^app/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^contact/', 'webapp.postosaurus.views.contact'),
+    (r'^contact/', 'webapp.postosaurus.views.landing_contact'),
     (r'^faq/', 'webapp.postosaurus.views.faq'),
+    (r'^about/', 'webapp.postosaurus.views.about'),
     )
 
 if settings.DEBUG:

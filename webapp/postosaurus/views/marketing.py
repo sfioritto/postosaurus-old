@@ -24,6 +24,9 @@ def plans(request):
             'basic' : settings.SPREEDLY_PLAN_BASIC,
             }, context_instance = RequestContext(request))
 
+def landing_contact(request):
+    return render_to_response('postosaurus/landing-contact.html', 
+                              context_instance = RequestContext(request))    
 
 def contact(request):
     return render_to_response('postosaurus/contact.html', 
@@ -32,4 +35,9 @@ def contact(request):
 def faq(request):
     return render_to_response('postosaurus/faq.html', 
                               context_instance = RequestContext(request))
-    
+
+
+def about(request):
+    return render_to_response('postosaurus/about.html', 
+                              context_instance = RequestContext(request))
+

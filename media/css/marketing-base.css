@@ -66,17 +66,19 @@
     background-color: rgb(40, 40, 80);
 }
 
-#top h1 {
+#top h1 a{
     font-family: georgia;
     font-size: 24px;
     font-weight: bold;
     color: white;
+    text-decoration: none;
 }
 
-#top h2{
+#top h2 a{
     font-family: georgia;
     font-size: 14px;
     color: rgb(200, 200, 200);
+    text-decoration: none;
 }
 
 #globalnav {

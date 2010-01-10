@@ -24,4 +24,5 @@ urlpatterns = patterns(
     (r'logout/$', 'django.contrib.auth.views.logout_then_login'),
     (r'subscriptions/create/(?P<planid>.+)/$', 'webapp.postosaurus.views.create_subscription'),
     (r'subscriptions/update/$', 'webapp.postosaurus.views.update_subscriptions'),
+    (r'contact/$', 'webapp.postosaurus.views.contact'),
 )

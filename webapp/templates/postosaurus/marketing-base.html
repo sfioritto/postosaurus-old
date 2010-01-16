@@ -20,6 +20,7 @@ Postosaurus -- Lightweight Group Collaboration
     <ul id="globalnav">
       <li><a href="{% url webapp.postosaurus.views.about %}">About</a></li>
       <li><a href="{% url webapp.postosaurus.views.landing_contact %}">Contact</a></li>
+      <li><a href="{% url webapp.postosaurus.views.plans %}">Plans & Pricing</a></li>
       <li><a href="{% url django.contrib.auth.views.logout_then_login %}">
       {% if user.is_authenticated %}
       Sign Out

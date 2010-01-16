@@ -26,7 +26,7 @@
     clear: left;
 }
 
-#topleft, #topright{
+#topleft{
     width: 450px;/*half of total width*/
 }
 

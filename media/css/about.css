@@ -23,4 +23,9 @@
 
 #middle {
     height: auto;
+    padding-top: 10px;
+}
+
+#middle h2#firstheader{
+    margin-top: 0px;
 }

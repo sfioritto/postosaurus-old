@@ -1,0 +1,26 @@
+#middle h2{
+    font-family: georgia;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+#middle h2, #middle p{
+    width: 50%;
+}
+
+#middle p{
+    font-family: verdana;
+    font-size: 12px;
+    margin: 10 0;
+    line-height: 1.2;
+}
+
+#middle img{
+    float: left;
+    margin: 0 20 20 0;
+}
+
+#middle {
+    height: auto;
+}

@@ -16,6 +16,7 @@ urlpatterns = patterns(
     (r'^contact/', 'webapp.postosaurus.views.landing_contact'),
     (r'^faq/', 'webapp.postosaurus.views.faq'),
     (r'^about/', 'webapp.postosaurus.views.about'),
+    (r'^privacy/', 'webapp.postosaurus.views.privacy'),
     )
 
 if settings.DEBUG:

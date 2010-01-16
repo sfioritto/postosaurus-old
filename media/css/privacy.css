@@ -1,43 +1,30 @@
-#center{
-    width: 600px;
-    margin-top: 25px;
+#middle h2{
+    font-family: georgia;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-#center, #footer{
-    margin-left: 250px;
-}
-
-a {
-    font-family: arial;
+#middle p{
     font-size: 12px;
-}
-#goback{
-    float: left;
+    line-height: 1.2;
 }
 
-#center h1{
-    font-weight: normal;
-    font-family: arial;
-    font-size: 16px;
-    font-color: rgb(40, 40, 40);
-    text-align: center;
-    margin-bottom: 25px;
+#middle ul{
+    margin: 30 0;
 }
 
-#center p, li{
+#middle li{
+    font-size: 10px;
+    line-height: 1.2;
+    list-style: square inside;
+    margin: 10 0;
+}
+
+#middle li, #middle p{
     font-family: verdana;
-    font-size: 12px;
-    color: rgb(80, 80, 80);
+    width: 50%;
 }
-
-#footer {
-    padding-left: 200px;
-}
-
-#footer ul li{
-    display: inline;
-}
-
-#footer ul{
-    list-style: none;
+#middle {
+    height: auto;
+    padding-top: 10px;
 }

@@ -41,3 +41,7 @@ def about(request):
     return render_to_response('postosaurus/about.html', 
                               context_instance = RequestContext(request))
 
+def privacy(request):
+    return render_to_response('postosaurus/privacy.html', 
+                              context_instance = RequestContext(request))
+

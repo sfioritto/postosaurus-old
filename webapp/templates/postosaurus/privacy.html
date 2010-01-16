@@ -1,16 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+{% extends "postosaurus/marketing-base.html" %}
 
-<head>
-  <title>Privacy Policy</title>
-  <link rel="stylesheet" type="text/css" href="/site_media/css/privacy.css" />
-</head>
-  
-<body>
-<div id="center">
-  <a href="/" id="goback"><-- Go Back</a>
-  <h1>Postosaurus Privacy Policy</h1>
+{% block title %}
+Privacy Policy
+{% endblock %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/privacy.css">
+{% endblock %}
+
+{% block content %}
+  <h2>Postosaurus Privacy Policy</h2>
   <p>
     Your privacy is very important to us. Accordingly, we have developed 
     this Policy in order for you to understand how we collect, use, communicate 
@@ -41,17 +40,7 @@
   <p>
     We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained.
   </p>
-</div>
 
-<div id="footer">
-  <ul id="footernav">
-    <li>
-      <a href="/site_media/html/contact.html" id="contact">contact</a>
-    </li>
-    <li>
-      <a href="/site_media/html/privacy.html" id="privacy">privacy</a>
-    </li>
-  </ul>
-</div>
-</body>
-</html>
+{% endblock %}
+
+

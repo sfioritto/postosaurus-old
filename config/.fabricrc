@@ -1,0 +1,10 @@
+user=sean
+password=Bethers8064
+devpath=/home/sean/deploy/postosaurus
+prodhome=/home/sean
+aws_secret_key=eKh5tREYG1U9N/WGwVMFFj6AZ+G6+CyhelEHH5xz
+aws_access_key=0E80640HDYY27D9PPR02
+aws_private_key=pk-MRP5PCOLDK554MP7FDK2FEUEKD6HXUDM.pem
+aws_certificate=cert-MRP5PCOLDK554MP7FDK2FEUEKD6HXUDM.pem
+aws_user=5209-1338-3552
+

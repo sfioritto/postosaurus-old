@@ -1,6 +1,6 @@
 import os
 import hashlib
-import settings
+import config.settings
 from webapp import settings
 from django.db import models
 from datetime import datetime

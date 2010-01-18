@@ -1,4 +1,4 @@
-import config.settings
+from webapp import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response

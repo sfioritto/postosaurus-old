@@ -26,7 +26,13 @@ Postosaurus -- Lightweight Group Collaboration
 	<li><a href="{% url webapp.postosaurus.views.contact %}">Contact</a></li>
 	<li><a href="/">Profile</a></li>
 	<li><a href="{% url webapp.postosaurus.views.faq %}">FAQ</a></li>
-	<li><a href="{% url django.contrib.auth.views.logout_then_login %}">Sign Out</a></li>
+	<li><a href="{% url django.contrib.auth.views.logout_then_login %}">
+	{% if user.is_authenticated %}
+	Sign Out
+	{% else %}
+	Sign In
+	{% endif %}
+	</a></li>
       </ul>
     </div>
   </div>

@@ -9,14 +9,14 @@ from webapp.forms import PasswordForm
 def user_main(request):
 
     try:
-        user = request.user.get_profile()
-        subscriptions = user.subscription_set.all()
+        puser = request.user.get_profile()
+        subscriptions = puser.subscription_set.all()
         mlists = [sub.mailing_list for sub in subscriptions]
     except ValueError:
         raise Http404()
 
     return render_to_response('postosaurus/usermain.html', {
-            'user' : user,
+            'puser' : puser,
             'subscriptions' : subscriptions,
             'mlists' : mlists,
             'groupstab' : True,

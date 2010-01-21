@@ -41,7 +41,7 @@
 
 /*middle layout*/
 #middle {
-    height: 400px;
+    min-height: 400px;
     margin-top: 40px;
 }
 

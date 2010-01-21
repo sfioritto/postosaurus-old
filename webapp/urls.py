@@ -19,7 +19,7 @@ urlpatterns = patterns(
     (r'^privacy/', 'webapp.postosaurus.views.privacy'),
     )
 
-if settings.DEBUG:
+if settings.TEMPLATE_DEBUG:
     urlpatterns += patterns('',
     (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
      {'document_root': settings.STATIC_DOC_ROOT}),)

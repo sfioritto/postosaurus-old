@@ -1,125 +1,16 @@
-<head>
-<title>500 Server Error</title>
-<STYLE type="text/css">
-body{
-    margin-top: 0px;
-    margin-left: 0px;
-}
+{% extends "postosaurus/marketing-base.html" %}
 
-#footer{
-    width: 750px;
-    clear: both;
-    height: 20px;
-    padding-top: 0px;
-    height: 20px;
-    font-size: 10px;
-    font-family: verdana;
-    text-align: center;
-}
+{% block title %}
+Postosaurus -- 500 Server Error
+{% endblock %}
 
-#footer a, #footer span{
-    margin-right: 5px;
-}
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/500.css">
+{% endblock %}
 
-/*end bottom */
-/*start middle*/
-
-#middle{
-    width: 750px;
-    
-}
-
-#middle p{
-    font-family: verdana;
-    font-size: 14px;
-    color: rgb(60, 60, 60);
-    padding-left: 80px;
-}
-
-
-#top{
-    width: 750px;
-}
-
-.header h1, .header h2{
-    margin: 0;
-}
-
-.header h1{
-    font-family: arial;
-    font-weight: normal;
-    font-size: 18px;
-    color: rgb(40, 40, 40);
-
-}
-
-.header h2{
-    font-family: verdana;
-    font-weight: normal;
-    font-size: 12px;
-    color: rgb(120, 120, 120);
-}
-
-ul#topnav{
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-
-ul#topnav li{
-    display: inline;
-}
-
-ul#topnav li a{
-    font-size: 10px;
-    font-family: verdana;
-    float: right;
-    margin-right: 5px;
-}
-
-.header{
-    background-color: rgb(153, 205, 223);
-    padding-top: 15px;
-    padding-bottom: 18px;
-    padding-left: 80px;
-}
-</STYLE>
-</head>
-
-<body>
-<div id="top">
-<div class="header">
-<h1>Postosaurus</h1>
-<span>
-  <h2>Run your project from your inbox</h2>
-  <ul id="topnav">
-    <li><a href="{% url django.contrib.auth.views.logout_then_login %}">Log Out</a></li>
-    <li><a href="/help.html">Help</a></li>
-  </ul>
-</span>
-</div>
-</div>
-
-<div id="middle">
+{% block content %}
 <p>Oh no! Something went wrong with the server.</p>
 <p>Please either try again later or let us know at <a href="mailto:support@email.postosaurus.com">support@email.postosaurus.com</a></p>
 <img src="{{MEDIA_URL}}images/500.jpg" alt="Sick Postosaurus" />
+{% endblock %}
 
-</div>
-
-<div id="footer">
-<a href="{{MEDIA_URL}}html/contact.html">About Us</a>
-<span id="copyright">| Copyright 2009 Allicator, LLC |</span>
-<a href="{{MEDIA_URL}}html/privacy.html">Privacy Policy</a
-</div>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-8964246-2");
-pageTracker._trackPageview();
-} catch(err) {}
-</script>
-</body>

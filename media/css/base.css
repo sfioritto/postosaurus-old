@@ -1,3 +1,8 @@
+/*TODO: remove this once search is working */
+#searchform{
+    visibility: hidden;
+}
+
 /*layout*/
 #top{
     clear: both;

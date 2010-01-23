@@ -31,4 +31,13 @@
   id="files">
     <a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
   </li>
+
+  <li
+  {% if taskstab %}
+  class="current"
+  {% endif %}
+  id="tasks">
+  <a href="{% url webapp.postosaurus.views.tasks listname=mlist.name %}">Files</a>
+  </li>
+  
 </ul>

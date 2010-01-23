@@ -209,6 +209,23 @@ def links(request, listname):
 
 
 @login_required
+def tasks(request, listname):
+
+    try:
+        user = request.user.get_profile()
+        mlist = mailinglist.find_list(listname)
+        _authorize_or_raise(user, mlist)
+            
+    except ValueError:
+        raise Http404()
+
+    return render_to_response('postosaurus/tasks.html', {
+            'mlist': mlist, 
+            'taskstab' : True,
+            }, context_instance = RequestContext(request))
+
+
+@login_required
 def files(request, listname):
 
     user = request.user.get_profile()

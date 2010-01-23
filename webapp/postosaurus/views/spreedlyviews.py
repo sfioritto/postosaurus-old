@@ -52,17 +52,17 @@ def update_subscriptions(request):
 def user_billing(request):
 
     try:
-        user = request.user.get_profile()
+        profile = request.user.get_profile()
     except ValueError:
         raise Http404()
 
     url, plans = None, None
-    if user.token:
-        url = user.spreedly_account_url()
+    if profile.token:
+        url = profile.spreedly_account_url()
     else:
         plans = __create_url(request.user, settings.SPREEDLY_PLAN_BASIC)
     return render_to_response('postosaurus/user-billing.html', {
-            'user' : user,
+            'profile' : profile,
             'url' : url,
             'plans' : plans,
             'billingtab' : True,

@@ -40,6 +40,13 @@
   </tbody>
 </table>
 {% endif %}
+{% if mlist %}
+<div id="listcreated">
+  <p>
+  Your list {{ mlist.name }} was created. A confirmation email has been sent to your email address.
+  </p>
+</div>
+{% endif %}
 {% if payup %}
 <div id="pay">
   <p>

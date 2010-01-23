@@ -37,6 +37,7 @@ def user_main(request):
         raise Http404()
     
     form = MailingListForm()
+    mlist = None
     if request.method == "POST":
         form = MailingListForm(request.POST)
         
@@ -61,9 +62,11 @@ def user_main(request):
     return render_to_response('postosaurus/usermain.html', {
             'profile' : profile,
             'subscriptions' : subscriptions,
+            'mlist' : mlist,
             'mlists' : mlists,
             'groupstab' : True,
             'form' : form,
+            'payup' : False,
             }, context_instance = RequestContext(request))
 
 @login_required

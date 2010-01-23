@@ -58,15 +58,15 @@ input#submit{
     width: auto;
 }
 
-input#submit, #examples, #emaildomain, #pay{
+input#submit, #examples, #emaildomain, #pay, #listcreated{
     font-family: verdana;
 }
 
-#emaildomain, #pay{
+#emaildomain, #pay, #listcreated{
     font-size: 14px;
 }
 
-#pay{
+#pay, #listcreated{
     margin-bottom: 10px;
 }
 

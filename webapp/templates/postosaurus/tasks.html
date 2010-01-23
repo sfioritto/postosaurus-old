@@ -10,13 +10,14 @@
 
 {% block content %}
 <h2>Coming soon.</h2>
-<p>Send an email and create a task. Keep track of what everyone is
-working on right here.</p>
 {% if profile.tasks_requested %}
 <p>We'll send you an email as soon as this feature is finished. Thanks
 for volunteering to beta test!</p>
 {% else %}
-<p>Would you like to beta test this new feature? We will send you an
+<p>Send an email and create a task. Keep track of what everyone is
+working on right here.</p>
+<p class="callout">Would you like to beta test this new feature?</p>
+<p>We will send you an
 email when it's ready.</p>
 <form action="" method="POST">
 <input type="submit" value="Sign me up." />

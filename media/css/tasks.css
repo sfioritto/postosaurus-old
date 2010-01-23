@@ -1,0 +1,22 @@
+#middle h2{
+    margin: 40 0 10 0;
+    font-family: georgia;
+    font-size: 24px;
+    color: rgb(40, 40, 40);
+}
+
+#middle p, #middle form input{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(80, 80, 80);
+}
+
+#middle form{
+    margin-top: 10px;
+}
+
+#middle p.callout{
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}

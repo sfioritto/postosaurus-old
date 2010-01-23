@@ -1,9 +1,30 @@
+import jinja2
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import check_password
 from django.http import Http404
 from django.template import RequestContext
-from webapp.forms import PasswordForm
+from app.model import mailinglist
+from webapp.forms import PasswordForm, MailingListForm
+
+from lamson import view
+
+# relay is created at runtime in boot.py for lamson, but django
+# doesn't know about it, so I create it here. Might be better
+# to just use built in django email stuff instead of lamson?
+from config import settings as appsettings
+from lamson.server import Relay
+appsettings.relay = Relay(host=appsettings.relay_config['host'], 
+                       port=appsettings.relay_config['port'], debug=1)
+
+#same thing here for the loader.
+view.LOADER = jinja2.Environment(
+    loader=jinja2.PackageLoader(appsettings.template_config['dir'], 
+                                appsettings.template_config['module']))
+
+
+from config.settings import relay, CONFIRM
+
 
 @login_required
 def user_main(request):
@@ -36,14 +57,13 @@ def user_main(request):
             list_name = form.cleaned_data['groupname']
             mlist = mailinglist.create_list(list_name, profile)
             CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
-            
-            return HttpResponseRedirect(reverse(list_created))
 
     return render_to_response('postosaurus/usermain.html', {
             'profile' : profile,
             'subscriptions' : subscriptions,
             'mlists' : mlists,
             'groupstab' : True,
+            'form' : form,
             }, context_instance = RequestContext(request))
 
 @login_required

@@ -212,14 +212,22 @@ def links(request, listname):
 def tasks(request, listname):
 
     try:
-        user = request.user.get_profile()
+        profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname)
-        _authorize_or_raise(user, mlist)
+        _authorize_or_raise(profile, mlist)
             
     except ValueError:
         raise Http404()
 
+    if request.method == 'POST':
+        feature = Request(email=profile.email,
+                          links=False,
+                          files=False,
+                          tasks=True)
+        feature.save()
+
     return render_to_response('postosaurus/tasks.html', {
+            'profile' : profile,
             'mlist': mlist, 
             'taskstab' : True,
             }, context_instance = RequestContext(request))

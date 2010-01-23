@@ -80,7 +80,13 @@ class User(models.Model):
     def spreedly_account_url(self):
         return "https://spreedly.com/%s/subscriber_accounts/%s" % (settings.SPREEDLY_SITE, self.token)
 
-
+    
+    def tasks_requested(self):
+        request = Request.objects.filter(email = self.email)
+        if len(request) > 0:
+            return True
+        else:
+            return False
 
     def __unicode__(self):
         return self.email

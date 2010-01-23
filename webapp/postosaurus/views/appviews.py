@@ -36,43 +36,6 @@ from config.settings import relay, CONFIRM
 AuthenticationForm.base_fields['username'].max_length = 75 
  
 
-@login_required
-def create_list(request):
-    
-    profile = request.user.get_profile()
-    if request.method == 'POST':
-        
-        form = MailingListForm(request.POST)
-
-        # Let them know they need to pay up to create another list.
-        if not profile.can_create_list():
-            return render_to_response('postosaurus/create-list.html', {
-                    'form': form,
-                    'payup' : True,
-                    }, context_instance = RequestContext(request))
-
-        #Check if the mailing list is valid.
-        if form.is_valid():
-            email = profile.email
-            list_name = form.cleaned_data['groupname']
-            mlist = mailinglist.create_list(list_name, profile)
-            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
-            
-            return HttpResponseRedirect(reverse(list_created))
-
-        else:
-            return render_to_response('postosaurus/create-list.html', {
-                    'form': form,
-                    }, context_instance = RequestContext(request))
-
-    else:
-        form = MailingListForm() # An unbound form
-
-    return render_to_response('postosaurus/create-list.html', {
-        'form': form,
-    }, context_instance = RequestContext(request))
-
-
 def create_user(request, template='postosaurus/create-user.html', next=settings.LOGIN_URL):
     
     """
@@ -172,10 +135,6 @@ def members(request, listname):
                 'subscriptions' : subscriptions,
                 'membertab' : True,
                 }, context_instance = RequestContext(request))
-
-
-def list_created(request):
-    return render_to_response('postosaurus/thanks.html', context_instance = RequestContext(request))
 
 
 @login_required

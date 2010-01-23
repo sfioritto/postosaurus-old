@@ -9,14 +9,38 @@ from webapp.forms import PasswordForm
 def user_main(request):
 
     try:
-        puser = request.user.get_profile()
-        subscriptions = puser.subscription_set.all()
+        profile = request.user.get_profile()
+        subscriptions = profile.subscription_set.all()
         mlists = [sub.mailing_list for sub in subscriptions]
     except ValueError:
         raise Http404()
+    
+    form = MailingListForm()
+    if request.method == "POST":
+        form = MailingListForm(request.POST)
+        
+        # Let them know they need to pay up to create another list.
+        if not profile.can_create_list():
+            return render_to_response('postosaurus/usermain.html', {
+                    'profile' : profile,
+                    'subscriptions' : subscriptions,
+                    'mlists' : mlists,
+                    'groupstab' : True,
+                    'form': form,
+                    'payup' : True,
+                    }, context_instance = RequestContext(request))
+        
+        #Check if the mailing list is valid.
+        if form.is_valid():
+            email = profile.email
+            list_name = form.cleaned_data['groupname']
+            mlist = mailinglist.create_list(list_name, profile)
+            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
+            
+            return HttpResponseRedirect(reverse(list_created))
 
     return render_to_response('postosaurus/usermain.html', {
-            'puser' : puser,
+            'profile' : profile,
             'subscriptions' : subscriptions,
             'mlists' : mlists,
             'groupstab' : True,

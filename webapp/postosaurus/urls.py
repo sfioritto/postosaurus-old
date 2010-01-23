@@ -12,7 +12,6 @@ urlpatterns = patterns(
     (r'^lists/(?P<listname>.+)/archive/$', 'webapp.postosaurus.views.archive_overview'),
     (r'^lists/(?P<listname>.+)/archive/(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/$', 
      'webapp.postosaurus.views.archive_by_day'),
-    (r'^lists/create/$', 'webapp.postosaurus.views.create_list'),
     (r'^user/create/$', 'webapp.postosaurus.views.create_user'),
     (r'^user/$', 'webapp.postosaurus.views.user_main'),
     (r'^user/profile/$', 'webapp.postosaurus.views.user_profile'),

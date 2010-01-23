@@ -2,10 +2,7 @@ div.headers{
     font-family: georgia;
     font-size: 10px;
     font-weight: bold;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-size: 2px;
+    border-bottom: 1px solid;
     padding: 5px;
     padding-left: 10px;
     border-color: rgb(200, 200, 200);
@@ -21,12 +18,8 @@ div.body{
     font-family: verdana;
     font-size: 10px;
     color: rgb(80, 80, 80);
-    border: 1px solid;
-    border-color: rgb(200, 200, 200);
     padding-left: 10px;
     padding-top: 10px;
-    margin-bottom: 10px;
-    background-color: white;
 }
 
 ul#emails{
@@ -37,6 +30,12 @@ ul#emails{
 
 ul#emails li{
     width: 60%;
+    border: 1px solid;
+    border-color: rgb(200, 200, 200);
+    margin-bottom: 10px;
+    background-color: white;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #description{

@@ -1,5 +1,5 @@
 import unittest
-from postosaurus.models import *
+from webapp.postosaurus.models import *
 
 class SpreedlyUpdate(unittest.TestCase):
 

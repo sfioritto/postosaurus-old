@@ -1,5 +1,5 @@
 from lamson.testing import *
-from lamson import server
+from lamson import server, routing
 from webapp.postosaurus.models import *
 from nose import with_setup
 from email.utils import parseaddr
@@ -39,7 +39,7 @@ def test_subscribe_user(sender=sender, client=client, mlist=None):
     client.say(msg['from'], "subscribe me")
     newsubs = len(mlist.subscription_set.all())
     assert newsubs == subs + 1, "Should be %s subscriptions but there are %s" % (str(subs + 1), str(newsubs))
-    assert_in_state('app.handlers.admin', mlist.email, msg['to'], 'POSTING')
+    assert_in_state('app.handlers.admin', msg['from'], msg['to'], 'POSTING')
 
 
 @with_setup(setup_func, teardown_func)
@@ -55,7 +55,7 @@ def test_existing_user_new_list():
     client.say(msg['from'], "subscribe me")
     newsubs = len(mlist.subscription_set.all())
     assert newsubs == subs + 1, "Should be %s subscriptions but there are %s" % (str(subs + 1), str(newsubs))
-    assert_in_state('app.handlers.admin', list_addr, msg['to'], 'POSTING')
+    assert_in_state('app.handlers.admin', msg['from'], msg['to'], 'POSTING')
 
 
 @with_setup(setup_func, teardown_func)
@@ -63,7 +63,7 @@ def test_add_new_user():
 
     """
     If there are multiple addresses in the To field, add them
-    tot the list.
+    to the list.
     """
     
     client.begin()

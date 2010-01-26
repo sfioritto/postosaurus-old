@@ -1,10 +1,20 @@
-from lamson.routing import route, route_like, stateless
+from lamson.routing import route, route_like, stateless, state_key_generator
 from config.settings import relay, CONFIRM
 from lamson import view, queue
 from app.model import mailinglist
 from types import ListType
 from email.utils import parseaddr
 
+@state_key_generator
+def module_and_listname(modulename, message):
+
+    name, address = parseaddr(message['to'])
+    if '-' in address:
+        listname = address.split('-')[0]
+    else:
+        listname = address.split('@')[0]
+
+    return modulename + ':' + listname
 
 
 @route('(list_name)-confirm-(id_number)@(host)')
@@ -29,7 +39,6 @@ def START(message, list_name=None, id_number=None, host=None):
             if not user:
                 user = mailinglist.create_user(address)
             mailinglist.add_if_not_subscriber(address, list_name)
-
             return POSTING
     return START
 

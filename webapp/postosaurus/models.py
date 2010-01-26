@@ -43,7 +43,7 @@ class User(models.Model):
 
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
         info = client.get_info(self.user.id)
-        self.level = info['feature_level']
+        self.level = info['feature_level']  
         self.token = info['token']
         if info['active'] is False:
             for mlist in self.mailinglist_set.all():

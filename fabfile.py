@@ -1,4 +1,5 @@
 from fabric.api import *
+from datetime import datetime
 
 env.hosts = ['postosaurus.com']
 env.approot = "/var/local/postosaurus"
@@ -66,6 +67,29 @@ def reboot():
             sudo("lamson start -gid 1000 -uid 1000 -boot config.queue -pid run/queue.pid")
             sudo("chown -R %s:%s ../postosaurus" % (env.user, env.user))
     
+
+def image(instance):
+    date = datetime.today().strftime("%Y%m%d%H%M")
+    bucket = 'postosaurus' + date
+
+    put('~/.ec2/%s' % env.aws_private_key, '/tmp/%s' % env.aws_private_key)
+    put('~/.ec2/%s' % env.aws_certificate, '/tmp/%s' % env.aws_certificate)
+    sudo('mv /tmp/%s /mnt/%s' % (env.aws_private_key, env.aws_private_key))
+    sudo('mv /tmp/%s /mnt/%s' % (env.aws_certificate, env.aws_certificate))
+    
+    #bundle
+    sudo('ec2-bundle-vol --no-inherit -d /mnt -k /mnt/%s -c /mnt/%s -u %s -r i386' % (env.aws_private_key, env.aws_certificate, env.aws_user))
+
+    #updload
+    sudo('ec2-upload-bundle -b %s -m /mnt/image.manifest.xml -a %s -s %s %s' % (bucket, env.aws_access_key, env.aws_secret_key, instance))
+
+    #register
+    local("ec2-register -K ~/.ec2/%s -C ~/.ec2/%s %s/image.manifest.xml" % (env.aws_private_key, env.aws_certificate, bucket))
+
+    cleanup()
+
+def cleanup():
+    sudo("rm /mnt/image*; rm -rf /mnt/img-mnt/; rm /mnt/%s; rm /mnt/%s" % (env.aws_private_key, env.aws_certificate))    
 
 def deploy(hash):
     with cd(env.devpath):

@@ -28,11 +28,11 @@ def json_encoding(base):
 
 def json_build(base):
     data = {'headers': base.headers,
-                'body': base.body,
-                'encoding': json_encoding(base),
-                'parts': [json_build(p) for p in base.parts],
+            'body': base.body,
+            'encoding': json_encoding(base),
+            'parts': [json_build(p) for p in base.parts],
             }
-
+    
     if data['encoding']['format'] and base.body:
         data['body'] = base64.b64encode(base.body)
 

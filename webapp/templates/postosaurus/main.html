@@ -26,17 +26,6 @@ Create a new group.
   </p>
 </div>
 {% endif %}
-{% if payup %}
-<div id="pay">
-  <p>
-  Looks like you've created all the groups your plan allows.
-  </p>
-  <p>
-  Please <a href="{% url webapp.postosaurus.views.contact %}">contact us</a>
-to upgrade your plan.
-  </p>
-</div>
-{% endif %}
 <form action="" method="POST">
 {{ form.groupname.errors }}
 {{ form.groupname }}

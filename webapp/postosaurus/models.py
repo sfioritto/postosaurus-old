@@ -7,22 +7,6 @@ from django.core.urlresolvers import reverse
 from pyspreedly import api
 
 
-class Organization(models.Model):
-
-    """
-    Highest level of the models. Organizations have mailing lists,
-    files, tasks (eventually), links, users. 
-    """
-
-    created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
-    name = models.CharField(max_length=63)
-    owner = models.ForeignKey(User, null=True)
-    active = 
-    
-    def __unicode__(self):
-        return self.name
-
-
 class User(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
@@ -66,31 +50,6 @@ class User(models.Model):
         self.save()
 
         
-    def can_create_list(self):
-        
-        """
-        Returns true or false if the user has paid in order to create the list.
-        """
-        return self.num_lists_allowed() > len(self.mailinglist_set.all())
-        
-    
-    def num_lists_allowed(self):
-
-        """
-        Returns the number of lists the user is allowed to own/create.
-        For now there is only the 'Basic' feature level.
-
-        SUPER_USERS are allowed to create as many lists as they would like.
-        """
-        self.update_from_spreedly()
-        if self.email in settings.SUPER_USERS:
-            return 100
-        elif self.level == 'Basic':
-            return 1
-        else:
-            return 0
-        
-
     def spreedly_account_url(self):
         return "https://spreedly.com/%s/subscriber_accounts/%s" % (settings.SPREEDLY_SITE, self.token)
 
@@ -105,6 +64,21 @@ class User(models.Model):
     def __unicode__(self):
         return self.email
     
+
+class Organization(models.Model):
+
+    """
+    Highest level of the models. Organizations have mailing lists,
+    files, tasks (eventually), links, users. 
+    """
+
+    created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
+    name = models.CharField(max_length=63)
+    owner = models.ForeignKey(User, null=True)
+    active = models.BooleanField()
+    
+    def __unicode__(self):
+        return self.name
 
 
 class MailingList(models.Model):

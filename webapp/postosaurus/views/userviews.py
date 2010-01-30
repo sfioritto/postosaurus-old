@@ -27,12 +27,12 @@ from config.settings import relay, CONFIRM
 
 
 @login_required
-def user_main(request):
+def main(request):
 
     try:
         profile = request.user.get_profile()
-        subscriptions = profile.subscription_set.all()
-        mlists = [sub.mailing_list for sub in subscriptions]
+        organization = 'blah' #TODO
+        mlists = organization.mailinglist_set.all()
     except ValueError:
         raise Http404()
     
@@ -41,17 +41,6 @@ def user_main(request):
     if request.method == "POST":
         form = MailingListForm(request.POST)
         
-        # Let them know they need to pay up to create another list.
-        if not profile.can_create_list():
-            return render_to_response('postosaurus/usermain.html', {
-                    'profile' : profile,
-                    'subscriptions' : subscriptions,
-                    'mlists' : mlists,
-                    'groupstab' : True,
-                    'form': form,
-                    'payup' : True,
-                    }, context_instance = RequestContext(request))
-        
         #Check if the mailing list is valid.
         if form.is_valid():
             email = profile.email
@@ -59,29 +48,20 @@ def user_main(request):
             mlist = mailinglist.create_list(list_name, profile)
             CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
 
-    return render_to_response('postosaurus/usermain.html', {
+    return render_to_response('postosaurus/main.html', {
             'profile' : profile,
-            'subscriptions' : subscriptions,
             'mlist' : mlist,
             'mlists' : mlists,
             'groupstab' : True,
             'form' : form,
-            'payup' : False,
             }, context_instance = RequestContext(request))
 
 @login_required
-def user_profile(request):
-    # todo: implement this later when it's actually used.
-    # it is currently unused.
-    """
-    """
-    raise Http404()
-
-@login_required
-def user_password(request):
+def user_settings(request):
 
     """
-    This view resets the user's password.
+    This view resets the user's password. Eventually
+    a user can do more, but this is it for now.
     """
 
     changed = False

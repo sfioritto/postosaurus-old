@@ -13,9 +13,7 @@ urlpatterns = patterns(
     (r'^lists/(?P<listname>.+)/archive/(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/$', 
      'webapp.postosaurus.views.archive_by_day'),
     (r'^user/create/$', 'webapp.postosaurus.views.create_user'),
-    (r'^user/$', 'webapp.postosaurus.views.user_main'),
-    (r'^user/profile/$', 'webapp.postosaurus.views.user_profile'),
-    (r'^user/password/$', 'webapp.postosaurus.views.user_password'),
+    (r'^user/$', 'webapp.postosaurus.views.user_settings'),
     (r'^user/billing/$', 'webapp.postosaurus.views.user_billing'),
     (r'^login/$', 'django.contrib.auth.views.login', {
             'template_name': 'postosaurus/login.html'

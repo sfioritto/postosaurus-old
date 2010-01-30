@@ -12,7 +12,7 @@ from webapp import settings
 
 def __create_url(user, planid):
     puser = user.get_profile()
-    return "https://spreedly.com/postosaurus/subscribers/%s/subscribe/%s/%s" % (str(user.id), planid, puser.email)
+    return "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, str(user.id), planid, puser.email)
 
 
 def create_subscription(request, planid):

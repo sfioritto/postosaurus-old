@@ -1,22 +1,14 @@
 <ul id="usertabs">
   
   <li
-  {% if groupstab %}
+  {% if settingstab %}
   class="current"
   {% endif %}
-  id="groupstab">
-    <a href="{% url webapp.postosaurus.views.user_settings %}">Groups</a>
+  id="settingstab">
+    <a href="{% url webapp.postosaurus.views.user_settings %}">Settings</a>
   </li>
   
  <li
-  {% if passwordtab %}
-  class="current"
-  {% endif %}
-  id="passwordtab">
-      <a href="{% url webapp.postosaurus.views.user_password %}">Password</a>
- </li>
-  
-  <li
   {% if billingtab %}
   class="current"
   {% endif %}

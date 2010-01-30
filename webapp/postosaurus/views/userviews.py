@@ -2,6 +2,7 @@ import jinja2
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import check_password
+from django.contrib.sites.models import Site
 from django.http import Http404
 from django.template import RequestContext
 from app.model import mailinglist
@@ -31,7 +32,15 @@ def main(request):
 
     try:
         profile = request.user.get_profile()
-        organization = 'blah' #TODO
+
+        #this code copied directly from here: http://www.rossp.org/blog/2007/apr/28/using-subdomains-django/
+        django_site = Site.objects.get_current()
+        domain_parts = django_site.domain.split(".")
+        domain = ".".join(domain_parts[1:])
+        subdomain = request.META['HTTP_HOST'].replace(domain, '').replace('.', '').replace('www', '')
+        #end copied code
+
+        organization = Organization.objects.get(subdomain=subdomain)
         mlists = organization.mailinglist_set.all()
     except ValueError:
         raise Http404()
@@ -81,7 +90,7 @@ def user_settings(request):
         else:
             return render_to_response('postosaurus/user-password.html', {
                     'form': form,
-                    'passwordtab' : True,
+                    'settingstab' : True,
                     'success' : changed,
                     }, context_instance = RequestContext(request))
 
@@ -91,7 +100,7 @@ def user_settings(request):
     
     return render_to_response('postosaurus/user-password.html', {
             'form' : form,
-            'passwordtab' : True,
+            'settingstab' : True,
             'success' : changed,
             }, context_instance = RequestContext(request))
 

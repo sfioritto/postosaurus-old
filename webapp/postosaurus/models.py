@@ -73,7 +73,8 @@ class Organization(models.Model):
     """
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
-    name = models.CharField(max_length=63)
+    subdomain = models.CharField(max_length=63, unique=True)
+    name = models.CharField(max_length=300)
     owner = models.ForeignKey(User, null=True)
     active = models.BooleanField()
     

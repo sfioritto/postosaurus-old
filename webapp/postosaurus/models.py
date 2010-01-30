@@ -2,11 +2,25 @@ import os
 import hashlib
 from webapp import settings
 from django.db import models
-from datetime import datetime
-from email.utils import formataddr
 from django.contrib.auth.models import User as DjangoUser
 from django.core.urlresolvers import reverse
 from pyspreedly import api
+
+
+class Organization(models.Model):
+
+    """
+    Highest level of the models. Organizations have mailing lists,
+    files, tasks (eventually), links, users. 
+    """
+
+    created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
+    name = models.CharField(max_length=63)
+    owner = models.ForeignKey(User, null=True)
+    active = 
+    
+    def __unicode__(self):
+        return self.name
 
 
 class User(models.Model):
@@ -95,10 +109,9 @@ class User(models.Model):
 
 class MailingList(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
-    owner = models.ForeignKey(User, null=True)
     name = models.CharField(max_length=100, unique = True)
     email = models.CharField(max_length=512, unique = True)
-    active = models.BooleanField(default=True)
+    organization = models.ForeignKey(Organization)
     
     def links_url(self):
         return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.links', args=[self.name])
@@ -112,12 +125,27 @@ class MailingList(models.Model):
         return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.archive_overview', args=[self.name])
 
 
-    
     def __unicode__(self):
         return self.name
 
 
+class Membership(models.Model):
+
+    """
+    Indicates a user is a member of an organization.
+    """
+
+    created_on = models.DateTimeField(auto_now_add=True)
+    organization = models.ForeignKey(Organization)
+    user = models.ForeignKey(User)
+
+
 class Subscription(models.Model):
+
+    """
+    Indicates a user is subscribed to a mailing list.
+    """
+
     created_on = models.DateTimeField(auto_now_add=True)
     mailing_list = models.ForeignKey(MailingList)
     user = models.ForeignKey(User)
@@ -127,6 +155,11 @@ class Subscription(models.Model):
 
 
 class UserState(models.Model):
+
+    """
+    Stores state for Lamson.
+    """
+
     created_on = models.DateTimeField(auto_now_add=True)
     key = models.CharField(max_length=512)
     address = models.EmailField()
@@ -148,14 +181,16 @@ class JoinConfirmation(models.Model):
 
 
 class Request(models.Model):
+
+    """
+    Feature request. Right now only used for tasks.
+    Kill this model once tasks are implemented.
+    """
+
     email = models.CharField(max_length=512)
     links = models.BooleanField()
     files = models.BooleanField()
     tasks = models.BooleanField()
-
-
-class BetaRequest(models.Model):
-    email = models.CharField(max_length=512)
 
 
 class Message(models.Model):

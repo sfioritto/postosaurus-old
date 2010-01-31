@@ -8,8 +8,6 @@ from webapp.postosaurus.views import create_user
 from webapp import settings
 
 
-
-
 def __create_url(user, planid):
     puser = user.get_profile()
     return "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, str(user.id), planid, puser.email)
@@ -49,7 +47,7 @@ def update_subscriptions(request):
 
 
 @login_required
-def user_billing(request):
+def billing(request):
 
     try:
         profile = request.user.get_profile()

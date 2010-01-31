@@ -6,7 +6,6 @@ from django.http import Http404
 from django.template import RequestContext
 from app.model import mailinglist
 from webapp.forms import PasswordForm
-
 from lamson import view
 
 # relay is created at runtime in boot.py for lamson, but django
@@ -27,7 +26,12 @@ from config.settings import relay, CONFIRM
 
 
 @login_required
-def user_settings(request):
+def main(request):
+    return settings(request)
+
+
+@login_required
+def settings(request):
 
     """
     This view resets the user's password. Eventually
@@ -53,7 +57,7 @@ def user_settings(request):
                     'form': form,
                     'settingstab' : True,
                     'success' : changed,
-                    }, context_instance = RequestContext(request))
+
 
     else:
         form = PasswordForm() # An unbound form

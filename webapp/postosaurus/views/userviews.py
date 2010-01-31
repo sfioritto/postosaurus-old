@@ -2,11 +2,10 @@ import jinja2
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import check_password
-from django.contrib.sites.models import Site
 from django.http import Http404
 from django.template import RequestContext
 from app.model import mailinglist
-from webapp.forms import PasswordForm, MailingListForm
+from webapp.forms import PasswordForm
 
 from lamson import view
 
@@ -26,44 +25,6 @@ view.LOADER = jinja2.Environment(
 
 from config.settings import relay, CONFIRM
 
-
-@login_required
-def main(request):
-
-    try:
-        profile = request.user.get_profile()
-
-        #this code copied directly from here: http://www.rossp.org/blog/2007/apr/28/using-subdomains-django/
-        django_site = Site.objects.get_current()
-        domain_parts = django_site.domain.split(".")
-        domain = ".".join(domain_parts[1:])
-        subdomain = request.META['HTTP_HOST'].replace(domain, '').replace('.', '').replace('www', '')
-        #end copied code
-
-        organization = Organization.objects.get(subdomain=subdomain)
-        mlists = organization.mailinglist_set.all()
-    except ValueError:
-        raise Http404()
-    
-    form = MailingListForm()
-    mlist = None
-    if request.method == "POST":
-        form = MailingListForm(request.POST)
-        
-        #Check if the mailing list is valid.
-        if form.is_valid():
-            email = profile.email
-            list_name = form.cleaned_data['groupname']
-            mlist = mailinglist.create_list(list_name, profile)
-            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
-
-    return render_to_response('postosaurus/main.html', {
-            'profile' : profile,
-            'mlist' : mlist,
-            'mlists' : mlists,
-            'groupstab' : True,
-            'form' : form,
-            }, context_instance = RequestContext(request))
 
 @login_required
 def user_settings(request):
@@ -105,3 +66,46 @@ def user_settings(request):
             }, context_instance = RequestContext(request))
 
 
+def create_user(request, template, next='/'):
+    
+    """
+    Creates an account for the web application.
+    """
+    form = UserAccountForm()
+    if request.method == 'POST':
+        form = UserAccountForm(request.POST)
+        next = form.data['next']
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            repassword = form.cleaned_data['repassword']
+            email = form.cleaned_data['email']
+
+            #never populate the email address of the django model. This is duplicated
+            #in the postosaurus user model.
+            djangouser = DjangoUser.objects.create_user(username, '', password)
+            djangouser.save()
+            user = mailinglist.find_user(email)
+            if not user:
+                user = User(email=email)
+                user.save()
+
+            user.user = djangouser
+            user.save()
+            
+            djangouser = authenticate(username=djangouser.username, password=password)
+            login(request, djangouser)
+
+            return HttpResponseRedirect(next)
+
+    else:
+
+        # override next if there is a value in the query string.
+        if request.GET.has_key('next'):
+            if request.GET['next']:
+                next = request.GET['next']
+
+        return render_to_response('postosaurus/create-user.html', {
+                'form' : form,
+                'next' : next
+                }, context_instance = RequestContext(request))

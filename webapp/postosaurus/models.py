@@ -15,19 +15,19 @@ class User(models.Model):
     token = models.CharField(max_length=512, null=True) # the subscriber token from spreedly
     user = models.ForeignKey(DjangoUser, null=True)
 
-    def is_subscribed(self, mlist):
+    def in_org(self, org):
 
         """
-        Returns true or false to indicate if the user is subscribed
-        to the given mailing list.
+        Returns true or false to indicate if the user is in
+        to the given organization.
         """
 
-        subs = mlist.subscription_set\
+        memberships = mlist.membership_set\
             .filter(user=self)\
-            .filter(mailing_list=mlist)\
+            .filter(organization=org)\
             .all()
 
-        if len(subs) > 0:
+        if len(memberships) > 0:
             return True
         else:
             return False

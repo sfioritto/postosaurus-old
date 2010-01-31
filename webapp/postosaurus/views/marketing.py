@@ -7,14 +7,12 @@ from webapp.postosaurus.views import main
 from webapp.forms import SignupForm, MailingListForm
 from lamson import view
 
-
-
 def index(request):
     if request.user.is_anonymous():
         return render_to_response("postosaurus/home.html", 
                                   context_instance = RequestContext(request))
     else:
-        return HttpResponseRedirect(reverse(main))
+        return main(request)
 
 
 def plans(request):

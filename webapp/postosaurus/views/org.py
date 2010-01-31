@@ -1,28 +1,19 @@
-from webapp.postosaurus.views.listviews import authorize_or_raise
+from webapp.postosaurus.views.list import authorize_or_raise
 from django.shortcuts import render_to_response
 from django.http import Http404
 from app.model import mailinglist
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
-from django.contrib.sites.models import Site
 from webapp.postosaurus.models import *
 from webapp.forms import MailingListForm
 
 
 @login_required 
-def main(request):
+def main(request, orgname):
     try:
         profile = request.user.get_profile()
-        
-        #this code copied directly from here: http://www.rossp.org/blog/2007/apr/28/using-subdomains-django/
-        django_site = Site.objects.get_current()
-        domain_parts = django_site.domain.split(".")
-        domain = ".".join(domain_parts[1:])
-        subdomain = request.META['HTTP_HOST'].replace(domain, '').replace('.', '').replace('www', '')
-        #end copied code
-        
-        organization = Organization.objects.get(subdomain=subdomain)
+        organization = Organization.objects.get(subdomain=orgname)
         mlists = organization.mailinglist_set.all()
     except ValueError:
         raise Http404()
@@ -48,9 +39,13 @@ def main(request):
             }, context_instance = RequestContext(request))
 
 
+@login_required
+def members(request, orgname):
+    return links(request, orgname)
+
 
 @login_required
-def links(request, listname):
+def links(request, orgname):
 
     try:
         user = request.user.get_profile()
@@ -80,7 +75,7 @@ def links(request, listname):
 
 
 @login_required
-def tasks(request, listname):
+def tasks(request, orgname):
 
     try:
         profile = request.user.get_profile()
@@ -105,7 +100,7 @@ def tasks(request, listname):
 
 
 @login_required
-def files(request, listname):
+def files(request, orgname):
 
     user = request.user.get_profile()
     mlist = mailinglist.find_list(listname)

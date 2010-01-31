@@ -2,6 +2,8 @@ from webapp.postosaurus.models import *
 from django.contrib import admin
 
 admin.site.register(Subscription)
+admin.site.register(Organization)
+admin.site.register(Membership)
 admin.site.register(MailingList)
 admin.site.register(User)
 admin.site.register(Link)     

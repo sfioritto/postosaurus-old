@@ -18,9 +18,9 @@ Postosaurus -- Lightweight Group Collaboration
   </div>
   <div id="topright">
     <ul id="globalnav">
-      <li><a href="{% url webapp.postosaurus.views.about %}">About</a></li>
-      <li><a href="{% url webapp.postosaurus.views.landing_contact %}">Contact</a></li>
-      <li><a href="{% url webapp.postosaurus.views.plans %}">Plans & Pricing</a></li>
+      <li><a href="{% url webapp.postosaurus.views.marketing.about %}">About</a></li>
+      <li><a href="{% url webapp.postosaurus.views.marketing.contact %}">Contact</a></li>
+      <li><a href="{% url webapp.postosaurus.views.marketing.plans %}">Plans & Pricing</a></li>
       <li><a href="{% url django.contrib.auth.views.logout_then_login %}">
       {% if user.is_authenticated %}
       Sign Out
@@ -38,8 +38,8 @@ Postosaurus -- Lightweight Group Collaboration
 </div>
 
 <div id="bottom">
-  <a href="{% url webapp.postosaurus.views.landing_contact %}">Contact</a>
- <a href="{% url webapp.postosaurus.views.privacy %}"">Privacy</a>
+  <a href="{% url webapp.postosaurus.views.marketing.contact %}">Contact</a>
+ <a href="{% url webapp.postosaurus.views.marketing.privacy %}"">Privacy</a>
 </div>
 
 <script type="text/javascript">

@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
 from webapp.forms import UserAccountForm
-from webapp.postosaurus.views import create_user
+from webapp.postosaurus.views.user import create_user
 from webapp import settings
 
 

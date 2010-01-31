@@ -39,7 +39,7 @@ Postosaurus -- Plans and Pricing
     <span class="number">15</span> day free trial.
     </li>
   </ul>
-  <a href="{% url webapp.postosaurus.views.create_subscription planid=basic %}">
+  <a href="{% url webapp.postosaurus.views.spreedly.create_subscription planid=basic %}">
   <img src="{{ MEDIA_URL }}images/signup-button-2.png" />
   </a>
 </div>
@@ -65,7 +65,7 @@ Postosaurus -- Plans and Pricing
     <p>
     We will be releasing more plans soon so you can upgrade and downgrade
     to whatever works the best for you. If you need a different plan right
-    away, contact us <a href="/site_media/html/contact.html">here</a>, and we'll set you up.
+    away, contact us <a href="{% url webapp.postosaurus.views.marketing.contact %}">here</a>, and we'll set you up.
     </p>
     </li>
     <li>

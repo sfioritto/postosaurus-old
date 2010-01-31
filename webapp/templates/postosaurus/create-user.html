@@ -3,7 +3,7 @@
 {% block content %}
 
 {{ form.errors }}
-<form method="post" action="{% url webapp.postosaurus.views.create_user %}">
+<form method="post" action="{% url webapp.postosaurus.views.user.create_user %}">
   <table>
     <tr>
       <td>{{ form.email.label_tag }}</td>

@@ -11,7 +11,17 @@ urlpatterns = patterns(
     '',
     (r'^$', 'webapp.postosaurus.views.marketing.index'),
     (r'^plans/$', 'webapp.postosaurus.views.marketing.plans'),
-    (r'^app/', include('webapp.postosaurus.urls')),
+    (r'^user/create/$', 'webapp.postosaurus.views.user.create_user'),
+    (r'^user/$', 'webapp.postosaurus.views.user.main'),
+    (r'^user/settings/$', 'webapp.postosaurus.views.user.settings'),
+    (r'^user/billing/$', 'webapp.postosaurus.views.spreedly.billing'),
+    (r'^login/$', 'django.contrib.auth.views.login', {
+            'template_name': 'postosaurus/login.html'
+            }),
+    (r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
+    (r'^subscriptions/create/(?P<planid>.+)/$', 'webapp.postosaurus.views.spreedly.create_subscription'),
+    (r'^subscriptions/update/$', 'webapp.postosaurus.views.spreedly.update_subscriptions'),
+    (r'^org/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^contact/', 'webapp.postosaurus.views.marketing.contact'),
     (r'^faq/', 'webapp.postosaurus.views.marketing.faq'),

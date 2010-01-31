@@ -27,6 +27,11 @@ from config.settings import relay, CONFIRM
 
 @login_required
 def main(request):
+
+    """
+    For now just shows user setgings.
+    TODO: Returns a list of the users organizations
+    """
     return settings(request)
 
 
@@ -52,13 +57,6 @@ def settings(request):
             user.save()
             changed = True
             
-        else:
-            return render_to_response('postosaurus/user-password.html', {
-                    'form': form,
-                    'settingstab' : True,
-                    'success' : changed,
-
-
     else:
         form = PasswordForm() # An unbound form
 

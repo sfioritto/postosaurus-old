@@ -23,10 +23,10 @@ Change or cancel your plan <a href="{{ url }}">here</a>.
 {% else %}
 <p id="topblurb">Create your own Postosaurus groups.</p>
 <p id="bottomblurb">Sign up for a basic account right <a href="{{ plans }}">here</a>.</p>
-<p>See plans and pricing <a href="{% url webapp.postosaurus.views.plans %}">here</a>.
+<p>See plans and pricing <a href="{% url webapp.postosaurus.views.marketing.plans %}">here</a>.
 {% endif %}
 <p id="needmore">There are more plans are on the way. Do you need another plan right
-now? Have any questions? Contact us <a href="{% url webapp.postosaurus.views.contact %}">here</a>.
+now? Have any questions? Contact us <a href="{% url webapp.postosaurus.views.marketing.contact %}">here</a>.
 </p>
 {% endblock %}
 

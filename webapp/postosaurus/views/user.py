@@ -1,9 +1,11 @@
 import jinja2
 from django.shortcuts import render_to_response
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import check_password
+from django.contrib.auth.models import check_password, User as DjangoUser
 from django.http import Http404
 from django.template import RequestContext
+from app.model import mailinglist
 from webapp.postosaurus import models
 from webapp.forms import PasswordForm
 from lamson import view
@@ -85,7 +87,7 @@ def create_user(request):
             repassword = form.cleaned_data['repassword']
             email = form.cleaned_data['email']
 
-            djangouser, user = models.create_users(email, username, password)
+            djangouser, user = create_users(email, username, password)
             
             djangouser = authenticate(username=djangouser.username, password=password)
             login(request, djangouser)
@@ -103,3 +105,5 @@ def create_user(request):
                 'form' : form,
                 'next' : next
                 }, context_instance = RequestContext(request))
+
+

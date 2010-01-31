@@ -1,8 +1,10 @@
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
+from webapp.postosaurus.views import helpers
 from webapp.forms import OrgUserForm
 from webapp.postosaurus import models
 from webapp import settings
@@ -26,10 +28,10 @@ def create_subscription(request, planid):
     if request.user.is_anonymous():
         form = OrgUserForm()
         if request.method == 'POST':
-            print 'here'
+
             form = OrgUserForm(request.POST)
             if form.is_valid():
-                print 'valid'
+
                 username = form.cleaned_data['username']
                 password = form.cleaned_data['password']
                 repassword = form.cleaned_data['repassword']
@@ -37,7 +39,7 @@ def create_subscription(request, planid):
                 subdomain = form.cleaned_data['subdomain']
                 orgname = form.cleaned_data['orgname']
                 
-                djangouser, user = models.create_users(email, username, password)
+                djangouser, user = helpers.create_users(email, username, password)
                 
                 org = models.Organization(subdomain = subdomain,
                                           name = orgname,
@@ -47,11 +49,12 @@ def create_subscription(request, planid):
                 
                 membership = models.Membership(organization = org,
                                                user = user)
+                membership.save()
                 
                 djangouser = authenticate(username=djangouser.username, password=password)
                 login(request, djangouser)
                 
-                return HttpResponseRedirect(__create_url(user, planid))
+                return HttpResponseRedirect(__create_url(djangouser, planid))
             
         return render_to_response('postosaurus/create-subscription.html', {
                 'form' : form,

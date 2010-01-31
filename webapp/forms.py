@@ -140,7 +140,6 @@ class OrgUserForm(UserAccountForm):
             org = None
 
         if org:
-            print 'invalid org'
             raise forms.ValidationError("An account for this email address has already been created.")
         else:
             return subdomain

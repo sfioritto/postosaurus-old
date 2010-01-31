@@ -1,5 +1,5 @@
 import re
-from webapp.postosaurus.models import *
+from webapp.postosaurus.models import User, MailingList, Subscription
 from email.utils import parseaddr
 from lamson.mail import MailResponse
 from types import ListType
@@ -45,6 +45,7 @@ def create_user(address):
     return user
 
 def find_user(address):
+    print User
     users = User.objects.filter(email = address)
     if users:
         return users[0]
@@ -206,6 +207,9 @@ def craft_response(message, list_name, list_addr):
         response.Body = message.body()
 
     return response
+
+
+
 
 
 

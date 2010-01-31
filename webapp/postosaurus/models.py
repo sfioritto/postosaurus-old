@@ -1,6 +1,5 @@
 import os
 import hashlib
-from app.model import mailinglist
 from webapp import settings
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
@@ -283,25 +282,6 @@ class File(models.Model):
         return self.name
 
 
-def create_users(username, email, password):
-
-    """
-    Creates the django user object and the
-    postosaurus user.
-    """
-
-    #never populate the email address of the django model.
-    djangouser = DjangoUser.objects.create_user(username, '', password)
-    djangouser.save()
-    user = mailinglist.create_user(email)
-    if not user:
-        user = User(email=email)
-        user.save()
-        
-        user.user = djangouser
-        user.save()
-
-    return djangouser, user
         
         
 

@@ -53,8 +53,32 @@
       <td>{{ form.repassword }}</td>
     </tr>
     <tr></tr>
+
+    
     <tr class="step">
       <td><span class="number">2.</span></td>
+      <td><p id="stepone" class="step">Create your organization's site.</p></td>
+    </tr>
+
+    {% if form.subdomain.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.subdomain.errors }}</td>
+    </tr>
+    {% endif %}
+    
+    <tr>
+      <td>{{ form.subdomain.label_tag }}</td>
+      <td>{{ form.subdomain }}</td>
+    </tr>
+
+    <tr>
+      <td>{{ form.orgname.label_tag }}</td>
+      <td>{{ form.orgname }}</td>
+    </tr>
+    
+    <tr></tr>
+    <tr class="step">
+      <td><span class="number">3.</span></td>
       <td><p id="steptwo">Enter your billing information.</p></td>
     </tr>
     <tr>

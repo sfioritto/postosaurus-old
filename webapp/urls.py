@@ -19,7 +19,7 @@ urlpatterns = patterns(
             'template_name': 'postosaurus/login.html'
             }),
     (r'^logout/$', 'django.contrib.auth.views.logout_then_login'),
-    (r'^subscriptions/create/(?P<planid>.+)/$', 'webapp.postosaurus.views.spreedly.create_org_user'),
+    (r'^subscriptions/create/(?P<planid>.+)/$', 'webapp.postosaurus.views.spreedly.create_subscription'),
     (r'^subscriptions/update/$', 'webapp.postosaurus.views.spreedly.update_subscriptions'),
     (r'^org/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),

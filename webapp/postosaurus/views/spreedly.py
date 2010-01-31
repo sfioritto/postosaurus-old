@@ -13,7 +13,7 @@ def __create_url(user, planid):
     return "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, str(user.id), planid, puser.email)
 
 
-def create_org_user(request, planid):
+def create_subscription(request, planid):
 
     """
     Creates an organization and a user.
@@ -26,8 +26,10 @@ def create_org_user(request, planid):
     if request.user.is_anonymous():
         form = OrgUserForm()
         if request.method == 'POST':
+            print 'here'
             form = OrgUserForm(request.POST)
             if form.is_valid():
+                print 'valid'
                 username = form.cleaned_data['username']
                 password = form.cleaned_data['password']
                 repassword = form.cleaned_data['repassword']

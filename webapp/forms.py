@@ -1,5 +1,5 @@
 from app.model import mailinglist
-from webapp.postosaurus.models import User
+from webapp.postosaurus.models import User, Organization
 from django import forms
 from django.contrib.auth.models import User as DjangoUser
 from email.utils import parseaddr
@@ -124,6 +124,7 @@ class UserAccountForm(forms.Form):
         else:
             return email
 
+
 class OrgUserForm(UserAccountForm):
 
     subdomain = forms.CharField(max_length=63)
@@ -139,6 +140,7 @@ class OrgUserForm(UserAccountForm):
             org = None
 
         if org:
+            print 'invalid org'
             raise forms.ValidationError("An account for this email address has already been created.")
         else:
             return subdomain

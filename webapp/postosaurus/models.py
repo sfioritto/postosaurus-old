@@ -1,5 +1,6 @@
 import os
 import hashlib
+from app.model import mailinglist
 from webapp import settings
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
@@ -61,6 +62,7 @@ class User(models.Model):
         else:
             return False
 
+
     def __unicode__(self):
         return self.email
     
@@ -83,11 +85,19 @@ class Organization(models.Model):
 
 
 class MailingList(models.Model):
+
     created_on = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=100, unique = True)
-    email = models.CharField(max_length=512, unique = True)
+    name = models.CharField(max_length=100)
     organization = models.ForeignKey(Organization)
     
+
+    class Meta:
+        unique_together = (("name", "organization"),)
+
+    def __email(self):
+        return "%s@%s.postosaurus.com" % (self.name, self.organization.subdomain)
+    email = property(__email)
+
     def links_url(self):
         return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.links', args=[self.name])
 
@@ -273,7 +283,27 @@ class File(models.Model):
         return self.name
 
 
+def create_users(username, email, password):
 
+    """
+    Creates the django user object and the
+    postosaurus user.
+    """
+
+    #never populate the email address of the django model.
+    djangouser = DjangoUser.objects.create_user(username, '', password)
+    djangouser.save()
+    user = mailinglist.create_user(email)
+    if not user:
+        user = User(email=email)
+        user.save()
+        
+        user.user = djangouser
+        user.save()
+
+    return djangouser, user
+        
+        
 
 
 

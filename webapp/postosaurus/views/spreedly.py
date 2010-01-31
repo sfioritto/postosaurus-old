@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, Http404
-from webapp.forms import UserAccountForm
-from webapp.postosaurus.views.user import create_user
+from webapp.forms import OrgUserForm
+from webapp.postosaurus import models
 from webapp import settings
 
 
@@ -13,22 +13,53 @@ def __create_url(user, planid):
     return "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, str(user.id), planid, puser.email)
 
 
-def create_subscription(request, planid):
+def create_org_user(request, planid):
 
     """
-    Call the create_user view. Make sure that this view is executed once the form has
-    been successfully processed by setting the next variable. Also, set a custom template.
+    Creates an organization and a user.
 
     Once the view has been completed, the user will be logged in and redirected to this view.
     This view then redirects them to spreedly.
     """
 
+
     if request.user.is_anonymous():
-        return create_user(request, template='postosaurus/create-subscription.html', next=request.path)
+        form = OrgUserForm()
+        if request.method == 'POST':
+            form = OrgUserForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                repassword = form.cleaned_data['repassword']
+                email = form.cleaned_data['email']
+                subdomain = form.cleaned_data['subdomain']
+                orgname = form.cleaned_data['orgname']
+                
+                djangouser, user = models.create_users(email, username, password)
+                
+                org = models.Organization(subdomain = subdomain,
+                                          name = orgname,
+                                          owner = user,
+                                          active = False) # becomes active once they enter payment info.
+                org.save()
+                
+                membership = models.Membership(organization = org,
+                                               user = user)
+                
+                djangouser = authenticate(username=djangouser.username, password=password)
+                login(request, djangouser)
+                
+                return HttpResponseRedirect(__create_url(user, planid))
+            
+        return render_to_response('postosaurus/create-subscription.html', {
+                'form' : form,
+                'next' : next
+                }, context_instance = RequestContext(request))
+        
     else:
         return HttpResponseRedirect(__create_url(request.user, planid))
-
-
+            
+                    
 def update_subscriptions(request):
 
     """
@@ -38,7 +69,7 @@ def update_subscriptions(request):
     """
 
     ids = [int(id) for id in request.POST['subscriber_ids'].split(',')]
-    users = User.objects.filter(id__in=ids).all()
+    users = models.User.objects.filter(id__in=ids).all()
     for user in users:
         profile = user.get_profile()
         profile.update_from_spreedly()

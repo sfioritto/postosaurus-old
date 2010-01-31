@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import check_password
 from django.http import Http404
 from django.template import RequestContext
-from app.model import mailinglist
+from webapp.postosaurus import models
 from webapp.forms import PasswordForm
 from lamson import view
 
@@ -68,11 +68,13 @@ def settings(request):
             }, context_instance = RequestContext(request))
 
 
-def create_user(request, template, next='/'):
+def create_user(request):
     
     """
     Creates an account for the web application.
     """
+
+    next = "/"
     form = UserAccountForm()
     if request.method == 'POST':
         form = UserAccountForm(request.POST)
@@ -83,17 +85,7 @@ def create_user(request, template, next='/'):
             repassword = form.cleaned_data['repassword']
             email = form.cleaned_data['email']
 
-            #never populate the email address of the django model. This is duplicated
-            #in the postosaurus user model.
-            djangouser = DjangoUser.objects.create_user(username, '', password)
-            djangouser.save()
-            user = mailinglist.find_user(email)
-            if not user:
-                user = User(email=email)
-                user.save()
-
-            user.user = djangouser
-            user.save()
+            djangouser, user = models.create_users(email, username, password)
             
             djangouser = authenticate(username=djangouser.username, password=password)
             login(request, djangouser)

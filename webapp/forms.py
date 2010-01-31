@@ -124,7 +124,24 @@ class UserAccountForm(forms.Form):
         else:
             return email
 
-            
-        
+class OrgUserForm(UserAccountForm):
+
+    subdomain = forms.CharField(max_length=63)
+    orgname = forms.CharField(max_length=300)
+
+    def clean_subdomain(self):
+
+        subdomain = self.cleaned_data['subdomain']
+
+        try:
+            org = Organization.objects.get(subdomain=subdomain)
+        except Organization.DoesNotExist:
+            org = None
+
+        if org:
+            raise forms.ValidationError("An account for this email address has already been created.")
+        else:
+            return subdomain
+
 
         

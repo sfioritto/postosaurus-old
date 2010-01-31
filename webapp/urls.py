@@ -9,14 +9,14 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    (r'^$', 'webapp.postosaurus.views.index'),
-    (r'^plans/$', 'webapp.postosaurus.views.plans'),
+    (r'^$', 'webapp.postosaurus.views.marketing.index'),
+    (r'^plans/$', 'webapp.postosaurus.views.marketing.plans'),
     (r'^app/', include('webapp.postosaurus.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^contact/', 'webapp.postosaurus.views.landing_contact'),
-    (r'^faq/', 'webapp.postosaurus.views.faq'),
-    (r'^about/', 'webapp.postosaurus.views.about'),
-    (r'^privacy/', 'webapp.postosaurus.views.privacy'),
+    (r'^contact/', 'webapp.postosaurus.views.marketing.contact'),
+    (r'^faq/', 'webapp.postosaurus.views.marketing.faq'),
+    (r'^about/', 'webapp.postosaurus.views.marketing.about'),
+    (r'^privacy/', 'webapp.postosaurus.views.marketing.privacy'),
     )
 
 if settings.TEMPLATE_DEBUG:

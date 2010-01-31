@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from webapp.postosaurus.views import main
 from webapp.forms import SignupForm, MailingListForm
 from lamson import view
 
@@ -11,8 +10,8 @@ def index(request):
     if request.user.is_anonymous():
         return render_to_response("postosaurus/home.html", 
                                   context_instance = RequestContext(request))
-    else:
-        return main(request)
+#    else:
+#        return main(request)
 
 
 def plans(request):
@@ -20,13 +19,9 @@ def plans(request):
             'basic' : settings.SPREEDLY_PLAN_BASIC,
             }, context_instance = RequestContext(request))
 
-def landing_contact(request):
-    return render_to_response('postosaurus/landing-contact.html', 
-                              context_instance = RequestContext(request))    
-
 def contact(request):
     return render_to_response('postosaurus/contact.html', 
-                              context_instance = RequestContext(request))
+                              context_instance = RequestContext(request))    
 
 def faq(request):
     return render_to_response('postosaurus/faq.html', 

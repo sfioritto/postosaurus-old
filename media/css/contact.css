@@ -1,28 +1,20 @@
 #middle h3{
-    font-weight: normal;
-    font-family: arial;
-    font-size: 16px;
-    color: rgb(40, 40, 40);
-    padding-top: 25px;
-    clear: both;
+    color: rgb(80, 80, 80);
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+#middle p, #middle h3{
+    font-family: georgia;
 }
 
 #middle p{
-    font-family: verdana;
     font-size: 14px;
-    color: rgb(80, 80, 80);
-    width: 60%;
-    margin-top: 5px;
-    margin-bottom: 10px;
 }
 
-#middle{
-    margin-top: 80px;
-    padding-top: 40px;
-}
-
-#middle #intro{
+#middle p#intro{
     font-family: georgia;
-    font-size: 18px;
+    font-size: 22px;
     color: rgb(40, 40, 40);
 }

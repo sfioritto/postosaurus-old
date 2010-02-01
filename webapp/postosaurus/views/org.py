@@ -28,9 +28,11 @@ def main(request, orgname):
             email = profile.email
             list_name = form.cleaned_data['groupname']
             mlist = mailinglist.create_list(list_name, profile)
-            CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', email, 'postosaurus/join-confirmation.msg')
+            CONFIRM.send_if_not_subscriber(relay, mlist, 
+                                           'confirm', email, 
+                                           'postosaurus/join-confirmation.msg')
             
-    return render_to_response('postosaurus/main.html', {
+    return render_to_response('postosaurus/org-lists.html', {
             'profile' : profile,
             'mlist' : mlist,
             'mlists' : mlists,

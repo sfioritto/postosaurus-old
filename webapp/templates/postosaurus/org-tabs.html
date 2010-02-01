@@ -1,0 +1,45 @@
+<ul id="orgtabs">
+
+  <li
+  {% if groupstab %}
+  class="current"
+  {% endif %}
+  id="groupstab">
+    <a href="{% url webapp.postosaurus.views.user.orgs %}">Groups</a>
+  </li>
+
+
+  <li
+  {% if memberstab %}
+  class="current"
+  {% endif %}
+  id="memberstab">
+    <a href="{% url webapp.postosaurus.views.user.orgs %}">Members</a>
+  </li>
+
+  
+  <li
+  {% if filestab %}
+  class="current"
+  {% endif %}
+  id="filestab">
+    <a href="{% url webapp.postosaurus.views.user.settings %}">Files</a>
+  </li>
+  
+ <li
+  {% if linkstab %}
+  class="current"
+  {% endif %}
+  id="linkstab">
+ <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Links</a>
+ </li>
+
+  <li
+  {% if taskstab %}
+  class="current"
+  {% endif %}
+  id="taskstab">
+ <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Tasks</a>
+ </li>
+
+</ul>

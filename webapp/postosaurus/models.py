@@ -79,6 +79,47 @@ class Organization(models.Model):
     owner = models.ForeignKey(User, null=True)
     active = models.BooleanField()
     
+    
+    def __url(self):
+        if settings.URL_DEBUG:
+            return reverse('webapp.postosaurus.views.org.main', 
+                           args=[self.subdomain])
+        else:
+            return "www.%s.postosaurus.com" % self.subdomain
+    url = property(__url)
+
+    def __linksurl(self):
+        if settings.URL_DEBUG:
+            return reverse('webapp.postosaurus.views.org.links', 
+                           args=[self.subdomain])
+        else:
+            return "/links/"
+    linksurl = property(__linksurl)
+
+    def __membersurl(self):
+        if settings.URL_DEBUG:
+            return reverse('webapp.postosaurus.views.org.members',
+                           args=[self.subdomain])
+        else:
+            return "/"
+    membersurl = property(__membersurl)
+
+    def __filesurl(self):
+        if settings.URL_DEBUG:
+            return reverse('webapp.postosaurus.views.org.files',
+                           args=[self.subdomain])
+        else:
+            return "/files/"
+    filesurl = property(__filesurl)
+
+    def __tasksurl(self):
+        if settings.URL_DEBUG:
+            return reverse('webapp.postosaurus.views.org.tasks',
+                           args=[self.subdomain])
+        else:
+            return "/tasks/"
+    tasksurl = property(__tasksurl)
+
     def __unicode__(self):
         return self.name
 

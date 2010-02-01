@@ -1,0 +1,40 @@
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/user-orgs.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/user-tabs.css" />
+{% endblock %}
+
+{% block nav %}
+{% include 'postosaurus/user-tabs.html' %}
+<div id="pagetitle">
+<h2>Your Organizations</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<ul id="orgs">
+{% for org in orgs %}
+  <li>
+  <a href="{{ org.url }}" >{{ org.name }}</a>
+  <ul class="orglinks">
+    <li>
+    <a href="{{ org.membersurl }}">Members</a>
+    </li>
+    <li>
+    <a href="{{ org.filesurl }}">Files</a>
+    </li>
+    <li>
+    <a href="{{ org.linksurl }}">Links</a>
+    </li>
+    <li>
+    <a href="{{ org.tasksurl }}">Tasks</a>
+    </li>
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+
+

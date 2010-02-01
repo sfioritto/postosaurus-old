@@ -3,8 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from webapp.postosaurus.views import org
-from webapp.forms import SignupForm, MailingListForm
+from webapp.postosaurus.views import user
 from lamson import view
 
 
@@ -21,7 +20,7 @@ def index(request):
                                   context_instance = RequestContext(request))
 
     else:
-        return HttpResponseRedirect(reverse(org.user.main))
+        return HttpResponseRedirect(reverse(user.main))
     
 
 def plans(request):

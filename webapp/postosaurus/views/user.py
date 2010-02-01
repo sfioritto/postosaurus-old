@@ -28,13 +28,19 @@ from config.settings import relay, CONFIRM
 
 
 @login_required
-def main(request):
+def orgs(request):
 
     """
-    For now just shows user setgings.
-    TODO: Returns a list of the users organizations
+    Returns a list of the users organizations
     """
-    return settings(request)
+    puser = request.user.get_profile()
+    orgs = [m.organization for m in models.Membership.objects.filter(user = puser)]
+    return render_to_response('postosaurus/user-orgs.html', {
+            'orgstab' : True,
+            'orgs' : orgs,
+            'url' : orgs[0].url
+            }, context_instance = RequestContext(request))
+
 
 
 @login_required
@@ -63,7 +69,7 @@ def settings(request):
         form = PasswordForm() # An unbound form
 
     
-    return render_to_response('postosaurus/user-password.html', {
+    return render_to_response('postosaurus/user-settings.html', {
             'form' : form,
             'settingstab' : True,
             'success' : changed,

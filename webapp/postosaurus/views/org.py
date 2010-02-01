@@ -41,7 +41,7 @@ def main(request, orgname):
 
 @login_required
 def members(request, orgname):
-    return links(request, orgname)
+    return main(request, orgname)
 
 
 @login_required

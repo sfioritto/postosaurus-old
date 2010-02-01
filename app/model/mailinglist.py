@@ -1,5 +1,5 @@
 import re
-from webapp.postosaurus.models import User, MailingList, Subscription
+from webapp.postosaurus.models import User, MailingList, Subscription, Organization
 from email.utils import parseaddr
 from lamson.mail import MailResponse
 from types import ListType
@@ -24,13 +24,14 @@ def valid_name(name):
     return len(name) <= 100 and re.match("^[a-zA-Z0-9]+\.*[a-zA-Z0-9]+$", name)
 
 
-def create_list(list_name, owner = None):
+def create_list(list_name, org):
     list_name = list_name.lower()
-    mlist = find_list(list_name)
+    mlist = find_list(list_name, org.subdomain)
     assert valid_name(list_name)
     
     if not mlist:
-        mlist = MailingList(name=list_name, email=list_name + '@postosaurus.com', owner=owner)
+        mlist = MailingList(name=list_name, 
+                            organization=org)
         mlist.save()
 
     return mlist
@@ -52,8 +53,11 @@ def find_user(address):
     else:
         return None
 
-def find_list(list_name):
-    mlists = MailingList.objects.filter(name = list_name)
+def find_list(list_name, subdomain):
+    org = Organization.objects.get(subdomain=subdomain)
+    mlists = MailingList.objects\
+        .filter(name = list_name)\
+        .filter(organization = org)
     if mlists:
         return mlists[0]
     else:
@@ -73,10 +77,10 @@ def add_if_not_subscriber(address, list_name):
     else:
         return sub
 
-def find_subscription(address, list_name):
+def find_subscription(address, list_name, org):
 
     sub_name, sub_addr = parseaddr(address)
-    mlist = find_list(list_name)
+    mlist = find_list(list_name, org.subdomain)
     user = find_user(address)
     if user:
         assert mlist, "Mailing list %s must exist to find a subscription." % list_name

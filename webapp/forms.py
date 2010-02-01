@@ -21,9 +21,11 @@ class ListNameField(forms.Field):
         if not mailinglist.valid_name(list_name):
             raise forms.ValidationError('List names are valid email addresses that contain letters, numbers and periods. e.g. awesome.list3')
 
-        mlist = mailinglist.find_list(list_name)
-        if mlist:
-            raise forms.ValidationError('That list name has already been taken.')
+#TODO: does django give you a reference to the parent form at runtime?
+# if so you can have the orgname in the form.
+#        mlist = mailinglist.find_list(list_name)
+#        if mlist:
+#            raise forms.ValidationError('That list name has already been taken.')
 
         return list_name
 

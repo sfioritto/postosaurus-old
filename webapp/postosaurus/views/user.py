@@ -1,4 +1,3 @@
-import jinja2
 from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -8,23 +7,8 @@ from django.template import RequestContext
 from app.model import mailinglist
 from webapp.postosaurus import models
 from webapp.forms import PasswordForm
-from lamson import view
-
-# relay is created at runtime in boot.py for lamson, but django
-# doesn't know about it, so I create it here. Might be better
-# to just use built in django email stuff instead of lamson?
-from config import settings as appsettings
-from lamson.server import Relay
-appsettings.relay = Relay(host=appsettings.relay_config['host'], 
-                       port=appsettings.relay_config['port'], debug=1)
-
-#same thing here for the loader.
-view.LOADER = jinja2.Environment(
-    loader=jinja2.PackageLoader(appsettings.template_config['dir'], 
-                                appsettings.template_config['module']))
 
 
-from config.settings import relay, CONFIRM
 
 
 @login_required

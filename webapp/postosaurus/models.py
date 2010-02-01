@@ -138,16 +138,8 @@ class MailingList(models.Model):
         return "%s@%s.postosaurus.com" % (self.name, self.organization.subdomain)
     email = property(__email)
 
-    def links_url(self):
-        return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.links', args=[self.name])
-
-
-    def members_url(self):
-        return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.members', args=[self.name])
-
-
     def archive_url(self):
-        return "http://www.postosaurus.com" + reverse('webapp.postosaurus.views.archive_overview', args=[self.name])
+        return reverse('webapp.postosaurus.views.org.archive_overview', args=[self.organization.subdomain, self.name])
 
 
     def __unicode__(self):

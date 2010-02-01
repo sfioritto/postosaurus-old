@@ -29,7 +29,7 @@ Create a new group.
 <form action="" method="POST">
 {{ form.groupname.errors }}
 {{ form.groupname }}
-<p id="emaildomain">@postosaurus.com</p>
+<p id="emaildomain">@{{org.subdomain}}.postosaurus.com</p>
 <p id="examples">Examples: MyProject, My.Project</p>
 <input id="submit" type="submit" value="Create my group." />
 </form>
@@ -48,12 +48,9 @@ Create a new group.
 	</p>
       </td>
       <td class="links">
-        <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
-	<a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
-	<a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
-	<a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
-	<a href="{% url webapp.postosaurus.views.tasks listname=mlist.name %}">Tasks</a>
-      </td>
+        <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=mlist.organization.subdomain %}">Members</a>
+	<a href="{% url webapp.postosaurus.views.list.archive_overview listname=mlist.name orgname=mlist.organization.subdomain %}">Archive</a>
+     </td>
     </tr>
     {% endfor %}
   </tbody>

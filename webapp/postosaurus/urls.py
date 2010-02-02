@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    (r'^(?P<orgname>.+)/$', 'webapp.postosaurus.views.org.main'),
+    (r'^(?P<orgname>[a-zA-Z0-9]+)/$', 'webapp.postosaurus.views.org.main'),
     (r'^(?P<orgname>.+)/links/$', 'webapp.postosaurus.views.org.links'),
     (r'^(?P<orgname>.+)/files/$', 'webapp.postosaurus.views.org.files'),
     (r'^(?P<orgname>.+)/members/$', 'webapp.postosaurus.views.org.members'),

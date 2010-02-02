@@ -5,7 +5,7 @@
   class="current"
   {% endif %}
   id="groupstab">
-    <a href="{% url webapp.postosaurus.views.user.orgs %}">Groups</a>
+    <a href="{% url webapp.postosaurus.views.org.main orgname=org.subdomain %}">Groups</a>
   </li>
 
 
@@ -14,7 +14,7 @@
   class="current"
   {% endif %}
   id="memberstab">
-    <a href="{% url webapp.postosaurus.views.user.orgs %}">Members</a>
+    <a href="{% url webapp.postosaurus.views.org.members orgname=org.subdomain %}">Members</a>
   </li>
 
   

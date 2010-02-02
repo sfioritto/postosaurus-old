@@ -6,12 +6,11 @@
 </div>
 <div id="listname">
   <p>
-  <a href="{% url webapp.postosaurus.views.main %}">
-  {{ organization.name }}
-  </a>
+  <a href="{% url webapp.postosaurus.views.org.main orgname=org.subdomain %}">
+ </a>
  </p>
 </div>
 <div id="listtabs">
-  {% include 'postosaurus/list-tabs.html' %}
+  {% include 'postosaurus/org-tabs.html' %}
 </div>
 

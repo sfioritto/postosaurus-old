@@ -62,7 +62,18 @@ def main(request, orgname):
 
 @login_required
 def members(request, orgname):
-    return main(request, orgname)
+    try:
+        profile = request.user.get_profile()
+        organization = Organization.objects.get(subdomain=orgname)
+        memberships = Membership.objects.filter(organization=organization).all()
+    except ValueError:
+        raise Http404()
+
+    return render_to_response('postosaurus/org-members.html', {
+            'org' : organization,
+            'memberstab' : True,
+            }, context_instance = RequestContext(request))
+
 
 
 @login_required

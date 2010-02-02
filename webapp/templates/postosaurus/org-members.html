@@ -1,0 +1,20 @@
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-members.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-tabs.css" />
+{% endblock %}
+
+{% block nav %}
+{% include 'postosaurus/org-nav.html' %}
+<div id="pagetitle">
+  {{org.name}}/Members
+</div>
+{% endblock %}
+
+{% block content %}
+<p>hello</p>
+{% endblock %}
+
+
+

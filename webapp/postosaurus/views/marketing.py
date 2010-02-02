@@ -20,7 +20,7 @@ def index(request):
                                   context_instance = RequestContext(request))
 
     else:
-        return HttpResponseRedirect(reverse(user.main))
+        return HttpResponseRedirect(reverse(user.orgs))
     
 
 def plans(request):

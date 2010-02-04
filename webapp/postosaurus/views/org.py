@@ -62,6 +62,10 @@ def main(request, orgname):
 
 @login_required
 def members(request, orgname):
+
+    if request.method == "POST":
+        pass
+
     try:
         profile = request.user.get_profile()
         organization = Organization.objects.get(subdomain=orgname)
@@ -71,6 +75,7 @@ def members(request, orgname):
 
     return render_to_response('postosaurus/org-members.html', {
             'org' : organization,
+            'memberships' : memberships,
             'memberstab' : True,
             }, context_instance = RequestContext(request))
 

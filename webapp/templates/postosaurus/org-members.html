@@ -13,6 +13,20 @@
 {% endblock %}
 
 {% block content %}
+<form action="" method="POST">
+  <p class="Remove">
+    Remove selected members.
+  </p>
+  <input type="submit" value="Remove" id="submit" />
+  <ul id="memberslist">   
+    {% for m in memberships %}
+    <li>
+      <input type="checkbox" name="{{m.user.email}}" />
+      <p class="email">{{ m.user.email }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</form>
 
 {% endblock %}
 

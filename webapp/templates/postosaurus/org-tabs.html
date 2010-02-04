@@ -5,7 +5,7 @@
   class="current"
   {% endif %}
   id="groupstab">
-    <a href="{% url webapp.postosaurus.views.org.main orgname=org.subdomain %}">Groups</a>
+    <a href="{{ org.url }}">Groups</a>
   </li>
 
 
@@ -14,7 +14,7 @@
   class="current"
   {% endif %}
   id="memberstab">
-    <a href="{% url webapp.postosaurus.views.org.members orgname=org.subdomain %}">Members</a>
+    <a href="{{ org.membersurl }}">Members</a>
   </li>
 
   
@@ -23,7 +23,7 @@
   class="current"
   {% endif %}
   id="filestab">
-    <a href="{% url webapp.postosaurus.views.user.settings %}">Files</a>
+    <a href="{{ org.filesurl }}">Files</a>
   </li>
   
  <li
@@ -31,7 +31,7 @@
   class="current"
   {% endif %}
   id="linkstab">
- <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Links</a>
+ <a href="{{ org.linksurl }}">Links</a>
  </li>
 
   <li
@@ -39,7 +39,7 @@
   class="current"
   {% endif %}
   id="taskstab">
- <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Tasks</a>
+ <a href="{{ org.tasksurl }}">Tasks</a>
  </li>
 
 </ul>

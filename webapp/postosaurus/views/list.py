@@ -7,7 +7,9 @@ from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
+from webapp.postosaurus.views import helpers
 from email.utils import parseaddr  
+
 
 #Django hack to let us put emails in the username field in the login form
 AuthenticationForm.base_fields['username'].max_length = 75 

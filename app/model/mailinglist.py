@@ -46,7 +46,7 @@ def create_user(address):
     return user
 
 def find_user(address):
-    print User
+
     users = User.objects.filter(email = address)
     if users:
         return users[0]

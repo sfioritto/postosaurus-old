@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block nav %}
- {% include 'postosaurus/list-nav.html' %}
 {% endblock %}
 
 {% block content %}
@@ -13,11 +12,15 @@
 Are you sure?
 </h1>
 <p>
-  Are you sure you wanted to remove the following members from the list <span class="listname">{{mlist.name}}</span>?
+{% if mlist %}
+  Are you sure you want to remove the following members from the list <span class="listname">{{mlist.name}}</span>?
+{% else %}
+Are you sure you want to remove the following members from <span class="listname">{{ org.name }}</span>?
+{% endif %}
 </p>
 <form action="" method="POST">
   <ul id="memberslist">   
-    {% for email in toremove %}
+    {% for email in emails %}
     <li>
       <input type="hidden" name="{{ email }}" value="{{ email }}"/>
       <p class="email">{{ email }}</p>
@@ -26,7 +29,7 @@ Are you sure?
   </ul>
   <input type="hidden" value="1" name="confirmed" />
   <input type="submit" value="Yes, I'm sure." id="submit" />
-  <a id="cancel" href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Cancel</a>
+  <a id="cancel" href="{{ org.membersurl }}">Cancel</a>
 </form>
 
 {% endblock %}

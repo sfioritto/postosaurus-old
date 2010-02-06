@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
+from webapp.postosaurus.views import helpers
 from webapp.forms import MailingListForm
 from lamson import view
 
@@ -63,15 +64,27 @@ def main(request, orgname):
 @login_required
 def members(request, orgname):
 
-    if request.method == "POST":
-        pass
-
     try:
         profile = request.user.get_profile()
         organization = Organization.objects.get(subdomain=orgname)
         memberships = Membership.objects.filter(organization=organization).all()
     except ValueError:
         raise Http404()
+
+    if request.method == "POST":
+
+        emails = helpers.emails_from_post(request.POST)
+
+        if request.POST.has_key("confirmed"):
+            for email in emails:
+                helpers.remove_member(email, organization)
+        else:
+            return render_to_response('postosaurus/members-confirm.html', {
+                    'org' : organization,
+                    'emails' : emails,
+                    }, context_instance = RequestContext(request))
+        
+    
 
     return render_to_response('postosaurus/org-members.html', {
             'org' : organization,

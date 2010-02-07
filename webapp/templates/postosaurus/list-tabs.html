@@ -1,11 +1,11 @@
-<ul id="listnav">
+<ul id="listtabs">
   
   <li
   {% if membertab %}
   class="current"
   {% endif %}
   id="members">
-    <a href="{% url webapp.postosaurus.views.members listname=mlist.name %}">Members</a>
+    <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Members</a>
   </li>
   
   <li
@@ -13,7 +13,7 @@
   class="current"
   {% endif %}
   id="archive">
-    <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
+    <a href="{% url webapp.postosaurus.views.list.archive_overview listname=mlist.name orgname=org.subdomain %}">Archive</a>
   </li>
   
   <li
@@ -21,7 +21,7 @@
   class="current"
   {% endif %}
   id="links">
-    <a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
+    <a href="{% url webapp.postosaurus.views.list.links listname=mlist.name orgname=org.subdomain %}">Links</a>
   </li>
   
   <li
@@ -29,7 +29,7 @@
   class="current"
   {% endif %}
   id="files">
-    <a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
+    <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
   </li>
 
   <li
@@ -37,7 +37,7 @@
   class="current"
   {% endif %}
   id="tasks">
-  <a href="{% url webapp.postosaurus.views.tasks listname=mlist.name %}">Tasks</a>
+  <a href="{% url webapp.postosaurus.views.list.tasks listname=mlist.name orgname=org.subdomain %}">Tasks</a>
   </li>
   
 </ul>

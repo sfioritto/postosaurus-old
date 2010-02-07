@@ -14,7 +14,7 @@
     float: left;
 }
 
-#topright, #listname{
+#topright{
     width: 40%;
     float: right;
 }
@@ -52,11 +52,6 @@
 }
 
 /*end layout*/
-
-#listname p{
-    font-family: verdana;
-    font-size: 30px;
-}
 
 #top, #middle, #bottom, #nav{
     margin-left: 60px;

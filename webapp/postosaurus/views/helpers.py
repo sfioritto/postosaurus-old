@@ -24,7 +24,7 @@ def emails_from_post(post):
     return [email for email in post.keys() if post[email] and email != 'confirmed']
 
 
-def remove_member(email, org):
+def remove_from_org(email, org):
     
     """
     Removes the member from the organization. Also unsubscribes
@@ -36,9 +36,11 @@ def remove_member(email, org):
     membership.delete()
 
     for mlist in org.mailinglist_set.all():
-        sub = mailinglist.find_subscription(email, mlist.name, org)
-        if sub:
-            sub.delete()
-        
-        
+        remove_from_list(email, mlist, org)
+
+def remove_from_list(email, mlist, org):
+    sub = mailinglist.find_subscription(email, mlist.name, org)
+    if sub:
+        sub.delete()
+    
             

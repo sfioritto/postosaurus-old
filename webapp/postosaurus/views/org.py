@@ -77,7 +77,7 @@ def members(request, orgname):
 
         if request.POST.has_key("confirmed"):
             for email in emails:
-                helpers.remove_member(email, organization)
+                helpers.remove_from_org(email, organization)
         else:
             return render_to_response('postosaurus/members-confirm.html', {
                     'org' : organization,

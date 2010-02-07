@@ -1,14 +1,14 @@
-ul#listnav{
+ul#listtabs{
     margin-top: 5px;
     border-top: 1px;
     border-right: 1px;
 }
 
-#listnav{
+#listtabs{
     height: 28px; /*li height plus padding and margin*/
 }
 
-#listnav li{
+#listtabs li{
     height: 25px;
     float: left;
     font-family: verdana;
@@ -19,18 +19,18 @@ ul#listnav{
     padding-top: 3px;
 }
 
-#listnav li, ul#listnav {
+#listtabs li, ul#listtabs {
     border-style: solid;
     border-color: rgb(200, 200, 200);
 }
 
-#listnav li a{
+#listtabs li a{
     display: block;
     text-decoration: none;
     margin-top: 5px;
 }
 
-#listnav li.current{
+#listtabs li.current{
     border-bottom: 1px solid;
     border-bottom-color: rgb(240, 240, 240);
     margin-bottom: -1px;

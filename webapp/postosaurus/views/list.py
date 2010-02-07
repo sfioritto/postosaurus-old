@@ -25,51 +25,47 @@ def authorize_or_raise(user, org):
     if not user.in_org(org):
         raise PermissionDenied
 
+def links(request, orgname, listname):
+    pass
+
+def files(request, orgname, listname):
+    pass
+
+def tasks(request, orgname, listname):
+    pass
 
 @login_required
-def members(request, listname):
-
+def members(request, orgname, listname):
     user = request.user.get_profile()
-    mlist = mailinglist.find_list(listname)
-    authorize_or_raise(user, mlist.organization)
-
+    mlist = mailinglist.find_list(listname, orgname)
     subscriptions = mlist.subscription_set.all()
-    
-    if request.method == 'POST':
 
-        if not request.POST.has_key('confirmed'):
-            # not confirmed yet.
-            toremove = []
-            for email in request.POST.keys():
-                if request.POST[email]:
-                    toremove.append(email)
-            if len(toremove) > 0:
-                return render_to_response('postosaurus/members-confirm.html', locals(), context_instance = RequestContext(request))
+    if request.method == "POST":
 
-        # they confirmed, now remove the members.
-        toremove = [key for key in request.POST.keys() if key != 'confirmed']
-        for email in toremove:
-            sub = mailinglist.find_subscription(email, listname)
-            if sub:
-                sub.delete()
+        emails = helpers.emails_from_post(request.POST)
 
-        return render_to_response('postosaurus/members.html', {
-                'mlist' : mlist,
-                'subscriptions' : subscriptions,
-                'membertab' : True,
-                }, context_instance = RequestContext(request))
+        if request.POST.has_key("confirmed"):
+            for email in emails:
+                helpers.remove_from_list(email, mlist, mlist.organization)
+        else:
+            return render_to_response('postosaurus/members-confirm.html', {
+                    'org' : mlist.organization,
+                    'mlist' : mlist,
+                    'emails' : emails,
+                    }, context_instance = RequestContext(request))
 
-    else:
-        return render_to_response('postosaurus/members.html', {
-                'mlist' : mlist,
-                'subscriptions' : subscriptions,
-                'membertab' : True,
-                }, context_instance = RequestContext(request))
+
+    return render_to_response('postosaurus/members.html', {
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'subscriptions' : subscriptions,
+            'membertab' : True,
+            }, context_instance = RequestContext(request))
 
 
 
 @login_required
-def archive_overview(request, listname):
+def archive_overview(request, orgname, listname):
 
     try:
         mlist = mailinglist.find_list(listname)
@@ -114,7 +110,7 @@ class CleanMessage(object):
 
 
 @login_required
-def archive_by_day(request, listname, month, day, year):
+def archive_by_day(request, orgname, listname, month, day, year):
     month = int(month)
     day = int(day)
     year = int(year)

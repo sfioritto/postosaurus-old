@@ -1,7 +1,9 @@
 ul#listtabs{
-    margin-top: 5px;
+    margin-top: 80px;
     border-top: 1px;
     border-right: 1px;
+    float: left;
+    clear: both;
 }
 
 #listtabs{

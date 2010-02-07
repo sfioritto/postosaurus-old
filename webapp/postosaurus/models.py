@@ -226,6 +226,7 @@ class Link(models.Model):
     mlist = models.ForeignKey(MailingList)
     url = models.CharField(max_length=2083)
     created_on = models.DateTimeField(auto_now_add=True)
+    organization = models.ForeignKey(Organization)
 
     def __unicode__(self):
         return self.url
@@ -242,6 +243,7 @@ class File(models.Model):
     sha = models.CharField(max_length=40, unique = True)
     name = models.CharField(max_length=260)
     ext = models.CharField(max_length=260)
+    organization = models.ForeignKey(Organization)
     created_on = models.DateTimeField(auto_now_add=True)
 
 

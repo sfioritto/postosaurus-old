@@ -1,0 +1,48 @@
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-tabs.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/files.css" />
+{% endblock %}
+
+{% block nav %}
+{% include 'postosaurus/org-nav.html' %}
+<div id="pagetitle">
+  {{org.name}}
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div id="breadcrumb">
+</div>
+
+{% if files %}
+<p class="hint">
+Send an email to {{ mlist.email }} with an attachment to upload
+a file to this group.
+</p>
+
+<ul id="filelist">
+  {% for file in files %}
+  {% ifchanged %}
+  <p class ="date">{{ file.created_on|date:"F j, Y"}}<p>
+    {% endifchanged %}
+    <li><a href="{{file.recent_url_path}}">{{file.name}}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<h3>Add a file to your project</h3>
+<p id="scannable">
+Attach a file to an email and send it to {{ mlist.email }} to add it
+to your project's files.
+</p>
+<p id="detail">
+As you and your group members send emails back and forth, Postosaurus
+will collect any attachements you send and keep them here where you can
+easily find and download them later.
+</p>
+
+{% endif %}
+{% endblock %}

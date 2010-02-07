@@ -96,31 +96,17 @@ def members(request, orgname):
 
 @login_required
 def links(request, orgname):
-
     try:
-        user = request.user.get_profile()
-        mlist = mailinglist.find_list(listname)
-        authorize_or_raise(user, mlist)
-        alllinks = mlist.link_set.all().order_by('-created_on')
-        paginator = Paginator(alllinks, 15) #sets links per page
-
-        try:
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-
-        try:
-            links = paginator.page(page)
-        except (EmptyPage, InvalidPage):
-            links = paginator.page(paginator.num_pages)
-            
+        profile = request.user.get_profile()
+        org = Organization.objects.get(subdomain=orgname)
+        links = org.link_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
 
-    return render_to_response('postosaurus/links.html', {
-            'mlist': mlist, 
+    return render_to_response('postosaurus/org-links.html', {
+            'org' : org,
             'links': links,
-            'linktab' : True,
+            'linkstab' : True,
             }, context_instance = RequestContext(request))
 
 
@@ -129,8 +115,7 @@ def tasks(request, orgname):
 
     try:
         profile = request.user.get_profile()
-        mlist = mailinglist.find_list(listname)
-        authorize_or_raise(profile, mlist)
+        org = Organization.objects.get(subdomain=orgname)
             
     except ValueError:
         raise Http404()
@@ -144,7 +129,7 @@ def tasks(request, orgname):
 
     return render_to_response('postosaurus/tasks.html', {
             'profile' : profile,
-            'mlist': mlist, 
+            'org' : org,
             'taskstab' : True,
             }, context_instance = RequestContext(request))
 
@@ -152,25 +137,17 @@ def tasks(request, orgname):
 @login_required
 def files(request, orgname):
 
-    user = request.user.get_profile()
-    mlist = mailinglist.find_list(listname)
-    authorize_or_raise(user, mlist)
-    files = mlist.file_set.all().order_by('-created_on')
-
-    paginator = Paginator(files, 15) #sets links per page
-
     try:
-        page = int(request.GET.get('page', '1'))
+        profile = request.user.get_profile()
+        org = Organization.objects.get(subdomain=orgname)
+        files = org.file_set.all().order_by('-created_on')
     except ValueError:
-        page = 1
+        raise Http404()
 
-    try:
-        files = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        files = paginator.page(paginator.num_pages)
-    
-    return render_to_response('postosaurus/files.html', {
-            'mlist': mlist, 
+
+
+    return render_to_response('postosaurus/org-files.html', {
+            'org' : org,
             'files': files,
-            'filetab' : True,
+            'filestab' : True,
             }, context_instance = RequestContext(request))

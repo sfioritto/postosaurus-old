@@ -1,5 +1,5 @@
 import re
-from webapp.postosaurus.models import User, MailingList, Subscription, Organization
+from webapp.postosaurus.models import User, MailingList, Subscription, Organization, Membership
 from email.utils import parseaddr
 from lamson.mail import MailResponse
 from types import ListType
@@ -28,7 +28,6 @@ def create_list(list_name, org):
     list_name = list_name.lower()
     mlist = find_list(list_name, org.subdomain)
     assert valid_name(list_name)
-    
     if not mlist:
         mlist = MailingList(name=list_name, 
                             organization=org)
@@ -56,7 +55,7 @@ def find_user(address):
 def find_list(list_name, subdomain):
     org = Organization.objects.get(subdomain=subdomain)
     mlist = MailingList.objects.get(name = list_name, organization = org)
-    if mlist
+    if mlist:
         return mlist
     else:
         return None
@@ -68,11 +67,23 @@ def find_org(subdomain):
     else:
         return None
 
+def find_membership(user, org):
+    mem = Organization.objects.get(organization=org, user=user)
+    if mem:
+        return mem
+    else:
+        return None
+
 def add_if_not_subscriber(address, list_name, org):
     mlist = create_list(list_name, org)
     sub_name, sub_addr = parseaddr(address)
     sub = find_subscription(sub_addr, list_name, org)
     user = find_user(sub_addr)
+    mem = find_membership(user, org)
+
+    if not mem:
+        mem = Membership(organization=org, user=user)
+        mem.save()
 
     if not sub:
         sub = Subscription(mailing_list = mlist,

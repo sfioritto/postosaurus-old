@@ -56,8 +56,23 @@ def files(request, orgname, listname):
             'filestab' : True,
             }, context_instance = RequestContext(request))
 
+
+@login_required
 def tasks(request, orgname, listname):
-    pass
+
+    try:
+        profile = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+            
+    except ValueError:
+        raise Http404()
+
+    return render_to_response('postosaurus/list-tasks.html', {
+            'profile' : profile,
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'taskstab' : True,
+            }, context_instance = RequestContext(request))
 
 @login_required
 def members(request, orgname, listname):

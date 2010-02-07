@@ -1,5 +1,4 @@
 import jinja2
-from webapp.postosaurus.views.list import authorize_or_raise
 from django.shortcuts import render_to_response
 from django.http import Http404
 from app.model import mailinglist
@@ -119,13 +118,6 @@ def tasks(request, orgname):
             
     except ValueError:
         raise Http404()
-
-    if request.method == 'POST':
-        feature = Request(email=profile.email,
-                          links=False,
-                          files=False,
-                          tasks=True)
-        feature.save()
 
     return render_to_response('postosaurus/tasks.html', {
             'profile' : profile,

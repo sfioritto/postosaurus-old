@@ -1,6 +1,7 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/list-tabs.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/links.css" />
 {% endblock %}
 
@@ -11,22 +12,20 @@
 {% block content %}
 
 <div id="breadcrumb">
-<a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+<a href="{% url webapp.postosaurus.views.list.members orgname=org.subdomain listname=mlist.name %}">
 {{ mlist.name }}
 </a>
 <span class="divider">></span>
-<a href="{% url webapp.postosaurus.views.links listname=mlist.name %}">Links</a>
-<span class="divider">></span>
-Page {{ links.number }} of {{ links.paginator.num_pages }}
+<a href="{% url webapp.postosaurus.views.list.links listname=mlist.name orgname=org.subdomain %}">Links</a>
 </div>
 
-{% if links.object_list %}
+{% if links %}
 <p class="hint">
 Send an email to {{ mlist.email }} with a link in the body to add
 a link to this page
 </p>
 <ul id="linkslist">
-  {% for link in links.object_list %}
+  {% for link in links %}
   {% ifchanged %}
   <p class ="date">{{ link.created_on|date:"F j, Y"}}<p>
     {% endifchanged %}
@@ -45,17 +44,6 @@ will collect any links you send and keep them here where you can
 easily find them later.
 </p>
 {% endif %}
-
-<div class="pagination">
-  <span class="step-links">
-    {% if links.has_previous %}
-    <a href="?page={{ links.previous_page_number }}">Previous Page</a>
-    {% endif %}
-    {% if links.has_next %}
-    <a href="?page={{ links.next_page_number }}">Next Page</a>
-    {% endif %}  
- </span>
-</div>
 
 {% endblock %}
 

@@ -26,7 +26,20 @@ def authorize_or_raise(user, org):
         raise PermissionDenied
 
 def links(request, orgname, listname):
-    pass
+    try:
+        profile = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+        links = mlist.link_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+    
+    return render_to_response('postosaurus/links.html', {
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'links': links,
+            'linkstab' : True,
+            }, context_instance = RequestContext(request))
+
 
 def files(request, orgname, listname):
     pass
@@ -36,9 +49,14 @@ def tasks(request, orgname, listname):
 
 @login_required
 def members(request, orgname, listname):
-    user = request.user.get_profile()
-    mlist = mailinglist.find_list(listname, orgname)
-    subscriptions = mlist.subscription_set.all()
+
+
+    try:
+        user = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+        subscriptions = mlist.subscription_set.all()
+    except ValueError:
+        raise Http404()
 
     if request.method == "POST":
 
@@ -68,9 +86,8 @@ def members(request, orgname, listname):
 def archive_overview(request, orgname, listname):
 
     try:
-        mlist = mailinglist.find_list(listname)
-        user = request.user.get_profile()
-        authorize_or_raise(user, mlist.organization)
+        mlist = mailinglist.find_list(listname, orgname)
+        profile = request.user.get_profile()
         dbmessages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
@@ -80,9 +97,10 @@ def archive_overview(request, orgname, listname):
         month = msg.created_on.month
         day = msg.created_on.day
         year = msg.created_on.year
-        url = reverse(archive_by_day, args=[listname, month, day, year])
+        url = reverse(archive_by_day, args=[orgname, listname, month, day, year])
         messages.append((msg, url))
     return render_to_response('postosaurus/archive.html', {
+            'org' : mlist.organization,
             'mlist': mlist,
             'messages': messages,
             'archivetab' : True,

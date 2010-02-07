@@ -42,7 +42,19 @@ def links(request, orgname, listname):
 
 
 def files(request, orgname, listname):
-    pass
+    try:
+        profile = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+        dbfiles = mlist.file_set.all().order_by('-created_on')
+    except ValueError:
+        raise Http404()
+
+    return render_to_response('postosaurus/files.html', {
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'files' : dbfiles,
+            'filestab' : True,
+            }, context_instance = RequestContext(request))
 
 def tasks(request, orgname, listname):
     pass

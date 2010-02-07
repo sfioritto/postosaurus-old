@@ -144,8 +144,6 @@ def files(request, orgname):
     except ValueError:
         raise Http404()
 
-
-
     return render_to_response('postosaurus/org-files.html', {
             'org' : org,
             'files': files,

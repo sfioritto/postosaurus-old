@@ -1,50 +1,41 @@
 {% extends "postosaurus/base.html" %}
 
 {% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/list-tabs.css">
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/files.css" />
 {% endblock %}
 
 {% block nav %}
- {% include 'postosaurus/list-nav.html' %}
+{% include 'postosaurus/list-nav.html' %}
 {% endblock %}
-
+{% block pagetitle %}
+{{mlist.name}}
+{% endblock %}
 
 {% block content %}
 
 <div id="breadcrumb">
-<a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
+<a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">
 {{ mlist.name }}
 </a>
 <span class="divider">></span>
-<a href="{% url webapp.postosaurus.views.files listname=mlist.name %}">Files</a>
-<span class="divider">></span>
-Page {{ files.number }} of {{ files.paginator.num_pages }}
+<a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
 </div>
 
-{% if files.object_list %}
+{% if files %}
 <p class="hint">
 Send an email to {{ mlist.email }} with an attachment to upload
 a file to this group.
 </p>
 
 <ul id="filelist">
-  {% for file in files.object_list %}
+  {% for file in files %}
   {% ifchanged %}
   <p class ="date">{{ file.created_on|date:"F j, Y"}}<p>
     {% endifchanged %}
     <li><a href="{{file.recent_url_path}}">{{file.name}}</a></li>
     {% endfor %}
 </ul>
-
-<div class="pagination">
-  {% if files.has_previous %}
-  <a href="?page={{ files.previous_page_number }}">previous</a>
-  {% endif %}
-  {% if files.has_next %}
-  <a href="?page={{ files.next_page_number }}">next</a>
-  {% endif %}  
-</div>
-
 
 {% else %}
 <h3>Add a file to your project</h3>

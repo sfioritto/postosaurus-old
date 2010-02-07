@@ -6,7 +6,6 @@ from app.model import mailinglist
 from email.utils import parseaddr
 
 
-
 def file_text(message, filename):
 
     """
@@ -55,7 +54,7 @@ def create_hash_from_msg(message, filename):
     return hashlib.sha1(text).hexdigest()
 
     
-def store_file(list_name, message, filename, dbmessage):
+def store_file(list_name, org, message, filename, dbmessage):
 
     """
     Given a list name and a filename store the attached file
@@ -63,7 +62,7 @@ def store_file(list_name, message, filename, dbmessage):
     (like this file was sent with this message, etc).
     """
 
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, org)
     name, addr = parseaddr(message['from'])
     user = mailinglist.find_user(addr)
     sha = create_hash_from_msg(message, filename)
@@ -71,6 +70,7 @@ def store_file(list_name, message, filename, dbmessage):
                   message = dbmessage,
                   user = user,
                   sha = sha,
+                  organization = org,
                   name = filename,
                   ext = os.path.splitext(filename)[1])
     dbfile.save()

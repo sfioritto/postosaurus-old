@@ -7,8 +7,9 @@ from app.model import mailinglist
 crazy = "(?#Protocol)(?:(?:ht|f)tp(?:s?)\:\/\/|~/|/)?(?#Username:Password)(?:\w+:\w+@)?(?#Subdomains)(?:(?:[-\w]+\.)+(?#TopLevel Domains)(?:com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|travel|[a-z]{2}))(?#Port)(?::[\d]{1,5})?(?#Directories)(?:(?:(?:/(?:[-\w~!$+|.,=]|%[a-f\d]{2})+)+|/)+|\?|#)?(?#Query)(?:(?:\?(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)(?:&(?:[-\w~!$+|.,*:]|%[a-f\d{2}])+=(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)*)*(?#Anchor)(?:#(?:[-\w~!$+|.,*:=]|%[a-f\d]{2})*)?"
 
 
-# This is my 'simpler' regular expression for extracting urls. I run this first and then check it against
-# the crazy regular expression.   
+# This is my 'simpler' regular expression for extracting urls. 
+# I run this first and then check it against the crazy regular
+# expression.   
 findurls = """
 (?:^|[\^\n\s"\(,]+)                    # urls must be enclosed in quotes, parenthesis, commas, or word breaks
 (                              # group the url
@@ -22,16 +23,16 @@ museum|travel|[a-z]{2}){1}
 )                              # end url group
 (?:$|[\n\s"\),]+)                    # closing boundary
 """
-#
 
-def add_link(list_name, url, message):
-    mlist = mailinglist.find_list(list_name)
-    if not_added(mlist, url):
-        link = Link(mlist=mlist, url=url, message=message)
+
+def add_link(list_name, org, url, message):
+    mlist = mailinglist.find_list(list_name, org.subdomain)
+    if not_added(org, url):
+        link = Link(organization=org, mlist=mlist, url=url, message=message)
         link.save()
 
 
-def not_added(mlist, url):
+def not_added(org, url):
     
     """
     Return true if the url provided has not already
@@ -39,7 +40,7 @@ def not_added(mlist, url):
     """
 
     links = Link.objects\
-        .filter(mlist__id = mlist.id)\
+        .filter(organization = org)\
         .filter(url=url).all()
     if len(links) > 0:
         # url was already added

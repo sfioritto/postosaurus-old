@@ -49,7 +49,8 @@ def main(request, orgname):
             mlist = mailinglist.create_list(list_name, organization)
             CONFIRM.send_if_not_subscriber(relay, mlist, 
                                            'confirm', email, 
-                                           'postosaurus/join-confirmation.msg')
+                                           'postosaurus/join-confirmation.msg',
+                                           organization.url)
             
     return render_to_response('postosaurus/org-lists.html', {
             'org' : organization,

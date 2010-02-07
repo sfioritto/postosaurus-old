@@ -43,13 +43,12 @@ def to_json(base):
     return json.dumps(json_build(base), sort_keys=True)
 
 
-def messages_by_day(listname, year, month, day):
+def messages_by_day(mlist, year, month, day):
 
     """
     Returns all messages for the given list and day.
     """
 
-    mlist = mailinglist.find_list(listname)
     start = datetime.datetime(year, month, day)
     end = start + datetime.timedelta(hours=23, minutes=59, seconds=59)
     dbmessages = Message.objects\

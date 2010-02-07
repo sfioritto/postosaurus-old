@@ -6,9 +6,9 @@ from types import ListType
 
 
 
-def is_subscribed(address, list_name):
+def is_subscribed(address, list_name, org):
     name, addr = parseaddr(address)
-    if find_subscription(addr, list_name):
+    if find_subscription(addr, list_name, org):
         return True
     else:
         return False;
@@ -55,18 +55,23 @@ def find_user(address):
 
 def find_list(list_name, subdomain):
     org = Organization.objects.get(subdomain=subdomain)
-    mlists = MailingList.objects\
-        .filter(name = list_name)\
-        .filter(organization = org)
-    if mlists:
-        return mlists[0]
+    mlist = MailingList.objects.get(name = list_name, organization = org)
+    if mlist
+        return mlist
     else:
         return None
 
-def add_if_not_subscriber(address, list_name):
-    mlist = create_list(list_name)
+def find_org(subdomain):
+    org = Organization.objects.get(subdomain=subdomain)
+    if org:
+        return org
+    else:
+        return None
+
+def add_if_not_subscriber(address, list_name, org):
+    mlist = create_list(list_name, org)
     sub_name, sub_addr = parseaddr(address)
-    sub = find_subscription(sub_addr, list_name)
+    sub = find_subscription(sub_addr, list_name, org)
     user = find_user(sub_addr)
 
     if not sub:
@@ -95,13 +100,13 @@ def find_subscription(address, list_name, org):
         return None
 
 
-def is_active(list_name):
-    mlist = find_list(list_name)
+def is_active(list_name, org):
+    mlist = find_list(list_name, org.subdomain)
     assert mlist, "The list %s needs to actually exist." % list_name
     return mlist.active
 
 
-def post_message(relay, message, delivery, list_name, host, fromaddress):
+def post_message(relay, message, delivery, list_name, org, fromaddress):
     
     """
     Takes a message and delivers it to everyone in the group
@@ -109,12 +114,12 @@ def post_message(relay, message, delivery, list_name, host, fromaddress):
     """
 
     name, addr = parseaddr(fromaddress)
-    mlist = find_list(list_name)
+    mlist = find_list(list_name, org.subdomain)
     sender = find_user(addr)
     assert mlist, "User is somehow able to post to list %s" % list_name
     assert sender, "Sender %s must exist in order to post a message" % addr
 
-    list_addr = "%s@%s" % (list_name, host)
+    list_addr = "%s@%s" % (list_name, org.url)
     for sub in mlist.subscription_set.all():
         if should_generate_response(sub.user, sender, message):
             relay.deliver(delivery, To=sub.user.email, From=list_addr)
@@ -155,6 +160,7 @@ def should_generate_response(user, sender, message):
     field of the message, they would get a duplicate
     message, so we don't generate a response.
     """
+
     allrecpts = all_recpts(message)
     if user.email in allrecpts:
         return False

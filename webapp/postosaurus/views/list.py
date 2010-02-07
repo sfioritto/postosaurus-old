@@ -161,10 +161,9 @@ def archive_by_day(request, orgname, listname, month, day, year):
     year = int(year)
     mlist = mailinglist.find_list(listname)
     user = request.user.get_profile()
-    authorize_or_raise(user, mlist.organization)
 
     messages = [CleanMessage(msg) for msg in \
-                    archive.messages_by_day(listname, year, month, day)]
+                    archive.messages_by_day(mlist, year, month, day)]
 
     return render_to_response('postosaurus/archivebyday.html', {
             'mlist': mlist,

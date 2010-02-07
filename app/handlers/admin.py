@@ -6,19 +6,14 @@ from types import ListType
 from email.utils import parseaddr
 
 @state_key_generator
-def module_and_listname(modulename, message):
+def module_and_listemail(modulename, message):
 
     name, address = parseaddr(message['to'])
-    if '-' in address:
-        listname = address.split('-')[0]
-    else:
-        listname = address.split('@')[0]
-
-    return modulename + ':' + listname
+    return modulename + ':' + address
 
 
-@route('(list_name)-confirm-(id_number)@(host)')
-def START(message, list_name=None, id_number=None, host=None):
+@route('(list_name)-confirm-(id_number)@(subdomain).(host)')
+def START(message, list_name=None, id_number=None, subdomain=None, host=None):
     
     """
     The start state looks for confirmation emails and move users with valid
@@ -29,7 +24,7 @@ def START(message, list_name=None, id_number=None, host=None):
     don't want to be.
     """
 
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, subdomain)
     if mlist:
         if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
             # Let them know they've been added.
@@ -43,9 +38,9 @@ def START(message, list_name=None, id_number=None, host=None):
     return START
 
 
-@route('(list_name)@(host)')
+@route('(list_name)@(subdomain).(host)')
 @route_like(START)
-def POSTING(message, list_name=None, id_number=None, host=None):
+def POSTING(message, list_name=None, id_number=None, subdomain=None, host=None):
 
     """
     Takes a message and posts it to the rest of the group. If there
@@ -58,19 +53,25 @@ def POSTING(message, list_name=None, id_number=None, host=None):
 
     #an existing user is adding themselves to another group.
     if id_number:
-        START(message, list_name=list_name, id_number=id_number, host=None)
+        START(message, list_name=list_name, id_number=id_number, subdomain=subdomain, host=host)
 
     else:
-
-        list_addr = "%s@%s" % (list_name, host)
-        if mailinglist.is_subscribed(message['from'], list_name) and mailinglist.is_active(list_name):
-            mlist = mailinglist.find_list(list_name)
+        org = mailinglist.find_org(subdomain)
+        list_addr = "%s@%s.%s" % (list_name, subdomain, host)
+        if mailinglist.is_subscribed(message['from'], list_name, org) and mailinglist.is_active(list_name, org):
+            mlist = mailinglist.find_list(list_name, org.subdomain)
 
         #send a request for confirmation to anyone cc'd on this list so they can
         #join the group if they want.    
             allrecpts = mailinglist.all_recpts(message)
             for address in [to for to in allrecpts if not to.endswith(host)]:
-                CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', address, 'postosaurus/join-confirmation.msg', host)
+
+                CONFIRM.send_if_not_subscriber(relay, 
+                                               mlist, 
+                                               'confirm', 
+                                               address, 
+                                               'postosaurus/join-confirmation.msg',
+                                               subdomain + '.' + host)
 
             delivery = mailinglist.craft_response(message, list_name, list_addr)
             mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])

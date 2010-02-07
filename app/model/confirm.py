@@ -103,7 +103,7 @@ class ConfirmationEngine(object):
             return False
 
 
-    def send_if_not_subscriber(self, relay, mlist, target, address, template, host='postosaurus.com'):
+    def send_if_not_subscriber(self, relay, mlist, target, address, template, host):
         
         name, addr = parseaddr(address)
         user = mailinglist.find_user(addr)

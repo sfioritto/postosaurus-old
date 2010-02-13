@@ -1,3 +1,4 @@
+import re
 from lamson.routing import route, route_like, stateless, state_key_generator
 from config.settings import relay, CONFIRM
 from lamson import view, queue
@@ -5,14 +6,17 @@ from app.model import mailinglist
 from types import ListType
 from email.utils import parseaddr
 
+_re_listname = re.compile("([.a-zA-Z0-9]+)(?:-confirm-(?:[a-z0-9]*))?@([-a-zA-Z0-9]+)\.postosaurus\.com")
+
 @state_key_generator
 def module_and_listemail(modulename, message):
-
     name, address = parseaddr(message['to'])
-    return modulename + ':' + address
+    listname, subdomain = re.match(_re_listname, address).groups()
+
+    return modulename + ':' + listname + ":" + subdomain
 
 
-@route('(list_name)-confirm-(id_number)@(subdomain).(host)')
+@route('(list_name)-confirm-(id_number)@(subdomain)\.(host)')
 def START(message, list_name=None, id_number=None, subdomain=None, host=None):
     
     """
@@ -33,12 +37,12 @@ def START(message, list_name=None, id_number=None, subdomain=None, host=None):
             user = mailinglist.find_user(address)
             if not user:
                 user = mailinglist.create_user(address)
-            mailinglist.add_if_not_subscriber(address, list_name)
+            mailinglist.add_if_not_subscriber(address, list_name, mlist.organization)
             return POSTING
     return START
 
 
-@route('(list_name)@(subdomain).(host)')
+@route('(list_name)@(subdomain)\.(host)')
 @route_like(START)
 def POSTING(message, list_name=None, id_number=None, subdomain=None, host=None):
 
@@ -58,7 +62,7 @@ def POSTING(message, list_name=None, id_number=None, subdomain=None, host=None):
     else:
         org = mailinglist.find_org(subdomain)
         list_addr = "%s@%s.%s" % (list_name, subdomain, host)
-        if mailinglist.is_subscribed(message['from'], list_name, org) and mailinglist.is_active(list_name, org):
+        if mailinglist.is_subscribed(message['from'], list_name, org):
             mlist = mailinglist.find_list(list_name, org.subdomain)
 
         #send a request for confirmation to anyone cc'd on this list so they can
@@ -74,9 +78,10 @@ def POSTING(message, list_name=None, id_number=None, subdomain=None, host=None):
                                                subdomain + '.' + host)
 
             delivery = mailinglist.craft_response(message, list_name, list_addr)
-            mailinglist.post_message(relay, message, delivery, list_name, host, message['from'])
+            mailinglist.post_message(relay, message, delivery, list_name, org, message['from'])
 
             q = queue.Queue("run/work")
             q.push(message)
 
     return POSTING
+

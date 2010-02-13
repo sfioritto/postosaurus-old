@@ -53,7 +53,8 @@ def find_user(address):
         return None
 
 def find_list(list_name, subdomain):
-    org = Organization.objects.get(subdomain=subdomain)
+    org = find_org(subdomain)
+    assert org
     mlist = MailingList.objects.get(name = list_name, organization = org)
     if mlist:
         return mlist
@@ -68,10 +69,9 @@ def find_org(subdomain):
         return None
 
 def find_membership(user, org):
-    mem = Organization.objects.get(organization=org, user=user)
-    if mem:
-        return mem
-    else:
+    try:
+        return Membership.objects.get(organization=org, user=user)
+    except Membership.DoesNotExist:
         return None
 
 def add_if_not_subscriber(address, list_name, org):
@@ -109,12 +109,6 @@ def find_subscription(address, list_name, org):
             return subs[0]
     else:
         return None
-
-
-def is_active(list_name, org):
-    mlist = find_list(list_name, org.subdomain)
-    assert mlist, "The list %s needs to actually exist." % list_name
-    return mlist.active
 
 
 def post_message(relay, message, delivery, list_name, org, fromaddress):

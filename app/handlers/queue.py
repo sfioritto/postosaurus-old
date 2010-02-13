@@ -4,7 +4,7 @@ from lamson.routing import route, stateless
 from lamson import queue
 from django.db import transaction
 
-@route("(list_name)@(subdomain).(host)")
+@route("(list_name)@(subdomain)\.(host)")
 @stateless
 @transaction.commit_manually
 def START(message, list_name=None, subdomain=None, host=None):

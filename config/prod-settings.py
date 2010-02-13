@@ -18,6 +18,7 @@ handlers = ['app.handlers.admin']
 queue_handlers = ['app.handlers.queue']
 
 router_defaults = {
+    'subdomain' : '[-a-zA-Z0-9]+',
     'host': 'postosaurus\\.com',
     'list_name': '[a-zA-Z0-9\.]+',
     'id_number': '[a-z0-9]+',

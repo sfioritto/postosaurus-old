@@ -139,7 +139,13 @@ class MailingList(models.Model):
     email = property(__email)
 
     def archive_url(self):
-        return reverse('webapp.postosaurus.views.org.archive_overview', args=[self.organization.subdomain, self.name])
+        return reverse('webapp.postosaurus.views.list.archive_overview', args=[self.organization.subdomain, self.name])
+
+    def links_url(self):
+        return reverse('webapp.postosaurus.views.list.links', args=[self.organization.subdomain, self.name])
+
+    def members_url(self):
+        return reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
 
 
     def __unicode__(self):
@@ -156,6 +162,9 @@ class Membership(models.Model):
     organization = models.ForeignKey(Organization)
     user = models.ForeignKey(User)
 
+    def __unicode__(self):
+        return "%s:%s" % (self.organization.subdomain, self.user.email)
+
 
 class Subscription(models.Model):
 
@@ -168,7 +177,7 @@ class Subscription(models.Model):
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return '%s' % (self.user.email)
+        return '%s:%s' % (self.mailing_list.name, self.user.email)
 
 
 class UserState(models.Model):

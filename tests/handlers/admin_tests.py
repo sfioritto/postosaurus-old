@@ -6,34 +6,42 @@ from email.utils import parseaddr
 from app.model import mailinglist
 from config.settings import CONFIRM
 
+
 relay = relay(port=8825)
 sender = "send <sender@sender.com>"
 member = "member <member@member.com>"
-host = "postosaurus.com"
+subdomain = "test"
+host = "%s.postosaurus.com" % subdomain
 list_name = "test.list"
 list_addr = "%s@%s" % (list_name, host)
 client = RouterConversation(sender, 'Admin Tests')
 mclient = RouterConversation(member, 'Admin Tests')
-user = None
 
 
 def setup_func():
-    mlist = MailingList(name = list_name, email = list_addr)
+    teardown_func()
+    user = User(email="bob@bob.com")
+    user.save()
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org.save()
+    mlist = MailingList(name = list_name, organization = org)
     mlist.save()
 
 
 def teardown_func():
+    Organization.objects.all().delete()
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()    
     JoinConfirmation.objects.all().delete()
 
 
+
 @with_setup(setup_func, teardown_func)
 def test_subscribe_user(sender=sender, client=client, mlist=None):
 
     if not mlist:
-        mlist = MailingList.objects.filter(email = list_addr)[0]
+        mlist = mailinglist.find_list(list_name, subdomain)
     subs = len(mlist.subscription_set.all())
     msg = CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', sender, 'postosaurus/join-confirmation.msg', host)
     client.say(msg['from'], "subscribe me")
@@ -46,7 +54,8 @@ def test_subscribe_user(sender=sender, client=client, mlist=None):
 def test_existing_user_new_list():
 
     test_subscribe_user()
-    mlist = MailingList(name = 'newlist', email = 'newlist@postosaurus.com')
+    org = mailinglist.find_org(subdomain)
+    mlist = MailingList(name = 'newlist', email = 'newlist@postosaurus.com', organization=org)
     mlist.save()
     subs = len(mlist.subscription_set.all())
     assert subs == 0
@@ -65,12 +74,13 @@ def test_add_new_user():
     If there are multiple addresses in the To field, add them
     to the list.
     """
-    
+
     client.begin()
     test_subscribe_user()
     client.say([list_addr, member], "Add member to this list.")
-    mlist = MailingList.objects.filter(email = list_addr)[0]
+    mlist = mailinglist.find_list(list_name, subdomain)
     assert len(mlist.subscription_set.all()) == 1
+    assert len(Membership.objects.all()) == 1
     assert len(JoinConfirmation.objects.all()) == 1
 
     test_subscribe_user(member, mclient)
@@ -114,7 +124,7 @@ def test_non_user_posts_message():
     Only subscribers to a list can post to the list.
     """
 
-    assert len(User.objects.all()) == 0
+    assert len(User.objects.all()) == 1 #the owner of the org created in the setup function
     client.begin()
     msg = client.say(list_addr, "My first message.")
     assert not delivered(list_addr)

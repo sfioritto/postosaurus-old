@@ -19,7 +19,6 @@ mclient = RouterConversation(member, 'Admin Tests')
 
 
 def setup_func():
-    teardown_func()
     user = User(email="bob@bob.com")
     user.save()
     org = Organization(name=subdomain, subdomain=subdomain, owner=user)

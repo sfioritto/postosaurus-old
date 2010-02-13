@@ -12,6 +12,7 @@ import simplejson as json
 
 sender = "send <sender@sender.com>"
 member = "member <member@member.com>"
+subdomain = "test"
 host = "postosaurus.com"
 list_name = "test.list"
 list_addr = "%s@%s" % (list_name, host)
@@ -20,7 +21,11 @@ user = None
 
 
 def setup_func():
-    mlist = MailingList(name = list_name, email = list_addr)
+    user = User(email="bob@bob.com")
+    user.save()
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org.save()
+    mlist = MailingList(name=list_name, organization=org)
     mlist.save()
     sender_name, sender_addr = parseaddr(sender)
     user = mailinglist.create_user(sender_addr)

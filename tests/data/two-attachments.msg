@@ -29,7 +29,7 @@ Date: Sun, 29 Nov 2009 20:58:52 -0600
 Message-ID: <a83a102a0911291858g64c643a6x952613382a91599a@mail.gmail.com>
 Subject: more attachments!
 From: Beth Lukes <beth.lukes@gmail.com>
-To: Sean Fioritto <sean.fioritto@gmail.com>
+To: test.list@files.postosaurus.com
 Content-Type: multipart/mixed; boundary=0016e65b635a5217ed04798dd29e
 
 --0016e65b635a5217ed04798dd29e

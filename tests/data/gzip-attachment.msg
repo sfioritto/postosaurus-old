@@ -6,7 +6,7 @@ Delivered-To: sean@allicator.com
 Message-ID: <bca0ebe30912051247o173ddabai8a5e9cc0e9eb4fc7@mail.gmail.com>
 Subject: save this file
 From: Sean Fioritto <sean@allicator.com>
-To: postosaurus@postosaurus.com
+To: test.lists@files.postosaurus.com
 Content-Type: multipart/mixed; boundary=0016e6dbe89606d9d2047a015527
 
 --0016e6dbe89606d9d2047a015527

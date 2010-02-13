@@ -87,7 +87,7 @@ def get_messages(keys):
     return [json.loads(message) for message in archive.multi_get(keys)]
 
 
-def store_message(list_name, message):
+def store_message(list_name, message, org):
 
     """
     Creates entries in key value store so a message can be
@@ -99,7 +99,7 @@ def store_message(list_name, message):
     be archived using this function.
     """
 
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, org.subdomain)
     dbmessage = Message(mlist=mlist, subject=message['Subject'])
     dbmessage.save()
     mjson = to_json(message.base)

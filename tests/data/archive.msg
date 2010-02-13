@@ -8,7 +8,7 @@ Delivered-To: sean@allicator.com
 Message-ID: <bca0ebe30911080918t6e63067fw5b3ab95f926bddaf@mail.gmail.com>
 Subject: Re: noticed a minor thing...
 From: Sean Fioritto <sean@allicator.com>
-To: postosaurus@postosaurus.com
+To: test@admin.postosaurus.com
 Content-Type: multipart/alternative; boundary=001485f626b09594cf0477df420b
 
 --001485f626b09594cf0477df420b

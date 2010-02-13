@@ -29,7 +29,7 @@ Date: Sun, 29 Nov 2009 17:59:40 -0600
 Message-ID: <a83a102a0911291559n37fa898ch662c147e4776145@mail.gmail.com>
 Subject: deneen school reform section
 From: Beth Lukes <beth.lukes@gmail.com>
-To: Sean Fioritto <sean.fioritto@gmail.com>
+To: test.list@files.postosaurus.com
 Content-Type: multipart/mixed; boundary=0016e659f46674004204798b516b
 
 --0016e659f46674004204798b516b

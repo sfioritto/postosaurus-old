@@ -63,6 +63,7 @@ def find_list(list_name, subdomain):
 
 def find_org(subdomain):
     org = Organization.objects.get(subdomain=subdomain)
+
     if org:
         return org
     else:
@@ -124,7 +125,7 @@ def post_message(relay, message, delivery, list_name, org, fromaddress):
     assert mlist, "User is somehow able to post to list %s" % list_name
     assert sender, "Sender %s must exist in order to post a message" % addr
 
-    list_addr = "%s@%s" % (list_name, org.url)
+    list_addr = "%s@%s.postosaurus.com" % (list_name, org.subdomain)
     for sub in mlist.subscription_set.all():
         if should_generate_response(sub.user, sender, message):
             relay.deliver(delivery, To=sub.user.email, From=list_addr)

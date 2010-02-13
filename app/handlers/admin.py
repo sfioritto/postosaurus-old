@@ -27,7 +27,6 @@ def START(message, list_name=None, id_number=None, subdomain=None, host=None):
     This prevents users from being added to a list if they
     don't want to be.
     """
-
     mlist = mailinglist.find_list(list_name, subdomain)
     if mlist:
         if CONFIRM.verify(mlist, 'confirm', message['from'], id_number):
@@ -54,7 +53,6 @@ def POSTING(message, list_name=None, id_number=None, subdomain=None, host=None):
     We also ensure that they don't receive a duplicate of the
     email they were just sent.
     """
-
     #an existing user is adding themselves to another group.
     if id_number:
         START(message, list_name=list_name, id_number=id_number, subdomain=subdomain, host=host)

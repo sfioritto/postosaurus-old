@@ -42,7 +42,12 @@ def test_subscribe_user(sender=sender, client=client, mlist=None):
     if not mlist:
         mlist = mailinglist.find_list(list_name, subdomain)
     subs = len(mlist.subscription_set.all())
-    msg = CONFIRM.send_if_not_subscriber(relay, mlist, 'confirm', sender, 'postosaurus/join-confirmation.msg', host)
+    msg = CONFIRM.send_if_not_subscriber(relay, 
+                                         mlist, 
+                                         'confirm', 
+                                         sender, 
+                                         'postosaurus/join-confirmation.msg', 
+                                         mlist.organization.subdomain + ".postosaurus.com")
     client.say(msg['from'], "subscribe me")
     newsubs = len(mlist.subscription_set.all())
     assert newsubs == subs + 1, "Should be %s subscriptions but there are %s" % (str(subs + 1), str(newsubs))

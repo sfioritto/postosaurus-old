@@ -62,7 +62,7 @@ def store_file(list_name, org, message, filename, dbmessage):
     (like this file was sent with this message, etc).
     """
 
-    mlist = mailinglist.find_list(list_name, org)
+    mlist = mailinglist.find_list(list_name, org.subdomain)
     name, addr = parseaddr(message['from'])
     user = mailinglist.find_user(addr)
     sha = create_hash_from_msg(message, filename)

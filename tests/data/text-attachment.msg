@@ -33,7 +33,7 @@ Date: Sun, 29 Nov 2009 17:54:23 -0600
 Message-ID: <5f1d9b0c0911291554r168ee147j32ec2b77e9081f8c@mail.gmail.com>
 Subject: test attachment
 From: Sean Fioritto <sean.fioritto@gmail.com>
-To: Sean Fioritto <sean@allicator.com>
+To: test.list@files.postosaurus.com
 Content-Type: multipart/mixed; boundary=0016e6d99ead8ca22104798b3ec0
 
 --0016e6d99ead8ca22104798b3ec0

@@ -12,10 +12,10 @@ import simplejson as json
 
 sender = "send <sender@sender.com>"
 member = "member <member@member.com>"
-subdomain = "test"
+subdomain = "admin"
 host = "postosaurus.com"
 list_name = "test.list"
-list_addr = "%s@%s" % (list_name, host)
+list_addr = "%s@%s.%s" % (list_name, subdomain, host)
 client = RouterConversation(sender, 'Admin Tests')
 user = None
 
@@ -29,11 +29,12 @@ def setup_func():
     mlist.save()
     sender_name, sender_addr = parseaddr(sender)
     user = mailinglist.create_user(sender_addr)
-    mailinglist.add_if_not_subscriber(sender, list_name)
+    mailinglist.add_if_not_subscriber(sender, list_name, org)
     user.save()
 
 
 def teardown_func():
+    Organization.objects.all().delete()
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()
@@ -49,18 +50,19 @@ def test_archive_message():
     """
     
     client.begin()
-    client.say(list_addr, "Add member to this list. postosaurus.com http://www.google.com")
-    mlist = MailingList.objects.filter(email = list_addr)[0]
+    client.say(list_addr, "Stuff.")
+    mlist = mailinglist.find_list(list_name, subdomain)
     assert len(mlist.message_set.all()) == 1
-    client.say(list_addr, "Add member to this list. www.postosaurus.com http://www.google.com")
+    client.say(list_addr, "More stuff")
     assert len(mlist.message_set.all()) == 2
 
 
 @with_setup(setup_func, teardown_func)
 def test_complicated_archive_message():
+    #NOTE: the address the message is delivered to is hardcoded in the message itself.
     msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/archive.msg").read())
     Router.deliver(msg)
-    mlist = MailingList.objects.filter(email = list_addr)[0]
+    mlist = mailinglist.find_list(list_name, subdomain)
     messageid = mlist.message_set.all()[0].id
     jsmsg = json.loads(arch[str(messageid)])
     assert jsmsg['body'] == None

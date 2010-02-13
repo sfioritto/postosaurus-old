@@ -13,9 +13,10 @@ import shutil
 import config
 
 sender = "send <sender@sender.com>"
+subdomain = "files"
 host = "postosaurus.com"
 list_name = "test.list"
-list_addr = "%s@%s" % (list_name, host)
+list_addr = "%s@%s.%s" % (list_name, subdomain, host)
 sender_client = RouterConversation(sender, 'Files Tests')
 
 deneen_msg = MailRequest('fakepeer', 'beth.lukes@gmail.com', list_addr, open("tests/data/deneen-attachment.msg").read())
@@ -25,11 +26,16 @@ gzip_msg = MailRequest('fakepeer', 'sean@allicator.com', list_addr, open("tests/
 
 
 def setup_func():
-
+    
+    Organization.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()
 
-    mlist = MailingList(name = list_name, email = list_addr)
+    user = User(email="bob@bob.com")
+    user.save()
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org.save()
+    mlist = MailingList(name=list_name, organization=org)
     mlist.save()
 
     if os.path.isdir(websettings.FILES_DIR):
@@ -45,6 +51,7 @@ def teardown_func():
     Subscription.objects.all().delete()
     User.objects.all().delete()
     UserState.objects.all().delete()
+    Organization.objects.all().delete()
 
 
 @with_setup(setup_func, teardown_func)
@@ -53,16 +60,17 @@ def test_one_attachment():
     #subscribe the original sender
     name, address = parseaddr(deneen_msg['from'])
     client = RouterConversation(address, 'Files Tests')
-    test_subscribe_user(sender=address, client=client)
+    mlist = mailinglist.find_list(list_name, subdomain)
+    test_subscribe_user(sender=address, client=client, mlist=mlist)
 
     # add someone else to the list
-    test_subscribe_user(sender=sender, client=sender_client)
+    test_subscribe_user(sender=sender, client=sender_client, mlist=mlist)
 
     # update the message to send to the list we just created.
     deneen_msg['to'] = list_addr
-
+    
     Router.deliver(deneen_msg)
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, subdomain)
     assert len(mlist.message_set.all()) == 1
     msg = mlist.message_set.all()[0]
     
@@ -77,9 +85,11 @@ def test_one_attachment():
 def test_two_attachments():
     name, address = parseaddr(deneen_msg['from'])
     client = RouterConversation(address, 'Files Tests')
-    test_subscribe_user(sender=address, client=client)
+    mlist = mailinglist.find_list(list_name, subdomain)
+    test_subscribe_user(sender=address, client=client, mlist=mlist)
+
     Router.deliver(two_msg)
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, subdomain)
     assert len(mlist.message_set.all()) == 1
 
     msg = mlist.message_set.all()[0]
@@ -102,7 +112,7 @@ def test_gzip_attachment():
     name, address = parseaddr(gzip_msg['from'])
     client = RouterConversation(address, 'Files Tests')
     client.begin()
-    mlist = mailinglist.find_list(list_name)
+    mlist = mailinglist.find_list(list_name, subdomain)
     test_subscribe_user(sender=address, client=client, mlist=mlist)
     
     test_subscribe_user(sender=parseaddr(sender)[1], client=sender_client, mlist=mlist)

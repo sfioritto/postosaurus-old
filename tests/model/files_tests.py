@@ -7,9 +7,10 @@ import os
 import shutil
 import re
 
+subdomain = "files"
 host = "postosaurus.com"
 list_name = "test.list"
-list_addr = "%s@%s" % (list_name, host)
+list_addr = "%s@%s.%s" % (list_name, subdomain, host)
 sender = "send <sender@sender.com>"
 member = "member <member@member.com>"
 
@@ -19,8 +20,14 @@ two_msg = MailRequest('fakeperr', sender, list_addr, open("tests/data/two-attach
 
 
 def setup_func():
-    mlist = MailingList(name = list_name, email = list_addr)
+    user = User(email="bob@bob.com")
+    user.save()
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org.save()
+    mlist = MailingList(name = list_name,
+                        organization = org)
     mlist.save()
+
     if os.path.isdir(settings.FILES_DIR):
         shutil.rmtree(settings.FILES_DIR)
     os.mkdir(settings.FILES_DIR)
@@ -28,6 +35,7 @@ def setup_func():
 
 def teardown_func():
     # clear the database
+    Organization.objects.all().delete()
     MailingList.objects.all().delete()
     User.objects.all().delete()
 
@@ -68,12 +76,13 @@ def test_store_files():
     """
 
     user = mailinglist.create_user(text_msg['from'])
-    dbmessage = archive.store_message(list_name, text_msg)
-    dbfile = files.store_file(list_name, text_msg, "customerinterviews.txt", dbmessage)
+    org = mailinglist.find_org(subdomain)
+    dbmessage = archive.store_message(list_name, text_msg, org)
+    dbfile = files.store_file(list_name, org, text_msg, "customerinterviews.txt", dbmessage)
     assert dbfile.name == "customerinterviews.txt"
 
     user = mailinglist.create_user(two_msg['from'])
-    dbmessage = archive.store_message(list_name, two_msg)
-    dbfile = files.store_file(list_name, two_msg, "sean-text.txt", dbmessage)
+    dbmessage = archive.store_message(list_name, two_msg, org)
+    dbfile = files.store_file(list_name, org, two_msg, "sean-text.txt", dbmessage)
     assert dbfile.name == "sean-text.txt"
 

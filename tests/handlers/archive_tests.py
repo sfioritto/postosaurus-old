@@ -38,7 +38,6 @@ def teardown_func():
     MailingList.objects.all().delete()
     Subscription.objects.all().delete()
     User.objects.all().delete()
-    Link.objects.all().delete()
     Message.objects.all().delete()
 
 

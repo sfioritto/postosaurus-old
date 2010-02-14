@@ -31,9 +31,6 @@ Manage your group
 Postosaurus provides a website for each group. Here are a few things you
 can do through the site:
 
--- Review any links or urls ever sent to the group. If you have ever sent
-a url to the group, you can see it here: {{ mlist.links_url() }}
-
 -- Remove members from your group here: {{ mlist.members_url() }}
 
 -- All emails sent to the group are saved so you can find them easily later.

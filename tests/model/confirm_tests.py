@@ -7,13 +7,21 @@ from lamson import mail, queue
 import shutil
 import os
 
+listname = "confirmtest"
+subdomain = "confirm"
 
 def setup():
-    mlist = MailingList(name = 'confirmtest',
-                        email = 'confirmtest@postosaurus.com')
+    user = User(email="bob@bob.com")
+    user.save()
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org.save()
+    mlist = MailingList(name = listname,
+                        organization = org)
     mlist.save()
 
 def teardown():
+    Organization.objects.all().delete()
+    User.objects.all().delete()
     MailingList.objects.all().delete()
     JoinConfirmation.objects.all().delete()
     if os.path.exists('run/queue'):
@@ -25,7 +33,7 @@ storage = JoinConfirmStorage()
 engine = ConfirmationEngine(storage)
 
 def test_ConfirmationStorage():
-    mlist = MailingList.objects.filter(name='confirmtest').all()[0]
+    mlist = mailinglist.find_list(listname, subdomain)
 
     storage.store(mlist, 'testing', 'somedude@localhost', '12345')
 

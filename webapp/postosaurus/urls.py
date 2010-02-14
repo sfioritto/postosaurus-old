@@ -6,13 +6,11 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/$', 'webapp.postosaurus.views.org.main'),
-    (r'^(?P<orgname>[-a-zA-Z0-9]+)/links/$', 'webapp.postosaurus.views.org.links'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/files/$', 'webapp.postosaurus.views.org.files'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/members/$', 'webapp.postosaurus.views.org.members'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/tasks/$', 'webapp.postosaurus.views.org.tasks'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/members/$', 'webapp.postosaurus.views.list.members'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/files/$', 'webapp.postosaurus.views.list.files'),
-    (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/links/$', 'webapp.postosaurus.views.list.links'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/tasks/$', 'webapp.postosaurus.views.list.tasks'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/archive/(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/$', 
      'webapp.postosaurus.views.list.archive_by_day'),

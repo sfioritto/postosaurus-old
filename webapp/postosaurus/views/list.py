@@ -25,21 +25,6 @@ def authorize_or_raise(user, org):
     if not user.in_org(org):
         raise PermissionDenied
 
-def links(request, orgname, listname):
-    try:
-        profile = request.user.get_profile()
-        mlist = mailinglist.find_list(listname, orgname)
-        links = mlist.link_set.all().order_by('-created_on')
-    except ValueError:
-        raise Http404()
-    
-    return render_to_response('postosaurus/links.html', {
-            'org' : mlist.organization,
-            'mlist' : mlist,
-            'links': links,
-            'linkstab' : True,
-            }, context_instance = RequestContext(request))
-
 
 def files(request, orgname, listname):
     try:

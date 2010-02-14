@@ -95,22 +95,6 @@ def members(request, orgname):
 
 
 @login_required
-def links(request, orgname):
-    try:
-        profile = request.user.get_profile()
-        org = Organization.objects.get(subdomain=orgname)
-        links = org.link_set.all().order_by('-created_on')
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/org-links.html', {
-            'org' : org,
-            'links': links,
-            'linkstab' : True,
-            }, context_instance = RequestContext(request))
-
-
-@login_required
 def tasks(request, orgname):
 
     try:

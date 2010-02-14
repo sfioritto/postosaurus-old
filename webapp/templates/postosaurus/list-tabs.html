@@ -16,15 +16,7 @@
     <a href="{% url webapp.postosaurus.views.list.archive_overview listname=mlist.name orgname=org.subdomain %}">Archive</a>
   </li>
   
-  <li
-  {% if linkstab %}
-  class="current"
-  {% endif %}
-  id="links">
-    <a href="{% url webapp.postosaurus.views.list.links listname=mlist.name orgname=org.subdomain %}">Links</a>
-  </li>
-  
-  <li
+ <li
   {% if filestab %}
   class="current"
   {% endif %}

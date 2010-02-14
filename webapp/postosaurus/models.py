@@ -70,7 +70,7 @@ class Organization(models.Model):
 
     """
     Highest level of the models. Organizations have mailing lists,
-    files, tasks (eventually), links, users. 
+    files, tasks (eventually), users. 
     """
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
@@ -88,13 +88,6 @@ class Organization(models.Model):
             return "www.%s.postosaurus.com" % self.subdomain
     url = property(__url)
 
-    def __linksurl(self):
-        if settings.URL_DEBUG:
-            return reverse('webapp.postosaurus.views.org.links', 
-                           args=[self.subdomain])
-        else:
-            return "/links/"
-    linksurl = property(__linksurl)
 
     def __membersurl(self):
         if settings.URL_DEBUG:
@@ -140,9 +133,6 @@ class MailingList(models.Model):
 
     def archive_url(self):
         return reverse('webapp.postosaurus.views.list.archive_overview', args=[self.organization.subdomain, self.name])
-
-    def links_url(self):
-        return reverse('webapp.postosaurus.views.list.links', args=[self.organization.subdomain, self.name])
 
     def members_url(self):
         return reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
@@ -229,21 +219,6 @@ class Message(models.Model):
         return str(self.id)
 
             
-class Link(models.Model):
-
-    message = models.ForeignKey(Message)
-    mlist = models.ForeignKey(MailingList)
-    url = models.CharField(max_length=2083)
-    created_on = models.DateTimeField(auto_now_add=True)
-    organization = models.ForeignKey(Organization)
-
-    def __unicode__(self):
-        return self.url
-
-    def cleaned(self):
-        return self.url
-    
-
 class File(models.Model):
 
     message = models.ForeignKey(Message)

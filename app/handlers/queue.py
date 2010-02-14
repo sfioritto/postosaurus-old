@@ -1,5 +1,5 @@
 import re
-from app.model import links, archive, files, mailinglist
+from app.model import archive, files, mailinglist
 from lamson.routing import route, stateless
 from lamson import queue
 from django.db import transaction
@@ -20,7 +20,7 @@ def START(message, list_name=None, subdomain=None, host=None):
         #db message is the message record created in the database. The
         #id generated is used as a key to extract the actual message
         #from tokyo tyrant. We do this so that it's easy to maintain
-        # relational data, like what links are related to a message? A
+        # relational data, like what files are related to a message? A
         # key value store is not good at storing this kind of data.
         dbmessage = archive.store_message(list_name, message, org)
 
@@ -28,11 +28,6 @@ def START(message, list_name=None, subdomain=None, host=None):
         for name in files.file_names(message):
             files.store_file(list_name, org, message, name, dbmessage)
 
-        body = message.body()
-        if body:
-            urls = links.extract_urls_from_text(body)
-            for url in urls:
-                links.add_link(list_name, org, url, dbmessage)
         transaction.commit()
 
     except:

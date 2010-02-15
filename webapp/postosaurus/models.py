@@ -265,10 +265,13 @@ class File(models.Model):
         on prefixes to get the url or path to
         the file in the filesystem.
         """
-        path = os.path.join("/files/",
-                            self.mlist.name[0], 
-                            self.mlist.name, 
+
+        path = os.path.join("/files/", 
+                            self.organization.subdomain[0],
+                            self.organization.subdomain,
+                            self.mlist.name,
                             self.file_name_hash())
+        
         return path
 
     urlprefix = property(__get_url_prefix)
@@ -283,7 +286,8 @@ class File(models.Model):
         """
 
         path = os.path.join(settings.FILES_DIR,
-                            self.mlist.name[0], 
+                            self.organization.subdomain[0],
+                            self.organization.subdomain,
                             self.mlist.name, 
                             self.file_name_hash())
         return path

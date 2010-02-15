@@ -47,6 +47,11 @@ class User(models.Model):
             for org in self.organization_set.all():
                 org.active = False
                 org.save()
+        else:
+            for org in self.organization_set.all():
+                if not org.active:
+                    org.active = True
+                    org.save()
         self.save()
 
         

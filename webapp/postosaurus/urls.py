@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/$', 'webapp.postosaurus.views.org.main'),
+    (r'^(?P<orgname>[-a-zA-Z0-9]+)/activate/$', 'webapp.postosaurus.views.spreedly.activate_org'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/files/$', 'webapp.postosaurus.views.org.files'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/members/$', 'webapp.postosaurus.views.org.members'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/tasks/$', 'webapp.postosaurus.views.org.tasks'),

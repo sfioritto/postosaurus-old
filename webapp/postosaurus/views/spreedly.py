@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from webapp.postosaurus.views import helpers
 from webapp.forms import OrgUserForm
@@ -10,9 +11,19 @@ from webapp.postosaurus import models
 from webapp import settings
 
 
-def __create_url(user, planid):
+def __create_url(user, planid, orgname=None):
+
     puser = user.get_profile()
-    return "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, str(user.id), planid, puser.email)
+    url = "https://spreedly.com/%s/subscribers/%s/subscribe/%s/%s" % (settings.SPREEDLY_SITE, 
+                                                                                     str(user.id), 
+                                                                                     planid, 
+                                                                                     puser.email)
+    org = mailing_list.find_org(orgname)
+    if org:
+        returnurl = "?return_url=%s" % reverse('webapp.postosaurus.views.spreedly.activate_org', args=[orgname])
+        url = url + returnurl
+    return url
+
 
 
 def create_subscription(request, planid):
@@ -54,7 +65,7 @@ def create_subscription(request, planid):
                 djangouser = authenticate(username=djangouser.username, password=password)
                 login(request, djangouser)
                 
-                return HttpResponseRedirect(__create_url(djangouser, planid))
+                return HttpResponseRedirect(__create_url(djangouser, planid, orgname=org.subdomain))
             
         return render_to_response('postosaurus/create-subscription.html', {
                 'form' : form,
@@ -63,8 +74,14 @@ def create_subscription(request, planid):
         
     else:
         return HttpResponseRedirect(__create_url(request.user, planid))
-            
-                    
+    
+        
+def activate_org(request, orgname):
+    org = mailinglist.find_org(orgname)
+    org.owner.update_from_spreedly()
+    return HttpResponseRedirect(org.url)
+    
+
 def update_subscriptions(request):
 
     """

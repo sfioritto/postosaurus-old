@@ -1,27 +1,20 @@
 <ul id="usertabs">
 
+  {% if profile.token %}
   <li
-  {% if orgstab %}
+  {% if billingtab %}
   class="current"
   {% endif %}
-  id="settingstab">
-    <a href="{% url webapp.postosaurus.views.user.orgs %}">Organizations</a>
+  id="billingtab">
+  <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Billing</a>
   </li>
-
-  
-  <li
+  {% endif %}
+ 
+ <li
   {% if settingstab %}
   class="current"
   {% endif %}
   id="settingstab">
     <a href="{% url webapp.postosaurus.views.user.settings %}">Settings</a>
   </li>
-  
- <li
-  {% if billingtab %}
-  class="current"
-  {% endif %}
-  id="billingtab">
- <a href="{% url webapp.postosaurus.views.spreedly.billing %}">Billing</a>
- </li>
 </ul>

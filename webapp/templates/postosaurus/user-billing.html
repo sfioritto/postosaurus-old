@@ -18,10 +18,14 @@
 All of our billing is handled securely by Spreedly.
 </p>
 <p id="bottomblurb">
+{% if active %}
 Change or cancel your plan <a href="{{ url }}">here</a>.
+{% else %}
+Reactivate your plan <a href="{{ url }}">here</a>.
+{% endif %}
 </p>
 {% else %}
-<p id="topblurb">Create your own Postosaurus groups.</p>
+<p id="topblurb">Create a Postosaurus site for your organization.</p>
 <p id="bottomblurb">Sign up for a basic account right <a href="{{ plans }}">here</a>.</p>
 <p>See plans and pricing <a href="{% url webapp.postosaurus.views.marketing.plans %}">here</a>.
 {% endif %}

@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
+from app.model import mailinglist
 from webapp.postosaurus.views import helpers
 from webapp.forms import OrgUserForm
 from webapp.postosaurus import models
@@ -18,7 +19,7 @@ def __create_url(user, planid, orgname=None):
                                                                                      str(user.id), 
                                                                                      planid, 
                                                                                      puser.email)
-    org = mailing_list.find_org(orgname)
+    org = mailinglist.find_org(orgname)
     if org:
         returnurl = "?return_url=%s" % reverse('webapp.postosaurus.views.spreedly.activate_org', args=[orgname])
         url = url + returnurl
@@ -107,14 +108,17 @@ def billing(request):
     except ValueError:
         raise Http404()
 
+    profile.update_from_spreedly()
     url, plans = None, None
     if profile.token:
         url = profile.spreedly_account_url()
+        return render_to_response('postosaurus/user-billing.html', {
+                'active' : profile.billing_active(),
+                'profile' : profile,
+                'url' : url,
+                'plans' : plans,
+                'billingtab' : True,
+                }, context_instance = RequestContext(request))
     else:
-        plans = __create_url(request.user, settings.SPREEDLY_PLAN_BASIC)
-    return render_to_response('postosaurus/user-billing.html', {
-            'profile' : profile,
-            'url' : url,
-            'plans' : plans,
-            'billingtab' : True,
-            }, context_instance = RequestContext(request))
+        return HttpResponseRedirect(profile.url)
+   

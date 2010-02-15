@@ -12,9 +12,8 @@ urlpatterns = patterns(
     (r'^$', 'webapp.postosaurus.views.marketing.index'),
     (r'^plans/$', 'webapp.postosaurus.views.marketing.plans'),
     (r'^user/create/$', 'webapp.postosaurus.views.user.create_user'),
-    (r'^user/$', 'webapp.postosaurus.views.user.orgs'),
-    (r'^user/settings/$', 'webapp.postosaurus.views.user.settings'),
     (r'^user/billing/$', 'webapp.postosaurus.views.spreedly.billing'),
+    (r'^user/settings/$', 'webapp.postosaurus.views.user.settings'),
     (r'^login/$', 'django.contrib.auth.views.login', {
             'template_name': 'postosaurus/login.html'
             }),

@@ -15,6 +15,7 @@ class User(models.Model):
     token = models.CharField(max_length=512, null=True) # the subscriber token from spreedly
     user = models.ForeignKey(DjangoUser, null=True)
 
+
     def in_org(self, org):
 
         """
@@ -32,6 +33,15 @@ class User(models.Model):
         else:
             return False
 
+    def billing_active(self):
+        client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
+        try:
+            info = client.get_info(self.user.id)
+            return info['active']
+        except:
+            print 'huh?'
+            return False
+
     def update_from_spreedly(self):
         
         """
@@ -40,19 +50,23 @@ class User(models.Model):
         """
 
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
-        info = client.get_info(self.user.id)
-        self.level = info['feature_level']  
-        self.token = info['token']
-        if info['active'] is False:
-            for org in self.organization_set.all():
-                org.active = False
-                org.save()
-        else:
-            for org in self.organization_set.all():
-                if not org.active:
-                    org.active = True
+        try:
+            info = client.get_info(self.user.id)
+            self.level = info['feature_level']  
+            self.token = info['token']
+            if info['active'] is False:
+                for org in self.organization_set.all():
+                    org.active = False
                     org.save()
-        self.save()
+            else:
+                for org in self.organization_set.all():
+                    if not org.active:
+                        org.active = True
+                        org.save()
+            self.save()
+        except:
+            #todo: I should probably log here.
+            pass
 
         
     def spreedly_account_url(self):
@@ -66,6 +80,10 @@ class User(models.Model):
         else:
             return False
 
+
+    def __url(self):
+        return reverse('webapp.postosaurus.views.user.settings')
+    url = property(__url)
 
     def __unicode__(self):
         return self.email

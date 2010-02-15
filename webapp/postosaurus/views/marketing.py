@@ -20,7 +20,7 @@ def index(request):
                                   context_instance = RequestContext(request))
 
     else:
-        return HttpResponseRedirect(reverse(user.orgs))
+        return HttpResponseRedirect(reverse('webapp.postosaurus.views.spreedly.billing'))
     
 
 def plans(request):

@@ -116,12 +116,7 @@ class UserAccountForm(forms.Form):
         except DjangoUser.DoesNotExist:
             duser = None
 
-        try:
-            user = User.objects.get(pk=email)
-        except User.DoesNotExist:
-            user = None
-
-        if user or duser:
+        if duser:
             raise forms.ValidationError("An account for this email address has already been created.")
         else:
             return email
@@ -132,6 +127,21 @@ class OrgUserForm(UserAccountForm):
     subdomain = forms.CharField(max_length=63)
     orgname = forms.CharField(max_length=300)
 
+
+    def clean_email(self):
+        UserAccountForm.clean_email(self)
+        email = self.cleaned_data['email']
+        try:
+            user = User.objects.get(pk=email)
+        except User.DoesNotExist:
+            user = None
+        if user:
+            raise forms.ValidationError("An account for this email address has already been created.")
+        else:
+            return email
+
+
+        
     def clean_subdomain(self):
 
         subdomain = self.cleaned_data['subdomain']

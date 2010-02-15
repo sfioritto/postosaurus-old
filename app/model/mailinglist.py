@@ -55,18 +55,18 @@ def find_user(address):
 def find_list(list_name, subdomain):
     org = find_org(subdomain)
     assert org
-    mlist = MailingList.objects.get(name = list_name, organization = org)
-    if mlist:
+    try:
+        mlist = MailingList.objects.get(name = list_name, organization = org)
         return mlist
-    else:
+    except MailingList.DoesNotExist:
         return None
 
 def find_org(subdomain):
-    org = Organization.objects.get(subdomain=subdomain)
-
-    if org:
+    
+    try:
+        org = Organization.objects.get(subdomain=subdomain)
         return org
-    else:
+    except Organization.DoesNotExist:
         return None
 
 def find_membership(user, org):

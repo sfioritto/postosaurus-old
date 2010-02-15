@@ -39,7 +39,7 @@ def create_subscription(request, planid):
                 subdomain = form.cleaned_data['subdomain']
                 orgname = form.cleaned_data['orgname']
                 
-                djangouser, user = helpers.create_users(email, username, password)
+                djangouser, user = helpers.create_users(username, email, password)
                 
                 org = models.Organization(subdomain = subdomain,
                                           name = orgname,

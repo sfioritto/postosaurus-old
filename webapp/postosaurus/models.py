@@ -44,9 +44,9 @@ class User(models.Model):
         self.level = info['feature_level']  
         self.token = info['token']
         if info['active'] is False:
-            for mlist in self.mailinglist_set.all():
-                mlist.active = False
-                mlist.save()
+            for org in self.organization_set.all():
+                org.active = False
+                org.save()
         self.save()
 
         

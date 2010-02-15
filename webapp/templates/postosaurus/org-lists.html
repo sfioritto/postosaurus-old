@@ -7,9 +7,9 @@
 
 {% block nav %}
 {% include 'postosaurus/org-nav.html' %}
-<div id="pagetitle">
-  {{org.name}}
-</div>
+{% endblock %}
+{% block pagetitle %}
+{{org.name}}
 {% endblock %}
 
 {% block content %}

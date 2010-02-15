@@ -135,12 +135,12 @@ class OrgUserForm(UserAccountForm):
     def clean_subdomain(self):
 
         subdomain = self.cleaned_data['subdomain']
+        username = self.cleaned_data['username']
 
-        try:
-            org = Organization.objects.get(subdomain=subdomain)
-        except Organization.DoesNotExist:
-            org = None
-
+        user = mailinglist.find_user(username)
+        org = mailinglist.find_org(subdomain)
+        if user and len(user.organization_set.all()) > 0:
+            raise forms.ValidationError("You can only own one organization at a time.")
         if org:
             raise forms.ValidationError("An account for this email address has already been created.")
         else:

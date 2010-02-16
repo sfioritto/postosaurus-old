@@ -32,11 +32,13 @@ def remove_from_org(email, org):
     """
     
     user = mailinglist.find_user(email)
-    membership = Membership.objects.get(organization = org, user=user)
-    membership.delete()
+    if user != org.owner:
+        membership = Membership.objects.get(organization = org, user=user)
+        membership.delete()
 
-    for mlist in org.mailinglist_set.all():
-        remove_from_list(email, mlist, org)
+        for mlist in org.mailinglist_set.all():
+            remove_from_list(email, mlist, org)
+
 
 def remove_from_list(email, mlist, org):
     sub = mailinglist.find_subscription(email, mlist.name, org)

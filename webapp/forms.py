@@ -3,7 +3,10 @@ from webapp.postosaurus.models import User, Organization
 from django import forms
 from django.contrib.auth.models import User as DjangoUser
 from email.utils import parseaddr
+import re
 
+subre = re.compile("^[-a-zA-Z0-9]+$")
+usernamere = re.compile("^[a-zA-Z0-9]+$")
 
 class ListNameField(forms.Field):
 
@@ -101,10 +104,13 @@ class UserAccountForm(forms.Form):
         except DjangoUser.DoesNotExist:
             duser = None
 
+        if not usernamere.match(username):
+            raise forms.ValidationError("Usernames can only contain letters and numbers.")
+
         if duser:
             raise forms.ValidationError("This username is already taken.")
-        else:
-            return username
+
+        return username
 
         
     def clean_email(self):
@@ -124,8 +130,11 @@ class UserAccountForm(forms.Form):
 
 class OrgUserForm(UserAccountForm):
 
-    subdomain = forms.CharField(max_length=63)
-    orgname = forms.CharField(max_length=300)
+    subdomain = forms.CharField(label="Subdomain for your site",
+                                max_length=63)
+    orgname = forms.CharField(label="Your organization's name",
+                              max_length=300,
+                              required=True)
 
 
     def clean_email(self):
@@ -145,16 +154,21 @@ class OrgUserForm(UserAccountForm):
     def clean_subdomain(self):
 
         subdomain = self.cleaned_data['subdomain']
-        username = self.cleaned_data['username']
+        username = self.data['username']
 
         user = mailinglist.find_user(username)
         org = mailinglist.find_org(subdomain)
+        
+        if not subre.match(subdomain):
+            raise forms.ValidationError("The subdomain can only contain letters, dashes and numbers.")
+
         if user and len(user.organization_set.all()) > 0:
             raise forms.ValidationError("You can only own one organization at a time.")
+
         if org:
-            raise forms.ValidationError("An account for this email address has already been created.")
-        else:
-            return subdomain
+            raise forms.ValidationError("An account for this subdomain has already been created.")
+
+        return subdomain
 
 
     

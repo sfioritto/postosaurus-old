@@ -21,7 +21,7 @@
       <td>
 	{{ form.email.label_tag }}
       </td>
-      <td>
+      <td class="right">
 	{{ form.email }}
       </td>
     </tr>
@@ -34,7 +34,7 @@
     
    <tr>
       <td>{{ form.username.label_tag }}</td>
-      <td>{{ form.username }}</td>
+      <td class="right">{{ form.username }}</td>
     </tr>
 
     {% if form.password.errors %}
@@ -45,12 +45,12 @@
     
     <tr>
       <td>{{ form.password.label_tag }}</td>
-      <td>{{ form.password }}</td>
+      <td class="right">{{ form.password }}</td>
     </tr>
     
     <tr>
       <td><label>Password Again</label></td>
-      <td>{{ form.repassword }}</td>
+      <td class="right">{{ form.repassword }}</td>
     </tr>
     <tr></tr>
 
@@ -65,15 +65,29 @@
       <td></td><td>{{ form.subdomain.errors }}</td>
     </tr>
     {% endif %}
-    
+
+    <tr class="tip">
+      <td></td>
+      <td class="right">
+	<p>
+	e.g. 'example' in example.postosaurus.com.
+	</p>
+      </td>
+    </tr>
     <tr>
       <td>{{ form.subdomain.label_tag }}</td>
-      <td>{{ form.subdomain }}</td>
+      <td class="right">{{ form.subdomain }}</td>
     </tr>
+
+    {% if form.orgname.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.orgname.errors }}</td>
+    </tr>
+    {% endif %}
 
     <tr>
       <td>{{ form.orgname.label_tag }}</td>
-      <td>{{ form.orgname }}</td>
+      <td class="right">{{ form.orgname }}</td>
     </tr>
     
     <tr></tr>

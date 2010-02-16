@@ -17,7 +17,11 @@ Postosaurus -- Lightweight Group Collaboration
 <body>
   <div id="top">
     <div id="topleft">
+      {% if org %}
       <h1><a href="{{ org.url }}">Postosaurus</a></h1>
+      {% else %}
+      <h1><a href="/">Postosaurus</a></h1>
+      {% endif %}
       <h2>Manage your project from your inbox</h2>
     </div>
     <div id="topright">

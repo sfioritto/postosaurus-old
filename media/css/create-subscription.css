@@ -12,6 +12,10 @@
     text-align: right;
 }
 
+#createsub td.right{
+    text-align: left;
+}
+
 #createsub table tbody tr td input{
     font-family: georgia;
     font-size: 16px;
@@ -41,7 +45,7 @@ ul.errorlist li{
     color: rgb(80, 80, 80);
 }
 
-tr.step{
+tr.step p.step{
     font-family: georgia;
     font-size: 22px;
     color: rgb(40, 40, 40);
@@ -65,6 +69,17 @@ span.number{
     height: 50px;
     width: 200px;
     margin-top: 10px;
+}
+
+tr.tip{
+    height: auto;
+}
+
+td p{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(40, 40, 40);
+    margin: 0;
 }
 
 

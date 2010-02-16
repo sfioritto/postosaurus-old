@@ -17,7 +17,7 @@ Postosaurus -- Lightweight Group Collaboration
 <body>
   <div id="top">
     <div id="topleft">
-      <h1><a href="/">Postosaurus</a></h1>
+      <h1><a href="{{ org.url }}">Postosaurus</a></h1>
       <h2>Manage your project from your inbox</h2>
     </div>
     <div id="topright">
@@ -39,8 +39,22 @@ Postosaurus -- Lightweight Group Collaboration
     {% block nav %}
     {% endblock %}
   <div id="pagetitle">
+    <p>
     {% block pagetitle %}
+    <a href="{{ org.url }}">{{ org.name }}</a>
     {% endblock %}
+    </p>
+    <div id="pagesubtitle">
+      <p>
+      {% block pagesubtitle %}
+      {% if mlist %}
+      <p>
+      {{ mlist.email }}
+      </p>
+      {% endif %}
+      {% endblock %}
+      </p>
+    </div>
   </div>
   </div>
  

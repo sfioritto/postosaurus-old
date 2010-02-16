@@ -8,11 +8,10 @@
 {% block nav %}
 {% include 'postosaurus/org-nav.html' %}
 {% endblock %}
-{% block pagetitle %}
-{{org.name}}
-{% endblock %}
 
 {% block content %}
+
+{% if memberships %}
 <form action="" method="POST">
   <p class="Remove">
     Remove selected members.
@@ -27,7 +26,8 @@
     {% endfor %}
   </ul>
 </form>
-
+{% endif %}
+  
 {% endblock %}
 
 

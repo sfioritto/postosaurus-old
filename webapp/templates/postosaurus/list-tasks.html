@@ -7,12 +7,17 @@
 
 {% block nav %}
 {% include 'postosaurus/list-nav.html' %}
-<div id="pagetitle">
-  {{mlist.name}}
-</div>
 {% endblock %}
 
 {% block content %}
+<div id="breadcrumb">
+  <a href="{{ org.url }}">{{ org.name }}</a> >
+  <a href="{% url webapp.postosaurus.views.list.members orgname=org.subdomain listname=mlist.name%}">
+  {{ mlist.name }}
+  </a> >
+  <a href="{% url webapp.postosaurus.views.list.tasks listname=mlist.name orgname=org.subdomain %}">Tasks</a>
+</div>
+
 <h2>Coming soon.</h2>
 <p>Send an email and create a task. Keep track of what everyone is
 working on right here.</p>

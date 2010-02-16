@@ -9,18 +9,19 @@
     height: 65px;
 }
 
+#topleft, topright{
+    float: left;
+}
 #topleft, #search{
     width: 60%;
-
 }
 
+#topleft{
+    float: left;
+}
 #topright{
     width: 40%;
     float: right;
-}
-
-#topnav{
-    float: left;
 }
 
 #top h1, #top h2{
@@ -119,10 +120,19 @@ ul#topnav li a{
     margin-right: 5px;
 }
 
-#pagetitle{
-    font-size: 30px;
+#pagetitle, #pagesubtitle{
     font-family: verdana;
     color: rgb(40, 40, 40);
     float: right;
     width: 40%;
+}
+
+#pagesubtitle{
+    font-size: 14px;
+    float: left;
+    margin-top: 5px;
+}
+
+#pagetitle{
+    font-size: 30px;
 }

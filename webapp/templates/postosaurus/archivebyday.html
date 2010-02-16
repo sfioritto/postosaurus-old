@@ -8,16 +8,13 @@
  {% include 'postosaurus/list-nav.html' %}
 {% endblock %}
 
-
 {% block content %}
-
 <div id="breadcrumb">
+  <a href="{{ org.url }}">{{ org.name }}</a> >
   <a href="{% url webapp.postosaurus.views.members listname=mlist.name%}">
   {{ mlist.name }}
-  </a>
-  <span class="divider">></span>
-  <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a>
-  <span class="divider">></span>
+  </a> >
+ <a href="{% url webapp.postosaurus.views.archive_overview listname=mlist.name %}">Archive</a> >
   <a href="{% url webapp.postosaurus.views.archive_by_day listname=mlist.name day=date.day month=date.month year=date.year %}">
   {{ date.month }}/{{ date.day }}/{{ date.year }}
   </a>

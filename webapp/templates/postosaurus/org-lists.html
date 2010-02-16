@@ -8,30 +8,9 @@
 {% block nav %}
 {% include 'postosaurus/org-nav.html' %}
 {% endblock %}
-{% block pagetitle %}
-{{org.name}}
-{% endblock %}
+
 
 {% block content %}
-
-<p class="description">
-Create a new group.
-</p>
-
-{% if mlist %}
-<div id="listcreated">
-  <p>
-  Your group {{ mlist.name }} was created. A confirmation email has been sent to your email address.
-  </p>
-</div>
-{% endif %}
-<form action="" method="POST">
-{{ form.groupname.errors }}
-{{ form.groupname }}
-<p id="emaildomain">@{{org.subdomain}}.postosaurus.com</p>
-<p id="examples">Examples: MyProject, My.Project</p>
-<input id="submit" type="submit" value="Create my group." />
-</form>
 
 {% if mlists %}
 <p class="description">
@@ -55,6 +34,24 @@ Create a new group.
   </tbody>
 </table>
 {% endif %}
+
+<p class="description">
+Create a new group.
+</p>
+{% if mlist %}
+<div id="listcreated">
+  <p>
+  Your group {{ mlist.name }} was created. A confirmation email has been sent to your email address.
+  </p>
+</div>
+{% endif %}
+<form action="" method="POST">
+{{ form.groupname.errors }}
+{{ form.groupname }}
+<p id="emaildomain">@{{org.subdomain}}.postosaurus.com</p>
+<p id="examples">Examples: MyProject, My.Project</p>
+<input id="submit" type="submit" value="Create my group." />
+</form>
 
 {% endblock %}
 

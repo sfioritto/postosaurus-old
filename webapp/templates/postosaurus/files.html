@@ -8,18 +8,14 @@
 {% block nav %}
 {% include 'postosaurus/list-nav.html' %}
 {% endblock %}
-{% block pagetitle %}
-{{mlist.name}}
-{% endblock %}
 
 {% block content %}
-
 <div id="breadcrumb">
-<a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">
-{{ mlist.name }}
-</a>
-<span class="divider">></span>
-<a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
+  <a href="{{ org.url }}">{{ org.name }}</a> >
+  <a href="{% url webapp.postosaurus.views.list.members orgname=org.subdomain listname=mlist.name%}">
+  {{ mlist.name }}
+  </a> >
+  <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
 </div>
 
 {% if files %}

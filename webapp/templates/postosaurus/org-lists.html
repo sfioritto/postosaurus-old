@@ -35,6 +35,7 @@
 </table>
 {% endif %}
 
+{% if org.active %}
 <p class="description">
 Create a new group.
 </p>
@@ -52,6 +53,11 @@ Create a new group.
 <p id="examples">Examples: MyProject, My.Project</p>
 <input id="submit" type="submit" value="Create my group." />
 </form>
+{% else %}
+<p class="description">
+This organization has been deactivated.
+</p>
+{% endif %}
 
 {% endblock %}
 

@@ -29,6 +29,7 @@ def create_list(list_name, org):
     mlist = find_list(list_name, org.subdomain)
     assert valid_name(list_name)
     if not mlist:
+        assert org.active
         mlist = MailingList(name=list_name, 
                             organization=org)
         mlist.save()
@@ -118,17 +119,18 @@ def post_message(relay, message, delivery, list_name, org, fromaddress):
     Takes a message and delivers it to everyone in the group
     that should receive it.
     """
-
-    name, addr = parseaddr(fromaddress)
-    mlist = find_list(list_name, org.subdomain)
-    sender = find_user(addr)
-    assert mlist, "User is somehow able to post to list %s" % list_name
-    assert sender, "Sender %s must exist in order to post a message" % addr
-
-    list_addr = "%s@%s.postosaurus.com" % (list_name, org.subdomain)
-    for sub in mlist.subscription_set.all():
-        if should_generate_response(sub.user, sender, message):
-            relay.deliver(delivery, To=sub.user.email, From=list_addr)
+    
+    if org.active:
+        name, addr = parseaddr(fromaddress)
+        mlist = find_list(list_name, org.subdomain)
+        sender = find_user(addr)
+        assert mlist, "User is somehow able to post to list %s" % list_name
+        assert sender, "Sender %s must exist in order to post a message" % addr
+        
+        list_addr = "%s@%s.postosaurus.com" % (list_name, org.subdomain)
+        for sub in mlist.subscription_set.all():
+            if should_generate_response(sub.user, sender, message):
+                relay.deliver(delivery, To=sub.user.email, From=list_addr)
 
 
 def all_recpts(message):

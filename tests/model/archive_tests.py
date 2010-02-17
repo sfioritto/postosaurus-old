@@ -18,7 +18,7 @@ message = MailResponse(To=list_addr, From='sender@sender.com', Subject="no subje
 def setup_func():
     user = User(email="bob@bob.com")
     user.save()
-    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user, active=True)
     org.save()
     mlist = MailingList(name=list_name, organization=org)
     mlist.save()

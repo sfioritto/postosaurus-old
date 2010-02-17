@@ -13,7 +13,7 @@ subdomain = "confirm"
 def setup():
     user = User(email="bob@bob.com")
     user.save()
-    org = Organization(name=subdomain, subdomain=subdomain, owner=user)
+    org = Organization(name=subdomain, subdomain=subdomain, owner=user, active=True)
     org.save()
     mlist = MailingList(name = listname,
                         organization = org)

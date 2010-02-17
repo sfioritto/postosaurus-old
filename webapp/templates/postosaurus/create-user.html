@@ -5,21 +5,48 @@
 {% endblock %}
 
 {% block content %}
-{{ form.errors }}
 <form method="post" action="{% url webapp.postosaurus.views.user.create_user %}">
   <table>
+    
+    {% if form.email.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.email.errors }}</td>
+    </tr>
+    {% endif %}
+
     <tr>
       <td>{{ form.email.label_tag }}</td>
       <td>{{ form.email }}</td>
     </tr>
+
+    {% if form.username.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.username.errors }}</td>
+    </tr>
+    {% endif %}
+
     <tr>
       <td>{{ form.username.label_tag }}</td>
       <td>{{ form.username }}</td>
     </tr>
+
+    {% if form.password.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.password.errors }}</td>
+    </tr>
+    {% endif %}
+    
     <tr>
       <td>{{ form.password.label_tag }}</td>
       <td>{{ form.password }}</td>
     </tr>
+
+    {% if form.repassword.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.repassword.errors }}</td>
+    </tr>
+    {% endif %}
+
     <tr>
       <td><label>Enter your password again.</label></td>
       <td>{{ form.repassword }}</td>

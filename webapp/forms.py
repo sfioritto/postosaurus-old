@@ -52,6 +52,7 @@ class MailingListForm(forms.Form):
     groupname = ListNameField()
 
 
+
 class SignupForm(forms.Form):
     
     email = forms.CharField(required=False)

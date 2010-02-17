@@ -43,7 +43,7 @@ def main(request, orgname):
         form = MailingListForm(request.POST)
         
         #Check if the mailing list is valid.
-        if form.is_valid():
+        if form.is_valid() and organization.active:
             email = profile.email
             list_name = form.cleaned_data['groupname']
             mlist = mailinglist.create_list(list_name, organization)

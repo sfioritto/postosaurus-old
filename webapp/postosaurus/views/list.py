@@ -60,8 +60,12 @@ def tasks(request, orgname, listname):
             }, context_instance = RequestContext(request))
 
 @login_required
-def members(request, orgname, listname):
+def invite_member(request, orgname, listname):
+    return None
 
+
+@login_required
+def edit_members(request, orgname, listname):
 
     try:
         user = request.user.get_profile()
@@ -84,11 +88,32 @@ def members(request, orgname, listname):
                     'emails' : emails,
                     }, context_instance = RequestContext(request))
 
+    return render_to_response('postosaurus/edit-members.html', {
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'subscriptions' : subscriptions,
+            'membertab' : True,
+            }, context_instance = RequestContext(request))
+    
+    
+    
+@login_required
+def members(request, orgname, listname):
+
+
+    try:
+        user = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+        subscriptions = mlist.subscription_set.all()
+        pending = mlist.joinconfirmation_set.all()
+    except ValueError:
+        raise Http404()
 
     return render_to_response('postosaurus/members.html', {
             'org' : mlist.organization,
             'mlist' : mlist,
             'subscriptions' : subscriptions,
+            'pending' : pending,
             'membertab' : True,
             }, context_instance = RequestContext(request))
 

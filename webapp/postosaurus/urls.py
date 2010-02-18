@@ -11,6 +11,8 @@ urlpatterns = patterns(
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/members/$', 'webapp.postosaurus.views.org.members'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/tasks/$', 'webapp.postosaurus.views.org.tasks'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/members/$', 'webapp.postosaurus.views.list.members'),
+    (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/members/edit$', 'webapp.postosaurus.views.list.edit_members'),
+    (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/members/invite$', 'webapp.postosaurus.views.list.invite_member'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/files/$', 'webapp.postosaurus.views.list.files'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/tasks/$', 'webapp.postosaurus.views.list.tasks'),
     (r'^(?P<orgname>[-a-zA-Z0-9]+)/lists/(?P<listname>.+)/archive/(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)/$', 

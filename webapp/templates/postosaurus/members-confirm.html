@@ -29,7 +29,11 @@ Are you sure you want to remove the following members from <span class="listname
   </ul>
   <input type="hidden" value="1" name="confirmed" />
   <input type="submit" value="Yes, I'm sure." id="submit" />
-  <a id="cancel" href="{{ org.membersurl }}">Cancel</a>
+  {% if mlist %}
+  <a id="cancel" href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Cancel</a>
+  {% else %}
+  <a id="cancel" href="{% url webapp.postosaurus.views.org.members orgname=org.subdomain %}">Cancel</a>
+  {% endif %}
 </form>
 
 {% endblock %}

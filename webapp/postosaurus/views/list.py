@@ -1,3 +1,4 @@
+import jinja2
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
@@ -9,6 +10,24 @@ from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
 from webapp.postosaurus.views import helpers
 from email.utils import parseaddr  
+from webapp import settings
+from lamson import view
+
+# relay is created at runtime in boot.py for lamson, but django
+# doesn't know about it, so I create it here. Might be better
+# to just use built in django email stuff instead of lamson?
+# this code is duplicated in org views.
+from config import settings as appsettings
+from lamson.server import Relay
+appsettings.relay = Relay(host=appsettings.relay_config['host'], 
+                       port=appsettings.relay_config['port'], debug=1)
+
+#same thing here for the loader.
+view.LOADER = jinja2.Environment(
+    loader=jinja2.PackageLoader(appsettings.template_config['dir'], 
+                                appsettings.template_config['module']))
+
+from config.settings import relay, CONFIRM
 
 
 #Django hack to let us put emails in the username field in the login form
@@ -61,7 +80,37 @@ def tasks(request, orgname, listname):
 
 @login_required
 def invite_member(request, orgname, listname):
-    return None
+
+    try:
+        mlist = mailinglist.find_list(listname, orgname)
+        org = mlist.organization
+    except ValueError:
+        raise Http404()
+
+    if request.method == "POST":
+
+        email = request.POST['email']
+        CONFIRM.send_if_not_subscriber(relay, 
+                                       mlist, 
+                                       'confirm', 
+                                       email, 
+                                       'postosaurus/join-confirmation.msg',
+                                       org.subdomain + '.' + settings.HOST)
+
+        return render_to_response('postosaurus/invite-sent.html', {
+                'org' : org,
+                'mlist' : mlist,
+                'email' : email,
+                'membertab' : True,
+                }, context_instance = RequestContext(request))
+    
+
+    else:
+        return render_to_response('postosaurus/invite-members.html', {
+                'org' : org,
+                'mlist' : mlist,
+                'membertab' : True,
+                }, context_instance = RequestContext(request))
 
 
 @login_required

@@ -120,22 +120,6 @@ class Organization(models.Model):
             return "/"
     membersurl = property(__membersurl)
 
-    def __filesurl(self):
-        if settings.URL_DEBUG:
-            return reverse('webapp.postosaurus.views.org.files',
-                           args=[self.subdomain])
-        else:
-            return "/files/"
-    filesurl = property(__filesurl)
-
-    def __tasksurl(self):
-        if settings.URL_DEBUG:
-            return reverse('webapp.postosaurus.views.org.tasks',
-                           args=[self.subdomain])
-        else:
-            return "/tasks/"
-    tasksurl = property(__tasksurl)
-
     def __unicode__(self):
         return self.name
 

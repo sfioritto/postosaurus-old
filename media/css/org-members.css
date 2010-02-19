@@ -1,3 +1,11 @@
+#middle h3{
+    font-family: verdana;
+    font-size: 18px;
+    color: rgb(40, 40, 40);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 #memberslist {
     margin-top: 15px;
 }

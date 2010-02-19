@@ -27,7 +27,8 @@
       </td>
       <td class="links">
         <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=mlist.organization.subdomain %}">Members</a>
-	<a href="{% url webapp.postosaurus.views.list.archive_overview listname=mlist.name orgname=mlist.organization.subdomain %}">Archive</a>
+	<a href="{% url	webapp.postosaurus.views.list.archive_overview	mlist.organization.subdomain, mlist.name %}">Archive</a>
+	<a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=mlist.organization.subdomain %}">Files</a>
      </td>
     </tr>
     {% endfor %}

@@ -1,0 +1,21 @@
+#middle h3{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(40, 40, 40);
+    margin-bottom: 15px;
+}
+
+#id_email{
+    width: 200px;
+    font-family: georgia;
+    font-size: 14px;
+    color: rgb(40, 40, 40);
+    margin-right: 5px;
+}
+
+#submit{
+    font-family: verdana;
+    font-size: 12px;
+    color: rgb(40, 40, 40);
+}
+

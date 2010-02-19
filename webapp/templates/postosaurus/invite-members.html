@@ -1,0 +1,31 @@
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list-tabs.css" />
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/invite-members.css" />
+{% endblock %}
+
+{% block nav %}
+{% include 'postosaurus/list-nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div id="breadcrumb">
+  <a href="{{ org.url }}">{{ org.name }}</a> >
+  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">
+  {{ mlist.name }}
+  </a> >
+  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Members</a> >
+  <a href="{% url webapp.postosaurus.views.list.invite_member listname=mlist.name orgname=org.subdomain %}">Invite</a>
+</div>
+<h3>
+Enter the email address of the person you would like to invite.
+</h3>
+<form action="" method="POST">
+<input type="text" name="email" id="id_email"/>
+<input type="submit" value="Invite" id="submit" />
+
+{% endblock %}
+
+
+

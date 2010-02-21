@@ -19,10 +19,13 @@
 </div>
 
 <h3>Members</h3>
+{% if org.active %}
 <p id="links">
 <a id="edit" href="{% url webapp.postosaurus.views.list.edit_members org.subdomain,mlist.name %}">edit</a>
 |<a id="add" href="{% url webapp.postosaurus.views.list.invite_member org.subdomain,mlist.name %}">add a member</a>
 </p>
+{% endif %}
+
 {% if subscriptions %}
 <ul id="memberslist">   
   {% for sub in subscriptions %}
@@ -43,10 +46,17 @@
   {% endfor %}
 </ul>
 {% endif %}
+
+{% if org.active %}
 <p class="scannable">
 To add a member send an email to {{ mlist.email }} and CC the person you would like
 to add.
 </p>
+{% else %}
+<p class="scannable">
+To add members the organization must be reactivated by the owner, {{ org.owner.email }}.
+</p>
+{% endif %}
 
 {% endblock %}
 

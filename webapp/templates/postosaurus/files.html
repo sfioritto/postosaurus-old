@@ -21,7 +21,6 @@
 {% if files %}
 <p class="hint">
 Tip: Email attachments sent to {{ mlist.email }} will be uploaded here.
-a file to this group.
 </p>
 
 <ul id="filelist">
@@ -50,6 +49,7 @@ a file to this group.
 </div>
 {% endif %}
 
+{% if org.active %}
 <form
 id="uploadfile"
 enctype="multipart/form-data"
@@ -60,5 +60,6 @@ action="{% url webapp.postosaurus.views.list.upload_file org.subdomain, mlist.na
 value="{% url webapp.postosaurus.views.list.files org.subdomain, mlist.name %}" />
 <input type="submit" value="Upload" id="uploadbutton" />
 </form>
+{% endif %}
 
 {% endblock %}

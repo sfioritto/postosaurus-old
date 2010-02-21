@@ -14,20 +14,34 @@
 To add a member invite them to join a <a href="{{ org.url }}">group</a>.
 </h3>
 {% if memberships %}
+{% if org.active %}
 <form action="" method="POST">
-  <p class="Remove">
-    Remove selected members.
-  </p>
-  <input type="submit" value="Remove" id="submit" />
-  <ul id="memberslist">   
-    {% for m in memberships %}
-    <li>
-      <input type="checkbox" name="{{m.user.email}}" />
-      <p class="email">{{ m.user.email }}</p>
-    </li>
-    {% endfor %}
-  </ul>
+<p class="Remove">
+Remove selected members.
+</p>
+<input type="submit" value="Remove" id="submit" />
+<ul id="memberslist">   
+  {% for m in memberships %}
+  <li>
+  <input type="checkbox" name="{{m.user.email}}" />
+  <p class="email">{{ m.user.email }}</p>
+  </li>
+  {% endfor %}
+</ul>
 </form>
+{% else %}
+<p class="Remove">
+In order to edit this organization's members it must be reactivated by
+the owner, {{ org.owner.email }}.
+</p>
+<ul id="memberslist">
+  {% for m in memberships %}
+  <li>
+  <p class="email">{{m.user.email }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
 {% endif %}
   
 {% endblock %}

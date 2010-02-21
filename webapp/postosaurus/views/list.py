@@ -1,14 +1,13 @@
 import jinja2
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponseRedirect
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from app.model import mailinglist, archive, files as appfiles
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
-from webapp.postosaurus.views import helpers
+from webapp.postosaurus.views import helpers, auth
 from email.utils import parseaddr  
 from webapp import settings, forms
 from lamson import view
@@ -34,19 +33,9 @@ from config.settings import relay, CONFIRM
 AuthenticationForm.base_fields['username'].max_length = 75 
 
 
-def authorize_or_raise(user, org):
-
-    """
-    Very simple authorization. This checks to see if the user is a member
-    of the list and raises a permission denied error if they aren't.
-    """
-
-    if not user.in_org(org):
-        raise PermissionDenied
-
-
 @login_required
 def file_versions(request, orgname, listname, filename):
+
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
@@ -58,6 +47,7 @@ def file_versions(request, orgname, listname, filename):
     except ValueError:
         raise Http404()
 
+    auth.authorize_or_raise(profile, org)
     if len(dbfiles) == 0:
         raise Http404()
 
@@ -79,10 +69,11 @@ def upload_file(request, orgname, listname):
         mlist = mailinglist.find_list(listname, orgname)
     except ValueError:
         raise Http404()
-    
+
+    auth.authorize_or_raise(profile, mlist.organization)
     if request.method == "POST":
         form = forms.UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid() and mlist.organization.active:
             appfiles.store_file(profile, mlist, mlist.organization, request.FILES['file'])
         return HttpResponseRedirect(request.POST['next'])
     else:
@@ -97,6 +88,8 @@ def files(request, orgname, listname):
         dbfiles = mlist.file_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
+
+    auth.authorize_or_raise(profile, mlist.organization)
     files = {}
     for f in dbfiles:
         files[f.name] = f
@@ -114,12 +107,14 @@ def files(request, orgname, listname):
 def invite_member(request, orgname, listname):
 
     try:
+        profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
         org = mlist.organization
     except ValueError:
         raise Http404()
 
-    if request.method == "POST":
+    auth.authorize_or_raise(profile, org)
+    if request.method == "POST" and org.active:
 
         email = request.POST['email']
         CONFIRM.send_if_not_subscriber(relay, 
@@ -149,13 +144,14 @@ def invite_member(request, orgname, listname):
 def edit_members(request, orgname, listname):
 
     try:
-        user = request.user.get_profile()
+        profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
         subscriptions = mlist.subscription_set.all()
     except ValueError:
         raise Http404()
 
-    if request.method == "POST":
+    auth.authorize_or_raise(profile, mlist.organization)
+    if request.method == "POST" and mlist.organization.active:
 
         emails = helpers.emails_from_post(request.POST)
 
@@ -183,13 +179,14 @@ def members(request, orgname, listname):
 
 
     try:
-        user = request.user.get_profile()
+        profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
         subscriptions = mlist.subscription_set.all()
         pending = mlist.joinconfirmation_set.all()
     except ValueError:
         raise Http404()
 
+    auth.authorize_or_raise(profile, mlist.organization)
     return render_to_response('postosaurus/members.html', {
             'org' : mlist.organization,
             'mlist' : mlist,
@@ -210,6 +207,7 @@ def archive_overview(request, orgname, listname):
     except ValueError:
         raise Http404()
     
+    auth.authorize_or_raise(profile, mlist.organization)
     messages = []
     for msg in dbmessages:
         month = msg.created_on.month
@@ -247,11 +245,17 @@ class CleanMessage(object):
 
 @login_required
 def archive_by_day(request, orgname, listname, month, day, year):
+
+    try:
+        mlist = mailinglist.find_list(listname)
+        profile = request.user.get_profile()
+    except ValueError:
+        raise Http404()
+
+    auth.authorize_or_raise(profile, mlist.organization)
     month = int(month)
     day = int(day)
     year = int(year)
-    mlist = mailinglist.find_list(listname)
-    user = request.user.get_profile()
 
     messages = [CleanMessage(msg) for msg in \
                     archive.messages_by_day(mlist, year, month, day)]

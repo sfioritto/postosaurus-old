@@ -23,7 +23,7 @@ class User(models.Model):
         to the given organization.
         """
 
-        memberships = mlist.membership_set\
+        memberships = org.membership_set\
             .filter(user=self)\
             .filter(organization=org)\
             .all()

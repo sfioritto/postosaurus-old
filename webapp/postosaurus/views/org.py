@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
-from webapp.postosaurus.views import helpers
+from webapp.postosaurus.views import helpers, auth
 from webapp.forms import MailingListForm
 from lamson import view
 
@@ -30,13 +30,19 @@ from config.settings import relay, CONFIRM
 
 @login_required 
 def main(request, orgname):
+
+    """
+    Handles displaying and creating an organization's groups.
+    """
+
     try:
         profile = request.user.get_profile()
         organization = Organization.objects.get(subdomain=orgname)
         mlists = organization.mailinglist_set.all()
     except ValueError:
         raise Http404()
-    
+
+    auth.authorize_or_raise(profile, organization)
     form = MailingListForm()
     mlist = None
     if request.method == "POST":
@@ -73,7 +79,8 @@ def members(request, orgname):
     except ValueError:
         raise Http404()
 
-    if request.method == "POST":
+    auth.authorize_or_raise(profile, organization)
+    if request.method == "POST" and organization.active:
 
         emails = helpers.emails_from_post(request.POST)
 
@@ -95,19 +102,3 @@ def members(request, orgname):
             }, context_instance = RequestContext(request))
 
 
-
-@login_required
-def files(request, orgname):
-
-    try:
-        profile = request.user.get_profile()
-        org = Organization.objects.get(subdomain=orgname)
-        files = org.file_set.all().order_by('-created_on')
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/org-files.html', {
-            'org' : org,
-            'files': files,
-            'filestab' : True,
-            }, context_instance = RequestContext(request))

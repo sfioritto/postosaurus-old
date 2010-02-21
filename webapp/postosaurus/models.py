@@ -34,12 +34,16 @@ class User(models.Model):
             return False
 
     def billing_active(self):
+        
+        #if not in production, all billing plans are active.
+        if settings.DEBUG:
+            return True
+
         client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
         try:
             info = client.get_info(self.user.id)
             return info['active']
         except:
-            print 'huh?'
             return False
 
     def update_from_spreedly(self):
@@ -49,37 +53,32 @@ class User(models.Model):
         in spreedly. If they aren't paying anymore, deactivate their lists.
         """
 
-        client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
-        try:
-            info = client.get_info(self.user.id)
-            self.level = info['feature_level']  
-            self.token = info['token']
-            if info['active'] is False:
-                for org in self.organization_set.all():
-                    org.active = False
-                    org.save()
-            else:
-                for org in self.organization_set.all():
-                    if not org.active:
-                        org.active = True
+        #only do this in production.
+        if not settings.DEBUG:
+            client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
+            try:
+                info = client.get_info(self.user.id)
+                self.level = info['feature_level']  
+                self.token = info['token']
+                if info['active'] is False:
+                    for org in self.organization_set.all():
+                        org.active = False
                         org.save()
-            self.save()
-        except:
-            #todo: I should probably log here.
-            pass
+                else:
+                    for org in self.organization_set.all():
+                        if not org.active:
+                            org.active = True
+                            org.save()
+                self.save()
+            except:
+                #todo: I should probably log here.
+                pass
 
         
     def spreedly_account_url(self):
         return "https://spreedly.com/%s/subscriber_accounts/%s" % (settings.SPREEDLY_SITE, self.token)
 
     
-    def tasks_requested(self):
-        request = Request.objects.filter(email = self.email)
-        if len(request) > 0:
-            return True
-        else:
-            return False
-
 
     def __url(self):
         return reverse('webapp.postosaurus.views.user.settings')
@@ -93,7 +92,7 @@ class Organization(models.Model):
 
     """
     Highest level of the models. Organizations have mailing lists,
-    files, tasks (eventually), users. 
+    files, users. 
     """
 
     created_on = models.DateTimeField(auto_now_add=True, auto_now=True)
@@ -203,19 +202,6 @@ class JoinConfirmation(models.Model):
         return self.address
 
 
-class Request(models.Model):
-
-    """
-    Feature request. Right now only used for tasks.
-    Kill this model once tasks are implemented.
-    """
-
-    email = models.CharField(max_length=512)
-    links = models.BooleanField()
-    files = models.BooleanField()
-    tasks = models.BooleanField()
-
-
 class Message(models.Model):
 
     subject = models.TextField()
@@ -228,7 +214,7 @@ class Message(models.Model):
             
 class File(models.Model):
 
-    message = models.ForeignKey(Message)
+    message = models.ForeignKey(Message, null=True)
     mlist = models.ForeignKey(MailingList)
     user = models.ForeignKey(User)
     sha = models.CharField(max_length=40, unique = True)

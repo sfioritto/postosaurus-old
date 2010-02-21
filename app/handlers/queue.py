@@ -26,7 +26,7 @@ def START(message, list_name=None, subdomain=None, host=None):
 
         # store attached files for retrieval
         for name in files.file_names(message):
-            files.store_file(list_name, org, message, name, dbmessage)
+            files.store_file_from_message(list_name, org, message, name, dbmessage)
 
         transaction.commit()
 

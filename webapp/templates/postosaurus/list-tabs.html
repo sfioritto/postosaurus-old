@@ -24,12 +24,4 @@
     <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
   </li>
 
-  <li
-  {% if taskstab %}
-  class="current"
-  {% endif %}
-  id="tasks">
-  <a href="{% url webapp.postosaurus.views.list.tasks listname=mlist.name orgname=org.subdomain %}">Tasks</a>
-  </li>
-  
 </ul>

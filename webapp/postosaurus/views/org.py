@@ -1,6 +1,6 @@
 import jinja2
 from django.shortcuts import render_to_response
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from app.model import mailinglist
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -52,6 +52,8 @@ def main(request, orgname):
                                            'postosaurus/join-confirmation.msg',
                                            organization.url)
             
+            return HttpResponseRedirect(mlist.members_url())
+            
     return render_to_response('postosaurus/org-lists.html', {
             'org' : organization,
             'mlist' : mlist,
@@ -92,23 +94,6 @@ def members(request, orgname):
             'memberstab' : True,
             }, context_instance = RequestContext(request))
 
-
-
-@login_required
-def tasks(request, orgname):
-
-    try:
-        profile = request.user.get_profile()
-        org = Organization.objects.get(subdomain=orgname)
-            
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/tasks.html', {
-            'profile' : profile,
-            'org' : org,
-            'taskstab' : True,
-            }, context_instance = RequestContext(request))
 
 
 @login_required

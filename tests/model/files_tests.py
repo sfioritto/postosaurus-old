@@ -78,11 +78,11 @@ def test_store_files():
     user = mailinglist.create_user(text_msg['from'])
     org = mailinglist.find_org(subdomain)
     dbmessage = archive.store_message(list_name, text_msg, org)
-    dbfile = files.store_file(list_name, org, text_msg, "customerinterviews.txt", dbmessage)
+    dbfile = files.store_file_from_message(list_name, org, text_msg, "customerinterviews.txt", dbmessage)
     assert dbfile.name == "customerinterviews.txt"
 
     user = mailinglist.create_user(two_msg['from'])
     dbmessage = archive.store_message(list_name, two_msg, org)
-    dbfile = files.store_file(list_name, org, two_msg, "sean-text.txt", dbmessage)
+    dbfile = files.store_file_from_message(list_name, org, two_msg, "sean-text.txt", dbmessage)
     assert dbfile.name == "sean-text.txt"
 

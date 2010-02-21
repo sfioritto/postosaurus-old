@@ -3,14 +3,14 @@ from django.shortcuts import render_to_response
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from app.model import mailinglist, archive
+from app.model import mailinglist, archive, files as appfiles
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
 from webapp.postosaurus.views import helpers
 from email.utils import parseaddr  
-from webapp import settings
+from webapp import settings, forms
 from lamson import view
 
 # relay is created at runtime in boot.py for lamson, but django
@@ -46,6 +46,7 @@ def authorize_or_raise(user, org):
 
 
 def files(request, orgname, listname):
+
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
@@ -53,30 +54,19 @@ def files(request, orgname, listname):
     except ValueError:
         raise Http404()
 
+    if request.method == "POST":
+        form = forms.UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            appfiles.store_file(profile, mlist, mlist.organization, request.FILES['file'])
+        
     return render_to_response('postosaurus/files.html', {
             'org' : mlist.organization,
             'mlist' : mlist,
             'files' : dbfiles,
             'filestab' : True,
+            'form' : forms.UploadFileForm(),
             }, context_instance = RequestContext(request))
 
-
-@login_required
-def tasks(request, orgname, listname):
-
-    try:
-        profile = request.user.get_profile()
-        mlist = mailinglist.find_list(listname, orgname)
-            
-    except ValueError:
-        raise Http404()
-
-    return render_to_response('postosaurus/list-tasks.html', {
-            'profile' : profile,
-            'org' : mlist.organization,
-            'mlist' : mlist,
-            'taskstab' : True,
-            }, context_instance = RequestContext(request))
 
 @login_required
 def invite_member(request, orgname, listname):

@@ -45,6 +45,34 @@ def authorize_or_raise(user, org):
         raise PermissionDenied
 
 
+@login_required
+def file_versions(request, orgname, listname, filename):
+    try:
+        profile = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+        org = mlist.organization
+        dbfiles = File.objects\
+            .filter(organization=org)\
+            .filter(mlist=mlist)\
+            .filter(name=filename).all()
+    except ValueError:
+        raise Http404()
+
+    if len(dbfiles) == 0:
+        raise Http404()
+
+    return render_to_response('postosaurus/file-versions.html', {
+            'org' : mlist.organization,
+            'mlist' : mlist,
+            'files' : dbfiles,
+            'filestab' : True,
+            'filename' : filename,
+            }, context_instance = RequestContext(request))
+
+
+
+
+@login_required
 def files(request, orgname, listname):
 
     try:

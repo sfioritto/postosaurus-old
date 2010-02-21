@@ -1,0 +1,33 @@
+{% extends "postosaurus/base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/list-tabs.css">
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/file-versions.css" />
+{% endblock %}
+
+{% block nav %}
+{% include 'postosaurus/list-nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div id="breadcrumb">
+  <a href="{{ org.url }}">{{ org.name }}</a> >
+  <a href="{% url webapp.postosaurus.views.list.members orgname=org.subdomain listname=mlist.name%}">
+  {{ mlist.name }}
+  </a> >
+  <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a> >
+  <a href="">{{ filename }}</a>
+</div>
+
+<ul id="filelist">
+  {% for file in files %}
+  <li>
+  <p>
+  <a href="{{file.url_path}}">{{file.name}}</a>
+  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on }}</span>
+  </p>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

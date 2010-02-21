@@ -31,11 +31,14 @@ a file to this group.
 
 <ul id="filelist">
   {% for file in files %}
-  {% ifchanged %}
-  <p class ="date">{{ file.created_on|date:"F j, Y"}}<p>
-    {% endifchanged %}
-    <li><a href="{{file.recent_url_path}}">{{file.name}}</a></li>
-    {% endfor %}
+  <li>
+  <p>
+  <a href="{{file.recent_url_path}}">{{file.name}}</a>
+  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on }}</span>
+  <a href="{% url webapp.postosaurus.views.list.file_versions org.subdomain, mlist.name, file.name %}">(older versions)</a>
+  </p>
+  </li>
+  {% endfor %}
 </ul>
 
 {% else %}

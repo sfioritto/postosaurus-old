@@ -1,38 +1,21 @@
 p.hint{
     font-family: verdana;
-    font-size: 14px;
-    color: rgb(100, 100, 100);
-}
-
-div.pagination{
-    margin-top: 20px;
-}
-
-div.pagination a{
-    font-family: georgia;
     font-size: 12px;
-    margin-right: 10px;
+    color: rgb(40, 40, 40);
 }
 
 #filelist{
     margin-top: 20px;
 }
 
-#filelist p.date {
-    font-family: verdana;
-    font-size: 20px;
-    color: rgb(40, 40, 40);
-    margin-bottom: 10px;
-}
-
 #filelist li{
     font-family: georgia;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 5px;
 }
 
 
-h3 {
+#middle h3 {
     font-family: georgia;
     font-size: 18px;
     color: rgb(40, 40, 40);
@@ -52,5 +35,21 @@ p#detail{
     width: 40%;
     color: rgb(80, 80, 80);
     margin-top: 10px;
+}
+
+form#uploadfile{
+    margin-top: 20px;
+}
+
+form#uploadfile input{
+    display: block;
+    margin-top: 10px;
+    font-family: georgia;
+    font-size: 12px;
+    rgb(40, 40, 40);
+}
+
+span.fileinfo{
+    color: rgb(100, 100, 100);
 }
 

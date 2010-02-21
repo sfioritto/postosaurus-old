@@ -18,14 +18,9 @@
   <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
 </div>
 
-<form id="uploadfile" enctype="multipart/form-data" method="post" action="">
-{{ form.file }}
-<input type="submit" value="Upload" id="uploadbutton" />
-</form>
-
 {% if files %}
 <p class="hint">
-Send an email to {{ mlist.email }} with an attachment to upload
+Tip: Email attachments sent to {{ mlist.email }} will be uploaded here.
 a file to this group.
 </p>
 
@@ -34,7 +29,7 @@ a file to this group.
   <li>
   <p>
   <a href="{{file.recent_url_path}}">{{file.name}}</a>
-  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on }}</span>
+  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on|date }}</span>
   <a href="{% url webapp.postosaurus.views.list.file_versions org.subdomain, mlist.name, file.name %}">(older versions)</a>
   </p>
   </li>
@@ -52,6 +47,11 @@ As you and your group members send emails back and forth, Postosaurus
 will collect any attachements you send and keep them here where you can
 easily find and download them later.
 </p>
-
 {% endif %}
+
+<form id="uploadfile" enctype="multipart/form-data" method="post" action="">
+{{ form.file }}
+<input type="submit" value="Upload" id="uploadbutton" />
+</form>
+
 {% endblock %}

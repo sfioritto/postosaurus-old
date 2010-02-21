@@ -24,7 +24,7 @@
   <li>
   <p>
   <a href="{{file.url_path}}">{{file.name}}</a>
-  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on }}</span>
+  <span class="fileinfo">by {{ file.user.email }} on {{ file.created_on|date }}</span>
   </p>
   </li>
   {% endfor %}

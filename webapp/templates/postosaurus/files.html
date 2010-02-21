@@ -37,16 +37,17 @@ a file to this group.
 </ul>
 
 {% else %}
-<h3>Add a file to your project</h3>
-<p id="scannable">
-Attach a file to an email and send it to {{ mlist.email }} to add it
-to your project's files.
-</p>
-<p id="detail">
-As you and your group members send emails back and forth, Postosaurus
-will collect any attachements you send and keep them here where you can
-easily find and download them later.
-</p>
+<div id="nofiles">
+  <h3>Add a file to your project</h3>
+  <p id="scannable">
+  Attach a file to an email and send it to {{ mlist.email }}.
+  </p>
+  <p id="detail">
+  As you and your group members send emails back and forth, Postosaurus
+  will collect any attachements you send and keep them here where you can
+  find and download them later. Or you can use the upload button below.
+  </p>
+</div>
 {% endif %}
 
 <form id="uploadfile" enctype="multipart/form-data" method="post" action="">

@@ -81,7 +81,11 @@ def files(request, orgname, listname):
         dbfiles = mlist.file_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
+    files = {}
+    for f in dbfiles:
+        files[f.name] = f
 
+    files.values()
     if request.method == "POST":
         form = forms.UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -90,7 +94,7 @@ def files(request, orgname, listname):
     return render_to_response('postosaurus/files.html', {
             'org' : mlist.organization,
             'mlist' : mlist,
-            'files' : dbfiles,
+            'files' : files.values(),
             'filestab' : True,
             'form' : forms.UploadFileForm(),
             }, context_instance = RequestContext(request))

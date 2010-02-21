@@ -1,0 +1,9 @@
+ul#filelist li{
+    font-family: georgia;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+span.fileinfo{
+    color: rgb(100, 100, 100);
+}

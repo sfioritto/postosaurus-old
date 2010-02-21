@@ -175,3 +175,4 @@ class OrgUserForm(UserAccountForm):
     
 class UploadFileForm(forms.Form):
     file  = forms.FileField()
+    next = forms.CharField()

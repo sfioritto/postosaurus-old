@@ -1,6 +1,6 @@
 import jinja2
 from django.shortcuts import render_to_response
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from app.model import mailinglist, archive, files as appfiles
@@ -67,10 +67,26 @@ def file_versions(request, orgname, listname, filename):
             'files' : dbfiles,
             'filestab' : True,
             'filename' : filename,
+            'form' : forms.UploadFileForm(),
             }, context_instance = RequestContext(request))
 
 
+@login_required
+def upload_file(request, orgname, listname):
 
+    try:
+        profile = request.user.get_profile()
+        mlist = mailinglist.find_list(listname, orgname)
+    except ValueError:
+        raise Http404()
+    
+    if request.method == "POST":
+        form = forms.UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            appfiles.store_file(profile, mlist, mlist.organization, request.FILES['file'])
+        return HttpResponseRedirect(request.POST['next'])
+    else:
+        raise Http404()
 
 @login_required
 def files(request, orgname, listname):
@@ -85,12 +101,6 @@ def files(request, orgname, listname):
     for f in dbfiles:
         files[f.name] = f
 
-    files.values()
-    if request.method == "POST":
-        form = forms.UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            appfiles.store_file(profile, mlist, mlist.organization, request.FILES['file'])
-        
     return render_to_response('postosaurus/files.html', {
             'org' : mlist.organization,
             'mlist' : mlist,

@@ -30,4 +30,15 @@
   {% endfor %}
 </ul>
 
+<form
+id="uploadfile"
+enctype="multipart/form-data"
+method="post"
+action="{% url webapp.postosaurus.views.list.upload_file org.subdomain, mlist.name %}">
+{{ form.file }}
+<input type="hidden" name="next"
+value="{% url webapp.postosaurus.views.list.file_versions org.subdomain, mlist.name, filename %}" />
+<input type="submit" value="Upload" id="uploadbutton" />
+</form>
+
 {% endblock %}

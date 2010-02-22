@@ -217,7 +217,7 @@ class File(models.Model):
     message = models.ForeignKey(Message, null=True)
     mlist = models.ForeignKey(MailingList)
     user = models.ForeignKey(User)
-    sha = models.CharField(max_length=40, unique = True)
+    sha = models.CharField(max_length=40)
     name = models.CharField(max_length=260)
     ext = models.CharField(max_length=260)
     organization = models.ForeignKey(Organization)

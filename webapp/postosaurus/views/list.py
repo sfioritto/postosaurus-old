@@ -39,6 +39,8 @@ def file_versions(request, orgname, listname, filename):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
         org = mlist.organization
         dbfiles = File.objects\
             .filter(organization=org)\
@@ -67,6 +69,8 @@ def upload_file(request, orgname, listname):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
     except ValueError:
         raise Http404()
 
@@ -85,6 +89,8 @@ def files(request, orgname, listname):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
         dbfiles = mlist.file_set.all().order_by('-created_on')
     except ValueError:
         raise Http404()
@@ -109,6 +115,8 @@ def invite_member(request, orgname, listname):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
         org = mlist.organization
     except ValueError:
         raise Http404()
@@ -146,6 +154,9 @@ def edit_members(request, orgname, listname):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
+
         subscriptions = mlist.subscription_set.all()
     except ValueError:
         raise Http404()
@@ -181,6 +192,8 @@ def members(request, orgname, listname):
     try:
         profile = request.user.get_profile()
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
         subscriptions = mlist.subscription_set.all()
         pending = mlist.joinconfirmation_set.all()
     except ValueError:
@@ -202,6 +215,8 @@ def archive_overview(request, orgname, listname):
 
     try:
         mlist = mailinglist.find_list(listname, orgname)
+        if not mlist:
+            raise Http404()
         profile = request.user.get_profile()
         dbmessages = mlist.message_set.all().order_by('-created_on')
     except ValueError:
@@ -248,6 +263,8 @@ def archive_by_day(request, orgname, listname, month, day, year):
 
     try:
         mlist = mailinglist.find_list(listname)
+        if not mlist:
+            raise Http404()
         profile = request.user.get_profile()
     except ValueError:
         raise Http404()

@@ -86,16 +86,16 @@ def store_file(user, mlist, org, file):
     write_symlink(dbfile)
 
 
-def find_dbfile(sha):
+def find_dbfile(sha, mlist):
 
     try:
-        return File.objects.get(sha=sha)
+        return File.objects.get(sha=sha, mlist=mlist)
     except File.DoesNotExist:
         return None
 
 def create_dbfile(mlist, user, sha, org, name, ext, message=None):
 
-    dbfile = find_dbfile(sha)
+    dbfile = find_dbfile(sha, mlist)
     if not dbfile:
         dbfile = File(mlist = mlist,
                       message = message,

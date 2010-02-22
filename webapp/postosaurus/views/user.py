@@ -26,7 +26,7 @@ def settings(request):
         raise Http404()
 
     changed = False
-
+    profile.update_from_spreedly()
     if request.method == 'POST':
 
         form = PasswordForm(request.POST)

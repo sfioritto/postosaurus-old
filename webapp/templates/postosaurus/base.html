@@ -20,7 +20,7 @@ Postosaurus -- Lightweight Group Collaboration
       {% if org %}
       <h1><a href="{{ org.url }}">Postosaurus</a></h1>
       {% else %}
-      <h1><a href="/">Postosaurus</a></h1>
+      <h1><a href="{% url webapp.postosaurus.views.marketing.plans %}">Postosaurus</a></h1>
       {% endif %}
       <h2>Manage your project from your inbox</h2>
     </div>

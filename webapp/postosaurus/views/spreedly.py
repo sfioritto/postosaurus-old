@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from app.model import mailinglist
 from webapp.postosaurus.views import helpers
 from webapp.forms import OrgUserForm, OrgForm
@@ -129,12 +129,11 @@ def update_subscriptions(request):
     """
 
     ids = [int(id) for id in request.POST['subscriber_ids'].split(',')]
-    users = models.User.objects.filter(id__in=ids).all()
+    users = User.objects.filter(id__in=ids).all()
     for user in users:
         profile = user.get_profile()
         profile.update_from_spreedly()
-    return render_to_response('postosaurus/plans.html', {
-            }, context_instance = RequestContext(request))
+    return HttpResponse("Here's the text of the Web page.")
 
 
 @login_required

@@ -55,11 +55,13 @@ class User(models.Model):
 
         #only do this in production.
         if not settings.DEBUG:
+
             client = api.Client(settings.SPREEDLY_TOKEN, settings.SPREEDLY_SITE)
             try:
                 info = client.get_info(self.user.id)
                 self.level = info['feature_level']  
                 self.token = info['token']
+
                 if info['active'] is False:
                     for org in self.organization_set.all():
                         org.active = False

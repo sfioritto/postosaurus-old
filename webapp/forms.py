@@ -128,6 +128,19 @@ class UserAccountForm(forms.Form):
         else:
             return email
 
+class OrgForm(forms.Form):
+
+    """
+    Same as OrgUserForm, but doesn't inherit user fields.
+    """
+
+    subdomain = forms.CharField(label="Subdomain for your site",
+                                max_length=63)
+
+    orgname = forms.CharField(label="Your organization's name",
+                              max_length=300,
+                              required=True)
+
 
 class OrgUserForm(UserAccountForm):
 

@@ -1,0 +1,17 @@
+{% extends "postosaurus/marketing-base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/billing-active.css" />
+{% endblock %}
+
+{% block content %}
+<p>
+You can only own one organization per account.
+<a href="{% url django.contrib.auth.views.logout_then_login %}">Logout</a> and create a
+new account to purchase an organization.
+</p>
+<p>
+Please <a href="">contact</a> us if you have any questions.
+</p>
+{% endblock %}
+

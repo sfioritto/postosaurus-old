@@ -1,0 +1,60 @@
+{% extends "postosaurus/marketing-base.html" %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/create-short.css">
+{% endblock %}
+
+{% block content %}
+<form id="createsub" method="post" action="{{request.path}}">
+  <table>
+    <tr class="step">
+      <td><span class="number">1.</span></td>
+      <td><p id="stepone" class="step">Create your organization's site.</p></td>
+    </tr>
+
+    {% if form.subdomain.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.subdomain.errors }}</td>
+    </tr>
+    {% endif %}
+
+    <tr class="tip">
+      <td></td>
+      <td class="right">
+	<p>
+	e.g. 'example' in example.postosaurus.com.
+	</p>
+      </td>
+    </tr>
+    <tr>
+      <td>{{ form.subdomain.label_tag }}</td>
+      <td class="right">{{ form.subdomain }}</td>
+    </tr>
+
+    {% if form.orgname.errors %}
+    <tr class="errorrow">
+      <td></td><td>{{ form.orgname.errors }}</td>
+    </tr>
+    {% endif %}
+
+    <tr>
+      <td>{{ form.orgname.label_tag }}</td>
+      <td class="right">{{ form.orgname }}</td>
+    </tr>
+    
+    <tr></tr>
+    <tr class="step">
+      <td><span class="number">2.</span></td>
+      <td><p id="steptwo">Enter your billing information.</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td id="submit">
+	<input type="submit" value="Create my account" id="createbutton" />
+	<p id="spreedly">(This will take you to Spreedly which securely handles our billing)</p>
+     </td>
+  </table>
+ <input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+{% endblock %}

@@ -34,7 +34,7 @@ class User(models.Model):
             return False
 
     def billing_active(self):
-        
+
         #if not in production, all billing plans are active.
         if settings.DEBUG:
             return True

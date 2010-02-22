@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from app.model import mailinglist
 from webapp.postosaurus.views import helpers
-from webapp.forms import OrgUserForm
+from webapp.forms import OrgUserForm, OrgForm
 from webapp.postosaurus import models
 from webapp import settings
 
@@ -21,7 +21,7 @@ def __create_url(user, planid, orgname=None):
                                                                                      puser.email)
     org = mailinglist.find_org(orgname)
     if org:
-        returnurl = "?return_url=%s" % reverse('webapp.postosaurus.views.spreedly.activate_org', args=[orgname])
+        returnurl = "?return_url=%s.postosaurus.com/activate" % org.subdomain
         url = url + returnurl
     return url
 
@@ -35,7 +35,6 @@ def create_subscription(request, planid):
     Once the view has been completed, the user will be logged in and redirected to this view.
     This view then redirects them to spreedly.
     """
-
 
     if request.user.is_anonymous():
         form = OrgUserForm()
@@ -72,11 +71,49 @@ def create_subscription(request, planid):
                 'form' : form,
                 'next' : next
                 }, context_instance = RequestContext(request))
-        
     else:
-        return HttpResponseRedirect(__create_url(request.user, planid))
-    
+        # user is logged in, if they are already paying for an organization,
+        # they can't buy another.
+        profile = request.user.get_profile()
+        # already owns an organization
+        if profile.billing_active():
+            return render_to_response('postosaurus/billing-active.html',
+                                      context_instance = RequestContext(request))
+        # doesn't own an organization.
+        else:
+            return HttpResponseRedirect(reverse(create_short, args=[planid]))
+
+@login_required    
+def create_short(request, planid):
+
+    form = OrgForm()
+    profile = request.user.get_profile()
+
+    if request.method == 'POST':
         
+        form = OrgForm(request.POST)
+        if form.is_valid():
+            
+            subdomain = form.cleaned_data['subdomain']
+            orgname = form.cleaned_data['orgname']
+            
+            org = models.Organization(subdomain = subdomain,
+                                      name = orgname,
+                                      owner = profile,
+                                      active = False) # becomes active once they enter payment info.
+            org.save()
+            
+            membership = models.Membership(organization = org,
+                                           user = profile)
+            membership.save()
+            return HttpResponseRedirect(__create_url(request.user, planid, orgname=org.subdomain))
+
+    else:
+        return render_to_response('postosaurus/create-short.html', {
+                'form' : form,
+                }, context_instance = RequestContext(request))
+            
+            
 def activate_org(request, orgname):
     org = mailinglist.find_org(orgname)
     org.owner.update_from_spreedly()

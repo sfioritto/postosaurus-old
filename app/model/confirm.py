@@ -134,7 +134,7 @@ class ConfirmationEngine(object):
             name, addr = parseaddr(address)
             msg = view.respond(locals(), 'postosaurus/welcome.msg', To=addr,
                                From=mlist.email,
-                               Subject='Welcome to the "%s" group.' % mlist.name)
+                               Subject='Welcome to the "%s".' % mlist.email)
             msg['Reply-To'] = mlist.email
 
             relay.deliver(msg)

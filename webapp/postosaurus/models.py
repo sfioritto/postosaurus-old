@@ -145,6 +145,8 @@ class MailingList(models.Model):
     def members_url(self):
         return reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
 
+    url = property(members_url)
+
 
     def __unicode__(self):
         return self.name

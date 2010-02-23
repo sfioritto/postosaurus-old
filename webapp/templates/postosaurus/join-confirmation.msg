@@ -1,6 +1,6 @@
 Hi,
 
-You've been invited to join the group {{ mlist.name }}. 
+You've been invited to join the group {{ mlist.email }}. 
 To confirm you would like to join this group, just reply to this message.
 
 Once you've replied, I'll send you another email outlining in more detail 

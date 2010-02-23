@@ -1,51 +1,29 @@
 Howdy,
 
-Welcome to {{ mlist.name }}.
+Get started
+------------------------------
+Emails sent to {{ mlist.email }} go to everyone in the group.
 
 
-What is Postosaurus?
-
-Postosaurus is a lightweight project management application built around email. 
-If you know how to use email, you know how to use Postosaurus. 
-
-
-What can I do with Postosaurus?
-
-Send emails to your group
---------------------------
-
-To send an email to your group simply send an email to {{ mlist.email }}. This
-message will be sent to everyone on your team.
+Add new members
+------------------------------
+Send an email to {{ mlist.email }} and CC any email addresses you want to add.
+They will be sent an invitation.
 
 
-Add new members to your group
------------------------------
-
-To add new members to your group, send an email to {{mlist.email}} 
-and CC any email addresses you want to add. That's it!
-
-
-Manage your group
-------------------
-
-Postosaurus provides a website for each group. Here are a few things you
-can do through the site:
-
--- Remove members from your group here: {{ mlist.members_url() }}
-
--- All emails sent to the group are saved so you can find them easily later.
-View your group's archive here: {{ mlist.archive_url() }}
-
-
-Create your account
--------------------
-
+Your group's web site
+------------------------------
 Before you can use the site for your group you'll need
-to create an account. To do that visit any of the urls above.
+to create an account. If you're just using email, skip this,
+you can always do it later.
+
+1. Go to {{ mlist.url }}
+
+2. Click on the link "create an account"
 
 
-If you have any questions or have any problems getting started just let us
-know by sending an email to support@email.postosaurus.com.
+If you have any questions please let us know at support@email.postosaurus.com.
+Or follow us on twitter @postosaurus.
 
 Sincerely,
 Postosaurus Rex

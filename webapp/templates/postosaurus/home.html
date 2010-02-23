@@ -7,14 +7,15 @@
 {% block content %}
   <div id="copy">
     <h2>
-    Your project runs on email. Postosaurus makes email better.
+    Your team runs on email. Postosaurus makes email better.
     </h2>
-    <h3>
-    Postosaurus uses a private email list to track your project's communications, files, links and tasks.
-    </h3>
-    <p>
-    It's easy to use and takes minutes to get started.
+    <p id="bottomcopy">
+    Postosaurus uses email groups to keep your team on the same page. Email attachments are automatically backed up and stored in your private web site for download later. It's easy to use -- if you know how to use email you know how to use Postosaurus. 
     </p>
+    <p>
+    There is no download and it takes minutes to get started.
+    </p>
+
     <a href="{% url webapp.postosaurus.views.marketing.plans %}">
     <img src="{{ MEDIA_URL }}images/signup-button.png" />
     </a>
@@ -23,34 +24,23 @@
    <ul>
      <li>
      <h2>Email</h2>
-     <p class="scannable">Use one email address to communicate with your entire group.</p>
-     <p> Every email is stored in a searchable archive.</p>
+     <p class="scannable">
+     Create as many private email groups as you want.
+     </p>
+     <p>
+     Use one email address to communicate with your team and another for your board and another for your volunteers. Use an email group for every new project. All emails are stored in a private, searchable archive.
+     </p>
      </li>
      <li>
      <h2>Files</h2>
      <p class="scannable">
-     Postosaurus manages your project's documents.
-      </p>
-     <p>
-     To add a file to your project, attach it to an email and send it to your group. See every version of every file emailed to your project in one place. 
-     </p>
-     </li>
-     <li>
-      <h2>Links</h2>
-     <p class="scannable">All of your project's urls in one place.</p>
-     <p>
-     Email a link to your group and Postosaurus will store it where you can find it later. No more fruitless searching for "that link you sent."
-     </p>
-     </li>
-     <li>
-     <h2>Tasks <span id="soon">(Coming soon.)</span></h2>
-     <p class="scannable">
-     Email yourself or someone else a task to do later. 
+     Every version of every file in one place.
      </p>
      <p>
-     Postosaurus builds task lists from emails automatically. View all of your project's tasks from one place without losing the convenience of using email.
+     Whether you send an email to your team with an attachment or upload a file through the web site, Postosaurus will remember it. Postosaurus keeps all versions of a file in one place, automatically.
      </p>
      </li>
+     
    </ul>
  </div>
  <hr/>
@@ -61,7 +51,7 @@
    Do I need to create a new email account?
    </h2>
    <p>
-   No. When you create a Postosaurus group you get a private email list for your group. You send email to that address from your own email address and it goes to everyone in your group.
+   No. When you create a private email group you get an email address that represents the group. You send email to that address from your own email address and it goes to everyone on the group.
    </p>
  </div>
  <div class="question">
@@ -77,17 +67,11 @@
    If I cancel, what happens to my data?
    </h2>
    <p>
-   Even if you cancel your plan you still have access to all of your data, you just can't add new links, files or send emails to your group.
+   Even if you cancel your plan you still have access to all of your data, you just can't add new files or send emails to your group.
    </p>
  </div>
  </div>
- <p id="bottomcopy">
- You begin your project using a traditional project management tool, but in the end everyone in your group skips using the tool and sends emails. Why fight it? <span class="callout">If you know how to use email you know how to use Postosaurus.</span> Your group members never even need to sign in to the web site. To start using Postosaurus, simply send an email to the group.
- </p>
- <a href="{% url webapp.postosaurus.views.marketing.plans %}">
- <img src="{{ MEDIA_URL }}images/signup-button.png" />
- </a>
- </div>
+</div>
  {% endblock %}
  
  

@@ -27,12 +27,6 @@ hr {
     margin-bottom: 15px;
 }
 
-#bottomcopy{
-    width: 450px; /*Added to margin should equal 570px to keep everythin lined up*/
-    margin-right: 120px;
-    float: left;
-    clear: left;
-}
 
 #middlebottom img{
     float: left;
@@ -118,11 +112,7 @@ hr {
     color: rgb(80, 80, 80);
 }
 
-#bottomcopy{
-    font-family: georgia;
-    color: rgb(80, 80, 80);
-    font-size: 14px;
-}
+
 
 hr{
     color: rgb(200, 200, 200);

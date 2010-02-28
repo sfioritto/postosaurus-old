@@ -182,6 +182,7 @@ def should_generate_response(user, sender, message):
 
 
 def craft_response(message, list_name, list_addr):
+    subject = u"[%s] %s" % (list_name, message['subject'])
     response = MailResponse(To=list_addr, 
                             From=message['from'],
                             Subject=message['subject'])

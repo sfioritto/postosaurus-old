@@ -1,5 +1,5 @@
 {% extends "postosaurus/base.html" %}
-
+{% load tags %}
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-lists.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-tabs.css" />
@@ -22,11 +22,11 @@ Groups for this organization.
     <tr>
       <td class="listname">
 	<p class="listname">
-	  {{ mlist.name }}<span class="domain">@postosaurus.com</span>
+	  {{ mlist.name }}<span class="domain">@{{ org.subdomain }}.postosaurus.com</span>
 	</p>
       </td>
       <td class="links">
-        <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=mlist.organization.subdomain %}">Members</a>
+        <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Members</a>
 	<a href="{% url	webapp.postosaurus.views.list.archive_overview	mlist.organization.subdomain, mlist.name %}">Archive</a>
 	<a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=mlist.organization.subdomain %}">Files</a>
      </td>

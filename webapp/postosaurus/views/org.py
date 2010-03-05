@@ -5,6 +5,7 @@ from app.model import mailinglist
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
+from webapp import settings
 from webapp.postosaurus.models import *
 from webapp.postosaurus.views import helpers, auth
 from webapp.forms import MailingListForm
@@ -56,7 +57,7 @@ def main(request, orgname):
             CONFIRM.send_if_not_subscriber(relay, mlist, 
                                            'confirm', email, 
                                            'postosaurus/join-confirmation.msg',
-                                           organization.url)
+                                           "%s.%s" % (organization.subdomain, settings.HOST))
             
             return HttpResponseRedirect(mlist.members_url())
             

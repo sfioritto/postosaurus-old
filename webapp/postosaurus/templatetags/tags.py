@@ -34,10 +34,10 @@ class OrgUrlNode(template.Node):
 
     def render(self, context):
         args = [arg.resolve(context) for arg in self.args]
-        url = reverse('webapp.postosaurus.views.list.members', args=args)
+        url = reverse(self.viewname, args=args)
         if settings.DEBUG:
             return url
         else:
-            return url
+            return "/" + '/'.join(url.split('/')[3:])
 
 

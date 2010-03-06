@@ -1,4 +1,5 @@
 {% extends "postosaurus/base.html" %}
+{% load tags %}
 
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list-tabs.css" />
@@ -11,19 +12,19 @@
 {% block content %}
 <div id="breadcrumb">
   <a href="{{ org.url }}">{{ org.name }}</a> >
-  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">
+  <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">
   {{ mlist.name }}
   </a> >
-  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Members</a> >
-  <a href="{% url webapp.postosaurus.views.list.invite_member listname=mlist.name orgname=org.subdomain %}">Invite</a>
+  <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Members</a> >
+  <a href="{% org_url webapp.postosaurus.views.list.invite_member org.subdomain, mlist.name %}">Invite</a>
 </div>
 
 <h3>A confirmation email has been sent to {{ email }}.</h3>
 <p>
-<a href="{% url webapp.postosaurus.views.list.invite_member org.subdomain, mlist.name %}">
+<a href="{% org_url webapp.postosaurus.views.list.invite_member org.subdomain, mlist.name %}">
 Invite someone else
 </a> or go
-<a href="{% url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">
+<a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">
 back to your group
 </a>
 </p>

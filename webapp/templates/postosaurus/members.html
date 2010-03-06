@@ -1,4 +1,5 @@
 {% extends "postosaurus/base.html" %}
+{% load tags %}
 
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/list-tabs.css" />
@@ -12,17 +13,17 @@
 {% block content %}
 <div id="breadcrumb">
   <a href="{{ org.url }}">{{ org.name }}</a> >
-  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">
+  <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">
   {{ mlist.name }}
   </a> >
-  <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Members</a>
+  <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Members</a>
 </div>
 
 <h3>Members</h3>
 {% if org.active %}
 <p id="links">
-<a id="edit" href="{% url webapp.postosaurus.views.list.edit_members org.subdomain,mlist.name %}">edit</a>
-|<a id="add" href="{% url webapp.postosaurus.views.list.invite_member org.subdomain,mlist.name %}">add a member</a>
+<a id="edit" href="{% org_url webapp.postosaurus.views.list.edit_members org.subdomain, mlist.name %}">edit</a>
+|<a id="add" href="{% org_url webapp.postosaurus.views.list.invite_member org.subdomain, mlist.name %}">add a member</a>
 </p>
 {% endif %}
 

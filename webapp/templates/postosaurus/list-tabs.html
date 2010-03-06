@@ -1,3 +1,5 @@
+{% load tags %}
+
 <ul id="listtabs">
   
   <li
@@ -5,7 +7,7 @@
   class="current"
   {% endif %}
   id="members">
-    <a href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Members</a>
+    <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Members</a>
   </li>
   
   <li
@@ -13,7 +15,7 @@
   class="current"
   {% endif %}
   id="archive">
-    <a href="{% url webapp.postosaurus.views.list.archive_overview listname=mlist.name orgname=org.subdomain %}">Archive</a>
+    <a href="{% org_url webapp.postosaurus.views.list.archive_overview org.subdomain, mlist.name %}">Archive</a>
   </li>
   
  <li
@@ -21,7 +23,7 @@
   class="current"
   {% endif %}
   id="files">
-    <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a>
+    <a href="{% org_url webapp.postosaurus.views.list.files org.subdomain, mlist.name %}">Files</a>
   </li>
 
 </ul>

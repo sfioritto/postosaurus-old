@@ -109,7 +109,7 @@ class Organization(models.Model):
             return reverse('webapp.postosaurus.views.org.main', 
                            args=[self.subdomain])
         else:
-            return "www.%s.postosaurus.com" % self.subdomain
+            return "http://www.%s.postosaurus.com" % self.subdomain
     url = property(__url)
 
 

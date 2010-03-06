@@ -169,6 +169,7 @@ def edit_members(request, orgname, listname):
         if request.POST.has_key("confirmed"):
             for email in emails:
                 helpers.remove_from_list(email, mlist, mlist.organization)
+            return HttpResponseRedirect(reverse(members, args=[mlist.organization.subdomain, mlist.name]))
         else:
             return render_to_response('postosaurus/members-confirm.html', {
                     'org' : mlist.organization,

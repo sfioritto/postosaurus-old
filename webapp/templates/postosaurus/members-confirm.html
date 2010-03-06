@@ -1,4 +1,5 @@
 {% extends "postosaurus/base.html" %}
+{% load tags %}
 
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/members-confirm.css" />
@@ -30,9 +31,9 @@ Are you sure you want to remove the following members from <span class="listname
   <input type="hidden" value="1" name="confirmed" />
   <input type="submit" value="Yes, I'm sure." id="submit" />
   {% if mlist %}
-  <a id="cancel" href="{% url webapp.postosaurus.views.list.members listname=mlist.name orgname=org.subdomain %}">Cancel</a>
+  <a id="cancel" href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Cancel</a>
   {% else %}
-  <a id="cancel" href="{% url webapp.postosaurus.views.org.members orgname=org.subdomain %}">Cancel</a>
+  <a id="cancel" href="{% org_url webapp.postosaurus.views.org.members org.subdomain %}">Cancel</a>
   {% endif %}
 </form>
 

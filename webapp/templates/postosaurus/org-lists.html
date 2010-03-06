@@ -1,5 +1,6 @@
 {% extends "postosaurus/base.html" %}
 {% load tags %}
+
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-lists.css" />
 <link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}css/org-tabs.css" />
@@ -27,8 +28,8 @@ Groups for this organization.
       </td>
       <td class="links">
         <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">Members</a>
-	<a href="{% url	webapp.postosaurus.views.list.archive_overview	mlist.organization.subdomain, mlist.name %}">Archive</a>
-	<a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=mlist.organization.subdomain %}">Files</a>
+	<a href="{% org_url webapp.postosaurus.views.list.archive_overview org.subdomain, mlist.name %}">Archive</a>
+	<a href="{% org_url webapp.postosaurus.views.list.files org.subdomain, mlist.name %}">Files</a>
      </td>
     </tr>
     {% endfor %}

@@ -1,3 +1,4 @@
+{% load tags %}
 <ul id="orgtabs">
 
   <li
@@ -14,7 +15,7 @@
   class="current"
   {% endif %}
   id="memberstab">
-    <a href="{{ org.membersurl }}">Members</a>
+    <a href="{% org_url webapp.postosaurus.views.org.members org.subdomain %}">Members</a>
   </li>
 
 </ul>

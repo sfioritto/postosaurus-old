@@ -1,4 +1,5 @@
 {% extends "postosaurus/base.html" %}
+{% load tags %}
 
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}css/list-tabs.css">
@@ -12,10 +13,10 @@
 {% block content %}
 <div id="breadcrumb">
   <a href="{{ org.url }}">{{ org.name }}</a> >
-  <a href="{% url webapp.postosaurus.views.list.members orgname=org.subdomain listname=mlist.name%}">
+  <a href="{% org_url webapp.postosaurus.views.list.members org.subdomain, mlist.name %}">
   {{ mlist.name }}
   </a> >
-  <a href="{% url webapp.postosaurus.views.list.files listname=mlist.name orgname=org.subdomain %}">Files</a> >
+  <a href="{% org_url webapp.postosaurus.views.list.files org.subdomain, mlist.name %}">Files</a> >
   <a href="">{{ filename }}</a>
 </div>
 
@@ -35,10 +36,10 @@
 id="uploadfile"
 enctype="multipart/form-data"
 method="post"
-action="{% url webapp.postosaurus.views.list.upload_file org.subdomain, mlist.name %}">
+action="{% org_url webapp.postosaurus.views.list.upload_file org.subdomain, mlist.name %}">
 {{ form.file }}
 <input type="hidden" name="next"
-value="{% url webapp.postosaurus.views.list.file_versions org.subdomain, mlist.name, filename %}" />
+value="{% org_url webapp.postosaurus.views.list.file_versions org.subdomain, mlist.name, filename %}" />
 <input type="submit" value="Upload" id="uploadbutton" />
 </form>
 {% endif %}

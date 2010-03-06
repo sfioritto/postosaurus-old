@@ -1,10 +1,17 @@
 from django import template
 from django.core.urlresolvers import reverse
 from webapp import settings
-from webapp.postosaurus.views.list import members
+
 
 register = template.Library()
 
+def org_reverse(viewname, args=[]):
+    url = reverse(viewname, args=args)
+    if settings.DEBUG:
+        return url
+    else:
+        return "/" + '/'.join(url.split('/')[3:])
+    
 
 @register.tag
 def org_url(parser, token):
@@ -34,10 +41,6 @@ class OrgUrlNode(template.Node):
 
     def render(self, context):
         args = [arg.resolve(context) for arg in self.args]
-        url = reverse(self.viewname, args=args)
-        if settings.DEBUG:
-            return url
-        else:
-            return "/" + '/'.join(url.split('/')[3:])
+        return org_reverse(self.viewname, args=args)
 
 

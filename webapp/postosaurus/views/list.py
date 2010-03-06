@@ -1,13 +1,13 @@
 import jinja2
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from app.model import mailinglist, archive, files as appfiles
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from webapp.postosaurus.models import *
 from webapp.postosaurus.views import helpers, auth
+from webapp.postosaurus.templatetags.tags import org_reverse
 from email.utils import parseaddr  
 from webapp import settings, forms
 from lamson import view
@@ -169,7 +169,7 @@ def edit_members(request, orgname, listname):
         if request.POST.has_key("confirmed"):
             for email in emails:
                 helpers.remove_from_list(email, mlist, mlist.organization)
-            return HttpResponseRedirect(reverse(members, args=[mlist.organization.subdomain, mlist.name]))
+            return HttpResponseRedirect(org_reverse(members, args=[mlist.organization.subdomain, mlist.name]))
         else:
             return render_to_response('postosaurus/members-confirm.html', {
                     'org' : mlist.organization,
@@ -229,7 +229,7 @@ def archive_overview(request, orgname, listname):
         month = msg.created_on.month
         day = msg.created_on.day
         year = msg.created_on.year
-        url = reverse(archive_by_day, args=[orgname, listname, month, day, year])
+        url = org_reverse(archive_by_day, args=[orgname, listname, month, day, year])
         messages.append((msg, url))
     return render_to_response('postosaurus/archive.html', {
             'org' : mlist.organization,

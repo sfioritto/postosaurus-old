@@ -4,6 +4,7 @@ from webapp import settings
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 from django.core.urlresolvers import reverse
+from webapp.postosaurus.templatetags.tags import org_reverse
 from pyspreedly import api
 
 
@@ -106,7 +107,7 @@ class Organization(models.Model):
     
     def __url(self):
         if settings.URL_DEBUG:
-            return reverse('webapp.postosaurus.views.org.main', 
+            return org_reverse('webapp.postosaurus.views.org.main', 
                            args=[self.subdomain])
         else:
             return "http://www.%s.postosaurus.com" % self.subdomain
@@ -134,12 +135,7 @@ class MailingList(models.Model):
 
 
     def __members_url(self):
-        url = reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
-        if settings.URL_DEBUG:
-            return url
-        else:
-            #todo: this code duplicated in tags module
-            return "/" + '/'.join(url.split('/')[3:])
+        url = org_reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
     url = property(__members_url)
 
 

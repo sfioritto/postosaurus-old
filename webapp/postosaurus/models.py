@@ -113,14 +113,6 @@ class Organization(models.Model):
     url = property(__url)
 
 
-    def __membersurl(self):
-        if settings.URL_DEBUG:
-            return reverse('webapp.postosaurus.views.org.members',
-                           args=[self.subdomain])
-        else:
-            return "/"
-    membersurl = property(__membersurl)
-
     def __unicode__(self):
         return self.name
 
@@ -139,13 +131,16 @@ class MailingList(models.Model):
         return "%s@%s.postosaurus.com" % (self.name, self.organization.subdomain)
     email = property(__email)
 
-    def archive_url(self):
-        return reverse('webapp.postosaurus.views.list.archive_overview', args=[self.organization.subdomain, self.name])
 
-    def members_url(self):
-        return reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
 
-    url = property(members_url)
+    def __members_url(self):
+        url = reverse('webapp.postosaurus.views.list.members', args=[self.organization.subdomain, self.name])
+        if settings.URL_DEBUG:
+            return url
+        else:
+            #todo: this code duplicated in tags module
+            return "/" + '/'.join(url.split('/')[3:])
+    url = property(__members_url)
 
 
     def __unicode__(self):

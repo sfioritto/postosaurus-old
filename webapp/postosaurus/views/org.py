@@ -38,31 +38,31 @@ def main(request, orgname):
 
     try:
         profile = request.user.get_profile()
-        organization = Organization.objects.get(subdomain=orgname)
-        mlists = organization.mailinglist_set.all()
+        org = Organization.objects.get(subdomain=orgname)
+        mlists = org.mailinglist_set.all()
     except ValueError:
         raise Http404()
 
-    auth.authorize_or_raise(profile, organization)
+    auth.authorize_or_raise(profile, org)
     form = MailingListForm()
     mlist = None
     if request.method == "POST":
         form = MailingListForm(request.POST)
         
         #Check if the mailing list is valid.
-        if form.is_valid() and organization.active:
+        if form.is_valid() and org.active:
             email = profile.email
             list_name = form.cleaned_data['groupname']
-            mlist = mailinglist.create_list(list_name, organization)
+            mlist = mailinglist.create_list(list_name, org)
             CONFIRM.send_if_not_subscriber(relay, mlist, 
                                            'confirm', email, 
                                            'postosaurus/join-confirmation.msg',
-                                           "%s.%s" % (organization.subdomain, settings.HOST))
+                                           "%s.%s" % (org.subdomain, settings.HOST))
             
-            return HttpResponseRedirect(mlist.members_url())
+            return HttpResponseRedirect(mlist.url)
             
     return render_to_response('postosaurus/org-lists.html', {
-            'org' : organization,
+            'org' : org,
             'mlist' : mlist,
             'mlists' : mlists,
             'groupstab' : True,

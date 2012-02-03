@@ -1,1 +1,11 @@
-This is your initial Lamson application.
+This is an email based group collaboration app. Here is how it works:
+
+1. Send an email to <your group>@postosaurus.com and CC people you want to invite.
+2. Start emailing your group using the new list you just created.
+3. That's it.
+
+Postosaurus will automatically version control any attachments you send to your group.
+You also get a searchable index of your discussions and a view of all the attachements
+and their revision history.
+
+
